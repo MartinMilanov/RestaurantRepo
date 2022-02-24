@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "6a5cce3e-7c93-4701-9d46-c29351ca4e39": {
+      "ProjectGuid": "6a5cce3e-7c93-4701-9d46-c29351ca4e39",
+      "DisplayName": "Restaurant.Web",
+      "ColorIndex": 0
+    },
+    "1ada0791-b730-4ecf-a985-b0ab4e2415f0": {
+      "ProjectGuid": "1ada0791-b730-4ecf-a985-b0ab4e2415f0",
+      "DisplayName": "Restaurant.Data",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

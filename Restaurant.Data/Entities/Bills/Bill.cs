@@ -1,0 +1,12 @@
+using Restaurant.Data.Entities.Common;
+using Restaurant.Data.Entities.FoodBills;
+
+namespace Restaurant.Data.Entities.Bills
+{
+    public class Bill : BaseEntity, IBill
+    {
+        public double Total { get; set; }
+        public DateTime Closed { get; set; }
+        public List<FoodBill> Foods { get; set; }
+    }
+}
