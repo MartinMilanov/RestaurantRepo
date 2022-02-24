@@ -10,3 +10,4 @@ namespace Restaurant.Data.Entities.Reservations
         public string TableId { get; set; }
         public Table Table { get; set; }
     }
+}
