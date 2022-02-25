@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Restaurant.Data.Entities.Bills;
+using Restaurant.Data.Entities.Reservations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +14,8 @@ namespace Restaurant.Data.Entities.Auth
         public ApplicationUser()
         {
         }
+
+        public List<Reservation> CreatedReservations { get; set; }
+        public List<Bill> CreatedBills { get; set; }
     }
 }
