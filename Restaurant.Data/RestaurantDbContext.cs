@@ -26,14 +26,16 @@ namespace Restaurant.Data
         public RestaurantDbContext(DbContextOptions<RestaurantDbContext> options) : base(options)
         { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            builder.HasDefaultSchema("18118164");
 
-            new FoodBillsConfiguration().Configure(modelBuilder.Entity<FoodBill>());
-            new BillsConfiguration().Configure(modelBuilder.Entity<Bill>());
-            new CategoriesConfiguration().Configure(modelBuilder.Entity<Category>());
-            new ReservationsConfiguration().Configure(modelBuilder.Entity<Reservation>());
+            base.OnModelCreating(builder);
+
+            new FoodBillsConfiguration().Configure(builder.Entity<FoodBill>());
+            new BillsConfiguration().Configure(builder.Entity<Bill>());
+            new CategoriesConfiguration().Configure(builder.Entity<Category>());
+            new ReservationsConfiguration().Configure(builder.Entity<Reservation>());
         }
     }
 }
