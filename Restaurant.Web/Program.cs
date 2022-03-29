@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Data;
 using Restaurant.Data.Common;
+using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<RestaurantDbContext>(options =>
 
 builder.Services.AddIdentityCore<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddEntityFrameworkStores<RestaurantDbContext>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
