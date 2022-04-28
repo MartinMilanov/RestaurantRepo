@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Restaurant.Data.Common.Persistance.Repositories;
 
 namespace Restaurant.Data.Common.Persistance
 {
     public interface IUnitOfWork
     {
-        Task Save();
+        FoodRepository Foods { get; }
+        Task SaveChanges();
     }
 }

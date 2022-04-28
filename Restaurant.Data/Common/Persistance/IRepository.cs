@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Restaurant.Services.Repositories.Common
+namespace Restaurant.Data.Common.Persistance
 {
     public interface IRepository<TEntity> where TEntity : class
     {

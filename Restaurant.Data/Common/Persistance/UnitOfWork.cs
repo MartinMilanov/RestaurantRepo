@@ -1,30 +1,21 @@
 ﻿using Restaurant.Data.Common.Persistance.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Restaurant.Data.Common.Persistance
 {
-    public class UnitOfWork : IUnitOfWork,IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
-        public FoodRepository FoodRepository { get; set; }
-        private readonly RestaurantDbContext dbContext;
+        private readonly RestaurantDbContext _context;
 
-        public UnitOfWork(RestaurantDbContext dbContext)
+        public UnitOfWork(RestaurantDbContext context)
         {
-            this.dbContext = dbContext;
-            FoodRepository = new FoodRepository(dbContext);
+            _context = context;
+            Foods = new FoodRepository(context);
         }
-        public async Task Save()
-        {
-            this.dbContext.SaveChangesAsync();
-        }
+        public FoodRepository Foods {get;set;}
 
-        public void Dispose()
+        public  async Task SaveChanges()
         {
-            dbContext.Dispose();
+            await _context.SaveChangesAsync();
         }
     }
 }
