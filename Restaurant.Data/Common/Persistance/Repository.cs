@@ -27,9 +27,19 @@ namespace Restaurant.Data.Common.Persistance
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity> Find(Expression<Func<TEntity,bool>> predicate)
+        public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+        }
+
+        public async Task<TEntity> GetBy(Expression<Func<TEntity,bool>> predicate)
         {
             return await _context.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
+        }
+
+        public void Update(TEntity entity)
+        {
+            _context.Set<TEntity>().Update(entity);
         }
     }
 }

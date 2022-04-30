@@ -6,7 +6,9 @@ namespace Restaurant.Data.Common.Persistance
     {
         Task Create(TEntity entity);
         void Delete(TEntity entity);
+        void Update(TEntity entity);
+        Task<TEntity> GetBy(Expression<Func<TEntity, bool>> predicate);
         Task<IEnumerable<TEntity>> GetAll();
-        Task<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> predicate);
     }
 }

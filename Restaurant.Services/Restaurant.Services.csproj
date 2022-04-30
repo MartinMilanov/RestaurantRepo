@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Restaurant.Web\Restaurant.Web.csproj" />
+    <ProjectReference Include="..\Restaurant.Data\Restaurant.Data.csproj" />
   </ItemGroup>
 
 </Project>

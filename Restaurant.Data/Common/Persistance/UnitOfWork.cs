@@ -13,7 +13,7 @@ namespace Restaurant.Data.Common.Persistance
         }
         public FoodRepository Foods {get;set;}
 
-        public  async Task SaveChanges()
+        public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
