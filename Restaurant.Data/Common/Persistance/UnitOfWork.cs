@@ -11,11 +11,14 @@ namespace Restaurant.Data.Common.Persistance
             _context = context;
             Foods = new FoodRepository(context);
             Categories = new CategoryRepository(context);
+            Tables = new TableRepository(context);
         }
 
         public FoodRepository Foods {get;set;}
 
         public CategoryRepository Categories {get;set; }
+
+        public TableRepository Tables { get; set; }
 
         public async Task SaveChangesAsync()
         {

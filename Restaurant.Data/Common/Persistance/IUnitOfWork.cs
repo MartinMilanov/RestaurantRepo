@@ -6,6 +6,7 @@ namespace Restaurant.Data.Common.Persistance
     {
         FoodRepository Foods { get; }
         CategoryRepository Categories { get; }
+        TableRepository Tables { get; }
         Task SaveChangesAsync();
     }
 }
