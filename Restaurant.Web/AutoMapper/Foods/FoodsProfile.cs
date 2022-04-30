@@ -11,7 +11,7 @@ namespace Restaurant.Web.AutoMapper.Foods
             CreateMap<FoodDto, Food>()
                 .ForMember(
                     dest => dest.Id,
-                    opt => opt.MapFrom(src => src.Id)
+                    opt => Guid.NewGuid().ToString()
                 )
                 .ForMember(
                     dest => dest.Name,
@@ -20,10 +20,6 @@ namespace Restaurant.Web.AutoMapper.Foods
                 .ForMember(
                     dest => dest.Price,
                     opt => opt.MapFrom(src => src.Price)
-                )
-                .ForMember(
-                    dest => dest.CategoryId,
-                    opt => opt.MapFrom(src => src.CategoryId)
                 );
         }
     }

@@ -37,7 +37,7 @@ namespace Restaurant.Data.Common.Persistance
             return await _context.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
         }
 
-        public void Update(TEntity entity)
+        public void Update(string id, TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
         }

@@ -16,7 +16,8 @@ namespace Restaurant.Data.Common.Configurations.Categories
             builder
                 .HasMany(x => x.Foods)
                 .WithOne(x => x.Category)
-                .HasForeignKey(x => x.CategoryId);
+                .HasForeignKey(x => x.CategoryId)
+                .IsRequired(false);
         }
     }
 }

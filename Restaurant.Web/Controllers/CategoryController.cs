@@ -1,56 +1,55 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data.Common.Persistance;
-using Restaurant.Data.Entities.Foods;
-using Restaurant.Web.Models.Request.Foods;
+using Restaurant.Data.Entities.Categories;
+using Restaurant.Web.Models.Request.Categories;
 using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
-    [Route("/api/[controller]")]
-    public class FoodsController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public FoodsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoryController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         [HttpPost("/")]
-        public async Task<IActionResult> Create([FromBody] FoodDto input)
+        public async Task<IActionResult> Create([FromBody] CategoryCreateDto input)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Food entity = _mapper.Map<Food>(input);
+            Category entity = _mapper.Map<Category>(input);
 
-            await _unitOfWork.Foods.Create(entity);
+            await _unitOfWork.Categories.Create(entity);
 
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new Response<String>(false, null, "Successfully created food"));
+            return Ok(new Response<String>(false, null, "Successfully created category"));
         }
 
         [HttpPut("/{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] FoodDto input)
+        public async Task<IActionResult> Update(string id, [FromBody] CategoryCreateDto input)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Food entity = _mapper.Map<Food>(input);
+            Category entity = _mapper.Map<Category>(input);
 
-            _unitOfWork.Foods.Update(id, entity);
+            _unitOfWork.Categories.Update(id, entity);
 
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new Response<String>(false, null, "Successfully updated food"));
+            return Ok(new Response<String>(false, null, "Successfully updated category"));
         }
 
         [HttpGet("/{id}")]
@@ -61,27 +60,27 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Food entity = await _unitOfWork.Foods.GetBy(x => x.Id == id);
+            Category entity = await _unitOfWork.Categories.GetBy(x => x.Id == id);
 
             if (entity == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            return Ok(new Response<Food>(false, "", entity));
+            return Ok(new Response<Category>(false, "", entity));
         }
 
-        [HttpGet("/{id}")]
-        public async Task<IActionResult> GetAllFoods()
+        [HttpGet("/")]
+        public async Task<IActionResult> GetCategories()
         {
-            List<Food> foods = (await _unitOfWork.Foods.GetAll()).ToList();
+            List<Category> catgories = (await _unitOfWork.Categories.GetAll()).ToList();
 
-            if (foods == null)
+            if (catgories == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            return Ok(new Response<IEnumerable<Food>>(false, "", foods));
+            return Ok(new Response<IEnumerable<Category>>(false, "", catgories));
         }
 
         [HttpDelete("/{id}")]
@@ -92,30 +91,17 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Food entity = await _unitOfWork.Foods.GetBy(x => x.Id == id);
+            Category entity = await _unitOfWork.Categories.GetBy(x => x.Id == id);
 
             if (entity == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            _unitOfWork.Foods.Delete(entity);
+            _unitOfWork.Categories.Delete(entity);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
-        }
-
-        [HttpGet("/getAllByCategory/{categoryId}")]
-        public async Task<IActionResult> GetAllByCategory(string categoryId)
-        {
-            if (categoryId == null)
-            {
-                return BadRequest(new Response<string>(true, "Category id should not be null", null));
-            }
-
-            IEnumerable<Food> foods = await _unitOfWork.Foods.GetAll(x => x.Id == categoryId);
-
-            return Ok(new Response<IEnumerable<Food>>(false, "", foods));
         }
     }
 }
