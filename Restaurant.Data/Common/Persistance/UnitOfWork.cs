@@ -12,6 +12,7 @@ namespace Restaurant.Data.Common.Persistance
             Foods = new FoodRepository(context);
             Categories = new CategoryRepository(context);
             Tables = new TableRepository(context);
+            Reservations = new ReservationRepository(context);
         }
 
         public FoodRepository Foods {get;set;}
@@ -19,6 +20,8 @@ namespace Restaurant.Data.Common.Persistance
         public CategoryRepository Categories {get;set; }
 
         public TableRepository Tables { get; set; }
+
+        public ReservationRepository Reservations { get; set; }
 
         public async Task SaveChangesAsync()
         {
