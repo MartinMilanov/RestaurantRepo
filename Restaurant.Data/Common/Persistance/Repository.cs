@@ -5,7 +5,7 @@ namespace Restaurant.Data.Common.Persistance
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly RestaurantDbContext _context;
+        protected readonly RestaurantDbContext _context;
 
         public Repository(RestaurantDbContext context)
         {
@@ -15,6 +15,11 @@ namespace Restaurant.Data.Common.Persistance
         public async Task Create(TEntity entity)
         {
            await _context.Set<TEntity>().AddAsync(entity);
+        }
+
+        public async Task CreateBatch(IEnumerable<TEntity> entity)
+        {
+            await _context.Set<TEntity>().AddRangeAsync(entity);
         }
 
         public void Delete(TEntity entity)

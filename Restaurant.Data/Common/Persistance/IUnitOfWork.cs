@@ -8,6 +8,8 @@ namespace Restaurant.Data.Common.Persistance
         CategoryRepository Categories { get; }
         TableRepository Tables { get; }
         ReservationRepository Reservations { get; }
+        BillsRepository Bills { get; }
+        FoodBillRepository FoodBills { get; }  
         Task SaveChangesAsync();
     }
 }

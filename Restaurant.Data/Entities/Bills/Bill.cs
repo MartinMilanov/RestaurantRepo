@@ -9,7 +9,7 @@ namespace Restaurant.Data.Entities.Bills
     {
         public double Total { get; set; }
         public DateTime Closed { get; set; }
-
+        public bool IsClosed { get; set; }
         public string TableId { get; set; }
         public Table Table { get; set; }
         public string CreatedById {get;set;}
