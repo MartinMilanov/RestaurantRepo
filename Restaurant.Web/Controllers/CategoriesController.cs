@@ -1,58 +1,62 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data.Common.Persistance;
-using Restaurant.Data.Entities.Reservations;
-using Restaurant.Web.Models.Request.Reservations;
+using Restaurant.Data.Entities.Categories;
+using Restaurant.Web.Models.Request.Categories;
 using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
-    public class ReservationController: ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CategoriesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ReservationController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoriesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        [HttpPost("/")]
-        public async Task<IActionResult> Create([FromBody] ReservationCreateDto input)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] CategoryCreateDto input)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Reservation entity = _mapper.Map<Reservation>(input);
+            Category entity = _mapper.Map<Category>(input);
 
-            await _unitOfWork.Reservations.Create(entity);
+            await _unitOfWork.Categories.Create(entity);
 
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new Response<String>(false, null, "Successfully created Reservation"));
+            return Ok(new Response<String>(false, null, "Successfully created category"));
         }
 
-        [HttpPut("/{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] ReservationCreateDto input)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] CategoryUpdateDto input)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Reservation entity = _mapper.Map<Reservation>(input);
+            Category entity = _mapper.Map<Category>(input);
 
-            _unitOfWork.Reservations.Update(id, entity);
+            input.Id = id;
+
+            _unitOfWork.Categories.Update(id, entity);
 
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new Response<String>(false, null, "Successfully updated Reservation"));
+            return Ok(new Response<String>(false, null, "Successfully updated category"));
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             if (id == null)
@@ -60,30 +64,30 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Reservation entity = await _unitOfWork.Reservations.GetBy(x => x.Id == id);
+            Category entity = await _unitOfWork.Categories.GetBy(x => x.Id == id);
 
             if (entity == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            return Ok(new Response<Reservation>(false, "", entity));
+            return Ok(new Response<Category>(false, "", entity));
         }
 
-        [HttpGet("/")]
-        public async Task<IActionResult> GetReservations()
+        [HttpGet]
+        public async Task<IActionResult> GetCategories()
         {
-            List<Reservation> reservations = (await _unitOfWork.Reservations.GetAll()).ToList();
+            List<Category> catgories = (await _unitOfWork.Categories.GetAll()).ToList();
 
-            if (reservations == null)
+            if (catgories == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            return Ok(new Response<IEnumerable<Reservation>>(false, "", reservations));
+            return Ok(new Response<IEnumerable<Category>>(false, "", catgories));
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -91,14 +95,14 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Reservation entity = await _unitOfWork.Reservations.GetBy(x => x.Id == id);
+            Category entity = await _unitOfWork.Categories.GetBy(x => x.Id == id);
 
             if (entity == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            _unitOfWork.Reservations.Delete(entity);
+            _unitOfWork.Categories.Delete(entity);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));

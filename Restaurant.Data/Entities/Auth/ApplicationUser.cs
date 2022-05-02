@@ -8,6 +8,7 @@ namespace Restaurant.Data.Entities.Auth
     {
         public ApplicationUser()
         {
+            this.Id = Guid.NewGuid().ToString();
         }
 
         public List<Reservation> CreatedReservations { get; set; }

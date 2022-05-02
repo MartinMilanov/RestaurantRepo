@@ -7,6 +7,8 @@ using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class TablesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +20,7 @@ namespace Restaurant.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("/")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] TableCreateDto input)
         {
             if (!ModelState.IsValid)
@@ -35,13 +37,15 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<String>(false, null, "Successfully created Table"));
         }
 
-        [HttpPut("/{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] TableCreateDto input)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] TableUpdateDto input)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
+
+            input.Id = id;
 
             Table entity = _mapper.Map<Table>(input);
 
@@ -52,7 +56,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<String>(false, null, "Successfully updated Table"));
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             if (id == null)
@@ -70,7 +74,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<Table>(false, "", entity));
         }
 
-        [HttpGet("/")]
+        [HttpGet]
         public async Task<IActionResult> GetTables()
         {
             List<Table> catgories = (await _unitOfWork.Tables.GetAll()).ToList();
@@ -83,7 +87,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<IEnumerable<Table>>(false, "", catgories));
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)

@@ -2,8 +2,9 @@
 
 namespace Restaurant.Web.Models.Request.Bills
 {
-    public class BillCreateDto
+    public class BillUpdateDto
     {
+        public string? Id { get; set; }
         [Required]
         public double Total { get; set; }
         [Required]

@@ -6,6 +6,7 @@ using Restaurant.Data;
 using Restaurant.Data.Common;
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Auth;
+using Restaurant.Services.FoodBills;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,12 +16,13 @@ ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c=> 
+    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()));
 
 builder.Services.AddDbContext<RestaurantDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDB")));
 
-builder.Services.AddIdentityCore<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
+builder.Services.AddIdentity<ApplicationUser,ApplicationUserRole>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddEntityFrameworkStores<RestaurantDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -42,22 +44,23 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IFoodBillService, FoodBillService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.MapControllers();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseHttpsRedirection();
 
 app.Run();

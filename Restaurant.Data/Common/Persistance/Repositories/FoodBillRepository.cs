@@ -9,7 +9,7 @@ namespace Restaurant.Data.Common.Persistance.Repositories
         {
         }
 
-        public void Delete(Expression<Func<FoodBill, bool>> predicate)
+        public void DeleteAllWhere(Expression<Func<FoodBill, bool>> predicate)
         {
             IEnumerable<FoodBill> foodBillsToBeDeleted = _context.FoodBills.Where(predicate);
 

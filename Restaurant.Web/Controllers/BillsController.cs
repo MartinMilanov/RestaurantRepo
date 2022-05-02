@@ -3,23 +3,28 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Bills;
 using Restaurant.Data.Entities.FoodBills;
+using Restaurant.Services.FoodBills;
 using Restaurant.Web.Models.Request.Bills;
 using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
-    public class BillController : ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class BillsController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IFoodBillService _foodBillService;
 
-        public BillController(IUnitOfWork unitOfWork, IMapper mapper)
+        public BillsController(IUnitOfWork unitOfWork, IFoodBillService foodBillService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _foodBillService = foodBillService;
             _mapper = mapper;
         }
 
-        [HttpPost("/")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] BillCreateDto input)
         {
             if (!ModelState.IsValid)
@@ -31,14 +36,14 @@ namespace Restaurant.Web.Controllers
 
             await _unitOfWork.Bills.Create(entity);
 
-            if (input.Foods != null)
+            if (input.FoodData != null)
             {
-                foreach (var food in input.Foods)
+                foreach (var food in input.FoodData)
                 {
                     food.BillId = entity.Id;
                 }
 
-                await _unitOfWork.FoodBills.CreateBatch(input.Foods.Select(x => _mapper.Map<FoodBill>(x)));
+                await _unitOfWork.FoodBills.CreateBatch(input.FoodData.Select(x => _mapper.Map<FoodBill>(x)));
             }
 
             await _unitOfWork.SaveChangesAsync();
@@ -46,8 +51,8 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<String>(false, null, "Successfully created Bill"));
         }
 
-        [HttpGet("/{id}")]
-        public async Task<IActionResult> GetById(string id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBillById(string id)
         {
             if (id == null)
             {
@@ -64,32 +69,43 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<Bill>(false, "", entity));
         }
 
-        [HttpPut("/{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] BillCreateDto input)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] BillUpdateDto input)
         {
-            //Think of a way to update the bill without updating the bill
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
+            }
 
+            input.Id = id;
 
-            // The bill can be updated only by adding or removing food items, which can be applied in the foods controller
+            Bill mappedInput = _mapper.Map<Bill>(input);
 
-            throw new NotImplementedException();
+            IEnumerable<FoodBill>? foodBillsMapped = input?.FoodData?.Select(x => _mapper.Map<FoodBill>(x));
+            
+            await _foodBillService.UpdateFoodsAfterBillUpdate(id,foodBillsMapped);
+
+            _unitOfWork.Bills.Update(id, mappedInput);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok(new Response<string>(false, "", "Succesfully update bill"));
         }
 
-
-        [HttpGet("/")]
+        [HttpGet]
         public async Task<IActionResult> GetBills()
         {
             List<Bill> result = (await _unitOfWork.Bills.GetAll()).ToList();
 
             if (result == null)
             {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
+                return BadRequest(new Response<string[]>(true, "Could not find records", new string[0]));
             }
 
             return Ok(new Response<IEnumerable<Bill>>(false, "", result));
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -104,12 +120,13 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            _unitOfWork.FoodBills.Delete(x => x.BillId == id);
+            _unitOfWork.FoodBills.DeleteAllWhere(x => x.BillId == id);
             _unitOfWork.Bills.Delete(entity);
 
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
         }
+
     }
 }

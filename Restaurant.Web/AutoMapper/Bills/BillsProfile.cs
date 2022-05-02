@@ -29,6 +29,28 @@ namespace Restaurant.Web.AutoMapper.Bills
                     dest => dest.CreatedById,
                     opt => opt.MapFrom(src => src.CreatedById)
                 );
+
+            CreateMap<BillUpdateDto, Bill>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.Id)
+                )
+                .ForMember(
+                    dest => dest.IsClosed,
+                    opt => opt.MapFrom(src => src.IsClosed)
+                )
+                .ForMember(
+                    dest => dest.TableId,
+                    opt => opt.MapFrom(src => src.TableId)
+                )
+                .ForMember(
+                    dest => dest.Total,
+                    opt => opt.MapFrom(src => src.Total)
+                )
+                .ForMember(
+                    dest => dest.CreatedById,
+                    opt => opt.MapFrom(src => src.CreatedById)
+                );
         }
     }
 }

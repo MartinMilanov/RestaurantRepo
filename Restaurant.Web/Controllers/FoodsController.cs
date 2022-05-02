@@ -7,7 +7,8 @@ using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
-    [Route("/api/[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class FoodsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -19,7 +20,7 @@ namespace Restaurant.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("/")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] FoodDto input)
         {
             if (!ModelState.IsValid)
@@ -36,13 +37,15 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<String>(false, null, "Successfully created food"));
         }
 
-        [HttpPut("/{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] FoodDto input)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] FoodUpdateDto input)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
+
+            input.Id = id;
 
             Food entity = _mapper.Map<Food>(input);
 
@@ -53,7 +56,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<String>(false, null, "Successfully updated food"));
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             if (id == null)
@@ -71,7 +74,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<Food>(false, "", entity));
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet]
         public async Task<IActionResult> GetAllFoods()
         {
             List<Food> foods = (await _unitOfWork.Foods.GetAll()).ToList();
@@ -84,7 +87,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<IEnumerable<Food>>(false, "", foods));
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -105,7 +108,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
         }
 
-        [HttpGet("/getAllByCategory/{categoryId}")]
+        [HttpGet("getAllByCategory/{categoryId}")]
         public async Task<IActionResult> GetAllByCategory(string categoryId)
         {
             if (categoryId == null)

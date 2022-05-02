@@ -21,6 +21,20 @@ namespace Restaurant.Web.AutoMapper.Tables
                     dest => dest.TableNumber,
                     opt => opt.MapFrom(src => src.TableNumber)
                 );
+
+            CreateMap<TableUpdateDto, Table>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.Id)
+                )
+                .ForMember(
+                    dest => dest.Seats,
+                    opt => opt.MapFrom(src => src.Seats)
+                )
+                .ForMember(
+                    dest => dest.TableNumber,
+                    opt => opt.MapFrom(src => src.TableNumber)
+                );
         }
     }
 }

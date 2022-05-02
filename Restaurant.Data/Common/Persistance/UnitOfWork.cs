@@ -9,7 +9,7 @@ namespace Restaurant.Data.Common.Persistance
         public UnitOfWork(RestaurantDbContext context)
         {
             _context = context;
-
+            
             Foods = new FoodRepository(context);
             Categories = new CategoryRepository(context);
             Tables = new TableRepository(context);

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Restaurant.Data\Restaurant.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Auth\" />
+  </ItemGroup>
+
 </Project>
