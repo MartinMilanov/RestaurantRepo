@@ -11,8 +11,6 @@ using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class BillsController : BaseController
     {
         private readonly IFoodBillService _foodBillService;
@@ -46,6 +44,8 @@ namespace Restaurant.Web.Controllers
             }
 
             await _unitOfWork.SaveChangesAsync();
+
+            await _loggingService.LogOnCreate("Bills");
 
             return Ok(new Response<String>(false, null, "Successfully created Bill"));
         }
@@ -87,6 +87,8 @@ namespace Restaurant.Web.Controllers
             _unitOfWork.Bills.Update(id, mappedInput);
 
             await _unitOfWork.SaveChangesAsync();
+            
+            await _loggingService.LogOnUpdate("Bills");
 
             return Ok(new Response<string>(false, "", "Succesfully update bill"));
         }

@@ -4,6 +4,8 @@ namespace Restaurant.Services.Loggers
 {
     public interface ILoggingService
     {
-        Task LogMessage(string message, string tableName, LogOperationType operationType);
+        Task LogOnCreate(string tableName);
+
+        Task LogOnUpdate(string tableName);
     }
 }

@@ -13,7 +13,17 @@ namespace Restaurant.Services.Loggers
             _context = context;
         }
 
-        public async Task LogMessage(string message, string tableName, LogOperationType operationType)
+        public async Task LogOnCreate(string tableName)
+        {
+            await LogMessage(tableName, LogOperationType.Create);
+        }
+
+        public async Task LogOnUpdate(string tableName)
+        {
+            await LogMessage(tableName, LogOperationType.Update);
+        }
+
+        private async Task LogMessage(string tableName, LogOperationType operationType)
         {
             Log log = new Log()
             {

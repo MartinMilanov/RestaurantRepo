@@ -32,6 +32,8 @@ namespace Restaurant.Web.Controllers
 
             await _unitOfWork.SaveChangesAsync();
 
+            await _loggingService.LogOnCreate("Foods");
+           
             return Ok(new Response<String>(false, null, "Successfully created food"));
         }
 
@@ -50,6 +52,8 @@ namespace Restaurant.Web.Controllers
             _unitOfWork.Foods.Update(id, entity);
 
             await _unitOfWork.SaveChangesAsync();
+            
+            await _loggingService.LogOnCreate("Foods");
 
             return Ok(new Response<String>(false, null, "Successfully updated food"));
         }

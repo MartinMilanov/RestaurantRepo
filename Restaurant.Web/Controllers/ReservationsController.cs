@@ -28,6 +28,8 @@ namespace Restaurant.Web.Controllers
             await _unitOfWork.Reservations.Create(entity);
 
             await _unitOfWork.SaveChangesAsync();
+            
+            await _loggingService.LogOnCreate("Reservations");
 
             return Ok(new Response<String>(false, null, "Successfully created Reservation"));
         }
@@ -47,6 +49,8 @@ namespace Restaurant.Web.Controllers
             _unitOfWork.Reservations.Update(id, entity);
 
             await _unitOfWork.SaveChangesAsync();
+            
+            await _loggingService.LogOnCreate("Reservations");
 
             return Ok(new Response<String>(false, null, "Successfully updated Reservation"));
         }

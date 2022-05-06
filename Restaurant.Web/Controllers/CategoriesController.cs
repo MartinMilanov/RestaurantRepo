@@ -29,6 +29,8 @@ namespace Restaurant.Web.Controllers
 
             await _unitOfWork.SaveChangesAsync();
 
+            await _loggingService.LogOnCreate("Categories");
+
             return Ok(new Response<String>(false, null, "Successfully created category"));
         }
 
@@ -48,6 +50,8 @@ namespace Restaurant.Web.Controllers
 
             await _unitOfWork.SaveChangesAsync();
 
+            await _loggingService.LogOnCreate("Categories");
+            
             return Ok(new Response<String>(false, null, "Successfully updated category"));
         }
 
