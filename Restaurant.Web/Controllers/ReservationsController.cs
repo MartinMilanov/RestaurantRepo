@@ -2,22 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Reservations;
+using Restaurant.Services.Loggers;
+using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Request.Reservations;
 using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ReservationsController: ControllerBase
+    public class ReservationsController: BaseController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public ReservationsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public ReservationsController(IUnitOfWork unitOfWork,ILoggingService loggingService, IMapper mapper) : base(unitOfWork, loggingService, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         [HttpPost("create")]

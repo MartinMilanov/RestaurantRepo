@@ -2,22 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Categories;
+using Restaurant.Services.Loggers;
+using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Request.Categories;
 using Restaurant.Web.Models.Response;
 
 namespace Restaurant.Web.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : BaseController
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public CategoriesController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoriesController(IUnitOfWork unitOfWork, ILoggingService loggingService, IMapper mapper): base(unitOfWork, loggingService, mapper)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         [HttpPost("create")]

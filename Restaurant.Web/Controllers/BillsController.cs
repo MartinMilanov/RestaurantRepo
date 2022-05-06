@@ -4,6 +4,8 @@ using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Bills;
 using Restaurant.Data.Entities.FoodBills;
 using Restaurant.Services.FoodBills;
+using Restaurant.Services.Loggers;
+using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Request.Bills;
 using Restaurant.Web.Models.Response;
 
@@ -11,17 +13,14 @@ namespace Restaurant.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BillsController : ControllerBase
+    public class BillsController : BaseController
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IFoodBillService _foodBillService;
 
-        public BillsController(IUnitOfWork unitOfWork, IFoodBillService foodBillService, IMapper mapper)
+        public BillsController(IUnitOfWork unitOfWork, ILoggingService loggingService, IFoodBillService foodBillService, IMapper mapper)
+            :base(unitOfWork, loggingService, mapper)
         {
-            _unitOfWork = unitOfWork;
             _foodBillService = foodBillService;
-            _mapper = mapper;
         }
 
         [HttpPost("create")]
