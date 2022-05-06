@@ -9,6 +9,7 @@ using Restaurant.Data.Entities.Bills;
 using Restaurant.Data.Entities.Categories;
 using Restaurant.Data.Entities.FoodBills;
 using Restaurant.Data.Entities.Foods;
+using Restaurant.Data.Entities.Logs;
 using Restaurant.Data.Entities.Reservations;
 using Restaurant.Data.Entities.Tables;
 
@@ -22,6 +23,7 @@ namespace Restaurant.Data
         public DbSet<Food> Foods { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Table> Tables { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         public RestaurantDbContext(DbContextOptions<RestaurantDbContext> options) : base(options)
         { }
@@ -31,6 +33,10 @@ namespace Restaurant.Data
             builder.HasDefaultSchema("18118164");
 
             base.OnModelCreating(builder);
+
+            builder.Entity<Log>(entity => {
+                entity.ToTable("Logs_18118164");
+            });
 
             new FoodBillsConfiguration().Configure(builder.Entity<FoodBill>());
             new BillsConfiguration().Configure(builder.Entity<Bill>());

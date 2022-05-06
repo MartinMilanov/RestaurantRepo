@@ -12,6 +12,7 @@ namespace Restaurant.Data.Entities.Auth
         }
 
         public List<Reservation> CreatedReservations { get; set; }
+
         public List<Bill> CreatedBills { get; set; }
     }
 }
