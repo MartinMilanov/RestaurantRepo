@@ -17,13 +17,13 @@ ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c=> 
+builder.Services.AddSwaggerGen(c =>
     c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()));
 
 builder.Services.AddDbContext<RestaurantDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("RestaurantDB")));
 
-builder.Services.AddIdentity<ApplicationUser,ApplicationUserRole>(IdentityOptionsProvider.GetIdentityOptions)
+builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddEntityFrameworkStores<RestaurantDbContext>()
                 .AddDefaultTokenProviders();
 

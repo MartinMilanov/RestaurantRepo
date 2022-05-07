@@ -1,18 +1,18 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Restaurant.Data.Common.Persistance;
-using Restaurant.Data.Entities.Reservations;
-using Restaurant.Services.Loggers;
+﻿using Microsoft.AspNetCore.Mvc;
 using Restaurant.Web.Controllers.Common;
-using Restaurant.Web.Models.Request.Reservations;
+using Restaurant.Mapping.Models.Reservations;
 using Restaurant.Web.Models.Response;
+using Restaurant.Services.Reservations;
 
 namespace Restaurant.Web.Controllers
 {
     public class ReservationsController: BaseController
     {
-        public ReservationsController(IUnitOfWork unitOfWork,ILoggingService loggingService, IMapper mapper) : base(unitOfWork, loggingService, mapper)
+        private readonly IReservationService _reservationService;
+
+        public ReservationsController(IReservationService reservationService)
         {
+            _reservationService = reservationService;
         }
 
         [HttpPost("create")]
@@ -23,13 +23,7 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Reservation entity = _mapper.Map<Reservation>(input);
-
-            await _unitOfWork.Reservations.Create(entity);
-
-            await _unitOfWork.SaveChangesAsync();
-            
-            await _loggingService.LogOnCreate("Reservations");
+            await _reservationService.Create(input);
 
             return Ok(new Response<String>(false, null, "Successfully created Reservation"));
         }
@@ -42,15 +36,7 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Reservation entity = _mapper.Map<Reservation>(input);
-
-            input.Id = id;
-
-            _unitOfWork.Reservations.Update(id, entity);
-
-            await _unitOfWork.SaveChangesAsync();
-            
-            await _loggingService.LogOnCreate("Reservations");
+            await _reservationService.Update(id, input);
 
             return Ok(new Response<String>(false, null, "Successfully updated Reservation"));
         }
@@ -63,27 +49,27 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Reservation entity = await _unitOfWork.Reservations.GetBy(x => x.Id == id);
+            ReservationResultDto entity = await _reservationService.GetById(id);
 
             if (entity == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            return Ok(new Response<Reservation>(false, "", entity));
+            return Ok(new Response<ReservationResultDto>(false, "", entity));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetReservations()
         {
-            List<Reservation> reservations = (await _unitOfWork.Reservations.GetAll()).ToList();
+            List<ReservationResultDto> reservations = (await _reservationService.GetAll()).ToList();
 
             if (reservations == null)
             {
                 return BadRequest(new Response<string>(true, "Could not find record", null));
             }
 
-            return Ok(new Response<IEnumerable<Reservation>>(false, "", reservations));
+            return Ok(new Response<IEnumerable<ReservationResultDto>>(false, "", reservations));
         }
 
         [HttpDelete("{id}")]
@@ -94,15 +80,7 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Reservation entity = await _unitOfWork.Reservations.GetBy(x => x.Id == id);
-
-            if (entity == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            _unitOfWork.Reservations.Delete(entity);
-            await _unitOfWork.SaveChangesAsync();
+            await _reservationService.Delete(id);
 
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
         }

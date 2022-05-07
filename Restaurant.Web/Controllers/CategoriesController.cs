@@ -3,16 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Categories;
 using Restaurant.Services.Loggers;
+using Restaurant.Mapping.Models.Categories;
 using Restaurant.Web.Controllers.Common;
-using Restaurant.Web.Models.Request.Categories;
 using Restaurant.Web.Models.Response;
+using Restaurant.Services.Categories;
 
 namespace Restaurant.Web.Controllers
 {
     public class CategoriesController : BaseController
     {
-        public CategoriesController(IUnitOfWork unitOfWork, ILoggingService loggingService, IMapper mapper): base(unitOfWork, loggingService, mapper)
+        private readonly ICategoryService _categoryService;
+
+        public CategoriesController(ICategoryService categoryService)
         {
+            _categoryService = categoryService;
         }
 
         [HttpPost("create")]
@@ -23,13 +27,7 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Category entity = _mapper.Map<Category>(input);
-
-            await _unitOfWork.Categories.Create(entity);
-
-            await _unitOfWork.SaveChangesAsync();
-
-            await _loggingService.LogOnCreate("Categories");
+            await _categoryService.Create(input);
 
             return Ok(new Response<String>(false, null, "Successfully created category"));
         }
@@ -41,17 +39,8 @@ namespace Restaurant.Web.Controllers
             {
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
+            await _categoryService.Update(id, input);
 
-            Category entity = _mapper.Map<Category>(input);
-
-            input.Id = id;
-
-            _unitOfWork.Categories.Update(id, entity);
-
-            await _unitOfWork.SaveChangesAsync();
-
-            await _loggingService.LogOnCreate("Categories");
-            
             return Ok(new Response<String>(false, null, "Successfully updated category"));
         }
 
@@ -63,27 +52,17 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Category entity = await _unitOfWork.Categories.GetBy(x => x.Id == id);
+            CategoryResultDto result = await _categoryService.GetById(id);
 
-            if (entity == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            return Ok(new Response<Category>(false, "", entity));
+            return Ok(new Response<CategoryResultDto>(false, "", result));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            List<Category> catgories = (await _unitOfWork.Categories.GetAll()).ToList();
+            List<CategoryResultDto> categories = (await _categoryService.GetAll()).ToList();
 
-            if (catgories == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            return Ok(new Response<IEnumerable<Category>>(false, "", catgories));
+            return Ok(new Response<IEnumerable<CategoryResultDto>>(false, "", categories));
         }
 
         [HttpDelete("{id}")]
@@ -94,15 +73,7 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Category entity = await _unitOfWork.Categories.GetBy(x => x.Id == id);
-
-            if (entity == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            _unitOfWork.Categories.Delete(entity);
-            await _unitOfWork.SaveChangesAsync();
+            await _categoryService.Delete(id);
 
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
         }

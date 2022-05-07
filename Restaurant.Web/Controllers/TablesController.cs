@@ -1,18 +1,18 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Restaurant.Data.Common.Persistance;
-using Restaurant.Data.Entities.Tables;
-using Restaurant.Services.Loggers;
+﻿using Microsoft.AspNetCore.Mvc;
+using Restaurant.Mapping.Models.Tables;
 using Restaurant.Web.Controllers.Common;
-using Restaurant.Web.Models.Request.Tables;
 using Restaurant.Web.Models.Response;
+using Restaurant.Services.Tables;
 
 namespace Restaurant.Web.Controllers
 {
     public class TablesController : BaseController
     {
-        public TablesController(IUnitOfWork unitOfWork, ILoggingService loggingService, IMapper mapper) : base(unitOfWork, loggingService, mapper)
+        private readonly ITableService _tableService;
+
+        public TablesController(ITableService tableService)
         {
+            _tableService = tableService;
         }
 
         [HttpPost("create")]
@@ -23,13 +23,7 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            Table entity = _mapper.Map<Table>(input);
-
-            await _unitOfWork.Tables.Create(entity);
-
-            await _unitOfWork.SaveChangesAsync();
-            
-            await _loggingService.LogOnCreate("Tables");
+            await _tableService.Create(input);
 
             return Ok(new Response<String>(false, null, "Successfully created Table"));
         }
@@ -42,16 +36,8 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            input.Id = id;
+            await _tableService.Update(id, input);
 
-            Table entity = _mapper.Map<Table>(input);
-
-            _unitOfWork.Tables.Update(id, entity);
-
-            await _unitOfWork.SaveChangesAsync();
-
-            await _loggingService.LogOnCreate("Tables");
-            
             return Ok(new Response<String>(false, null, "Successfully updated Table"));
         }
 
@@ -63,27 +49,17 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Table entity = await _unitOfWork.Tables.GetBy(x => x.Id == id);
+            TableResultDto entity = await _tableService.GetById(id);
 
-            if (entity == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            return Ok(new Response<Table>(false, "", entity));
+            return Ok(new Response<TableResultDto>(false, "", entity));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetTables()
         {
-            List<Table> catgories = (await _unitOfWork.Tables.GetAll()).ToList();
+            List<TableResultDto> tables = (await _tableService.GetAll()).ToList();
 
-            if (catgories == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            return Ok(new Response<IEnumerable<Table>>(false, "", catgories));
+            return Ok(new Response<IEnumerable<TableResultDto>>(false, "", tables));
         }
 
         [HttpDelete("{id}")]
@@ -94,15 +70,7 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Id should not be null", null));
             }
 
-            Table entity = await _unitOfWork.Tables.GetBy(x => x.Id == id);
-
-            if (entity == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            _unitOfWork.Tables.Delete(entity);
-            await _unitOfWork.SaveChangesAsync();
+            await _tableService.Delete(id);
 
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
         }

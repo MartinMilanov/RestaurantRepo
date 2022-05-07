@@ -807,11 +807,26 @@
           "bin/placeholder/Restaurant.Data.dll": {}
         }
       },
+      "Restaurant.Mapping/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "AutoMapper": "11.0.1",
+          "Restaurant.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Restaurant.Mapping.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Restaurant.Mapping.dll": {}
+        }
+      },
       "Restaurant.Services/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Restaurant.Data": "1.0.0"
+          "Restaurant.Data": "1.0.0",
+          "Restaurant.Mapping": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Restaurant.Services.dll": {}
@@ -2292,6 +2307,11 @@
       "type": "project",
       "path": "../Restaurant.Data/Restaurant.Data.csproj",
       "msbuildProject": "../Restaurant.Data/Restaurant.Data.csproj"
+    },
+    "Restaurant.Mapping/1.0.0": {
+      "type": "project",
+      "path": "../Restaurant.Mapping/Restaurant.Mapping.csproj",
+      "msbuildProject": "../Restaurant.Mapping/Restaurant.Mapping.csproj"
     },
     "Restaurant.Services/1.0.0": {
       "type": "project",

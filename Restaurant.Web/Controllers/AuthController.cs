@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Restaurant.Data.Entities.Auth;
+using Restaurant.Mapping.Models.Auth;
 using Restaurant.Services.Settings;
-using Restaurant.Web.Models.Request.Auth;
 using Restaurant.Web.Models.Response;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
