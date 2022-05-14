@@ -1,10 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Restaurant.Data.Common.Persistance;
-using Restaurant.Data.Entities.Bills;
-using Restaurant.Data.Entities.FoodBills;
+﻿using Microsoft.AspNetCore.Mvc;
 using Restaurant.Services.FoodBills;
-using Restaurant.Services.Loggers;
 using Restaurant.Mapping.Models.Bills;
 using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Response;
@@ -32,16 +27,6 @@ namespace Restaurant.Web.Controllers
             }
 
             await _billService.Create(input);
-
-            //if (input.FoodData != null)
-            //{
-            //    foreach (var food in input.FoodData)
-            //    {
-            //        food.BillId = entity.Id;
-            //    }
-
-            //    await _unitOfWork.FoodBills.CreateBatch(input.FoodData.Select(x => _mapper.Map<FoodBill>(x)));
-            //}
 
             return Ok(new Response<String>(false, null, "Successfully created Bill"));
         }
@@ -71,14 +56,6 @@ namespace Restaurant.Web.Controllers
 
             await _billService.Update(id, input);
 
-            //Bill mappedInput = _mapper.Map<Bill>(input);
-
-            //IEnumerable<FoodBill>? foodBillsMapped = input?.FoodData?.Select(x => _mapper.Map<FoodBill>(x));
-
-            //await _foodBillService.UpdateFoodsAfterBillUpdate(id, foodBillsMapped);
-
-            //_unitOfWork.Bills.Update(id, mappedInput);
-
             return Ok(new Response<string>(false, "", "Succesfully update bill"));
         }
 
@@ -99,9 +76,6 @@ namespace Restaurant.Web.Controllers
             }
 
             await _billService.Delete(id);
-
-            //_unitOfWork.FoodBills.DeleteAllWhere(x => x.BillId == id);
-            //_unitOfWork.Bills.Delete(entity);
 
             return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
         }

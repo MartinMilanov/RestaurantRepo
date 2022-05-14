@@ -20,7 +20,12 @@
       "ProjectGuid": "bb4b15d2-9b4f-4abf-a3d0-fb8386761109",
       "DisplayName": "Restaurant.Services",
       "ColorIndex": 2
+    },
+    "17017c71-c662-4063-aaa6-f611f33c0d60": {
+      "ProjectGuid": "17017c71-c662-4063-aaa6-f611f33c0d60",
+      "DisplayName": "Restaurant.Mapping",
+      "ColorIndex": 3
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 4
 }

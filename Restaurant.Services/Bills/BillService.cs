@@ -2,7 +2,9 @@
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Common.Persistance.Repositories;
 using Restaurant.Data.Entities.Bills;
+using Restaurant.Data.Entities.FoodBills;
 using Restaurant.Mapping.Models.Bills;
+using Restaurant.Services.FoodBills;
 using Restaurant.Services.Loggers;
 
 namespace Restaurant.Services.Bills
@@ -13,12 +15,14 @@ namespace Restaurant.Services.Bills
         private readonly IMapper _mapper;
         private readonly ILoggingService _loggingService;
         private readonly BillsRepository _billRepo;
+        private readonly FoodBillService _foodBillService;
 
-        public BillService(IUnitOfWork unitOfWork, IMapper mapper, ILoggingService loggingService)
+        public BillService(IUnitOfWork unitOfWork, IMapper mapper, ILoggingService loggingService, FoodBillService foodBillService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _loggingService = loggingService;
+            _foodBillService = foodBillService;
             _billRepo = unitOfWork.Bills;
         }
 
@@ -29,6 +33,16 @@ namespace Restaurant.Services.Bills
             await _billRepo.Create(entity);
 
             //Create the FoodBills stuff
+
+            if (input.FoodData != null)
+            {
+                foreach (var food in input.FoodData)
+                {
+                    food.BillId = entity.Id;
+                }
+
+                await _unitOfWork.FoodBills.CreateBatch(input.FoodData.Select(x => _mapper.Map<FoodBill>(x)));
+            }
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -45,6 +59,8 @@ namespace Restaurant.Services.Bills
             }
 
             _billRepo.Delete(entityToDelete);
+
+            _unitOfWork.FoodBills.DeleteAllWhere(x => x.BillId == id);
 
             await _unitOfWork.SaveChangesAsync();
         }
@@ -73,6 +89,14 @@ namespace Restaurant.Services.Bills
             var entity = _mapper.Map<Bill>(input);
 
             _billRepo.Update(id, entity);
+
+            Bill mappedInput = _mapper.Map<Bill>(input);
+
+            IEnumerable<FoodBill>? foodBillsMapped = input?.FoodData?.Select(x => _mapper.Map<FoodBill>(x));
+
+            await _foodBillService.UpdateFoodsAfterBillUpdate(id, foodBillsMapped);
+
+            _unitOfWork.Bills.Update(id, mappedInput);
 
             await _unitOfWork.SaveChangesAsync();
 
