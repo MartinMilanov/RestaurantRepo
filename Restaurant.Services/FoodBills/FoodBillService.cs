@@ -12,7 +12,7 @@ namespace Restaurant.Services.FoodBills
             _unitOfWork = unitOfWork;
         }
 
-        public async Task UpdateFoodsAfterBillUpdate(string billId, IEnumerable<FoodBill> foodBills)
+        public async Task UpdateFoodsAfterBillUpdate(string billId, List<FoodBill> foodBills)
         {
             var foodBillRepo = _unitOfWork.FoodBills;
 

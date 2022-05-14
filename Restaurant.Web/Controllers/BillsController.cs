@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Restaurant.Services.FoodBills;
 using Restaurant.Mapping.Models.Bills;
 using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Response;
@@ -9,12 +8,10 @@ namespace Restaurant.Web.Controllers
 {
     public class BillsController : BaseController
     {
-        private readonly IFoodBillService _foodBillService;
         private readonly IBillService _billService;
 
-        public BillsController(IFoodBillService foodBillService, IBillService billService)
+        public BillsController(IBillService billService)
         {
-            _foodBillService = foodBillService;
             _billService = billService;
         }
 

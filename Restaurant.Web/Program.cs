@@ -6,8 +6,14 @@ using Restaurant.Data;
 using Restaurant.Data.Common;
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Entities.Auth;
+using Restaurant.Mapping.Settings;
+using Restaurant.Services.Bills;
+using Restaurant.Services.Categories;
 using Restaurant.Services.FoodBills;
+using Restaurant.Services.Foods;
 using Restaurant.Services.Loggers;
+using Restaurant.Services.Reservations;
+using Restaurant.Services.Tables;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,8 +53,13 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IFoodBillService, FoodBillService>();
 builder.Services.AddTransient<ILoggingService, LoggingService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IFoodService, FoodService>();
+builder.Services.AddTransient<IBillService, BillService>();
+builder.Services.AddTransient<IReservationService, ReservationService>();
+builder.Services.AddTransient<ITableService, TableService>();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(MapperSettings.CurrentDomainAssemblies);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

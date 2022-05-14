@@ -812,6 +812,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "AutoMapper": "11.0.1",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "11.0.0",
           "Restaurant.Data": "1.0.0"
         },
         "compile": {
@@ -2321,11 +2322,10 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "AutoMapper >= 11.0.1",
-      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.4",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.2",
       "Restaurant.Data >= 1.0.0",
+      "Restaurant.Mapping >= 1.0.0",
       "Restaurant.Services >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
@@ -2364,6 +2364,9 @@
             "C:\\Users\\Marto\\source\\repos\\Restaurant.Web\\Restaurant.Data\\Restaurant.Data.csproj": {
               "projectPath": "C:\\Users\\Marto\\source\\repos\\Restaurant.Web\\Restaurant.Data\\Restaurant.Data.csproj"
             },
+            "C:\\Users\\Marto\\source\\repos\\Restaurant.Web\\Restaurant.Mapping\\Restaurant.Mapping.csproj": {
+              "projectPath": "C:\\Users\\Marto\\source\\repos\\Restaurant.Web\\Restaurant.Mapping\\Restaurant.Mapping.csproj"
+            },
             "C:\\Users\\Marto\\source\\repos\\Restaurant.Web\\Restaurant.Services\\Restaurant.Services.csproj": {
               "projectPath": "C:\\Users\\Marto\\source\\repos\\Restaurant.Web\\Restaurant.Services\\Restaurant.Services.csproj"
             }
@@ -2380,14 +2383,6 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
-          "AutoMapper": {
-            "target": "Package",
-            "version": "[11.0.1, )"
-          },
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-            "target": "Package",
-            "version": "[11.0.0, )"
-          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[6.0.4, )"

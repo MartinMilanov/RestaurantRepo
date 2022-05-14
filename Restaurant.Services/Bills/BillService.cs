@@ -15,9 +15,9 @@ namespace Restaurant.Services.Bills
         private readonly IMapper _mapper;
         private readonly ILoggingService _loggingService;
         private readonly BillsRepository _billRepo;
-        private readonly FoodBillService _foodBillService;
+        private readonly IFoodBillService _foodBillService;
 
-        public BillService(IUnitOfWork unitOfWork, IMapper mapper, ILoggingService loggingService, FoodBillService foodBillService)
+        public BillService(IUnitOfWork unitOfWork, IMapper mapper, ILoggingService loggingService, IFoodBillService foodBillService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -92,7 +92,7 @@ namespace Restaurant.Services.Bills
 
             Bill mappedInput = _mapper.Map<Bill>(input);
 
-            IEnumerable<FoodBill>? foodBillsMapped = input?.FoodData?.Select(x => _mapper.Map<FoodBill>(x));
+            List<FoodBill>? foodBillsMapped = input?.FoodData?.Select(x => _mapper.Map<FoodBill>(x)).ToList();
 
             await _foodBillService.UpdateFoodsAfterBillUpdate(id, foodBillsMapped);
 

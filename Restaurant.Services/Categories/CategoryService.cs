@@ -68,9 +68,11 @@ namespace Restaurant.Services.Categories
 
         public async Task Update(string id, CategoryUpdateDto input)
         {
-            var entity = _mapper.Map<Category>(input);
+            var newData = _mapper.Map<Category>(input);
 
-            _catRepo.Update(id, entity);
+            newData.Id = id;
+
+            _catRepo.Update(id, newData);
 
             await _unitOfWork.SaveChangesAsync();
 

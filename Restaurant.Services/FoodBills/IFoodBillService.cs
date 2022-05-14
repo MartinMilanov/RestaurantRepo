@@ -4,6 +4,6 @@ namespace Restaurant.Services.FoodBills
 {
     public interface IFoodBillService
     {
-        Task UpdateFoodsAfterBillUpdate(string billId, IEnumerable<FoodBill> foodBills);
+        Task UpdateFoodsAfterBillUpdate(string billId, List<FoodBill> foodBills);
     }
 }
