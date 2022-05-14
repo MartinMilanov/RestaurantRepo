@@ -2,7 +2,7 @@
 
 namespace Restaurant.Data.Common.Persistance
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly RestaurantDbContext _context;
 
@@ -16,6 +16,7 @@ namespace Restaurant.Data.Common.Persistance
             Reservations = new ReservationRepository(context);
             Bills = new BillsRepository(context);
             FoodBills = new FoodBillRepository(context);
+            Users = new UserRepository(context);
         }
 
         public FoodRepository Foods {get;set;}
@@ -29,6 +30,22 @@ namespace Restaurant.Data.Common.Persistance
         public BillsRepository Bills { get; set; }
 
         public FoodBillRepository FoodBills { get; set; }
+
+        public UserRepository Users { get; set; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+        }
 
         public async Task SaveChangesAsync()
         {

@@ -9,6 +9,7 @@ namespace Restaurant.Mapping.Models.Foods
 
         [Required]
         public double Price { get; set; }
-        
+
+        public string CategoryId { get; set; }
     }
 }

@@ -68,14 +68,11 @@ namespace Restaurant.Services.Tables
 
         public async Task Update(string id, TableUpdateDto input)
         {
-            var entity = _mapper.Map<Table>(input);
+            var newData = _mapper.Map<Table>(input);
 
-            if (entity == null)
-            {
-                throw new Exception("Table does not exist");
-            }
+            newData.Id = id;
 
-            _tableRepo.Update(id, entity);
+            _tableRepo.Update(id, newData);
 
             await _unitOfWork.SaveChangesAsync();
 

@@ -4,7 +4,6 @@ namespace Restaurant.Mapping.Models.Reservations
 {
     public class ReservationUpdateDto
     {
-        public string? Id { get; set; }
         [Required]
         public string ReserveeName { get; set; }
         [Required]

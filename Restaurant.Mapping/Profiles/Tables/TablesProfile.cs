@@ -24,10 +24,6 @@ namespace Restaurant.Mapping.Profiles.Tables
 
             CreateMap<TableUpdateDto, Table>()
                 .ForMember(
-                    dest => dest.Id,
-                    opt => opt.MapFrom(src => src.Id)
-                )
-                .ForMember(
                     dest => dest.Seats,
                     opt => opt.MapFrom(src => src.Seats)
                 )
@@ -35,6 +31,8 @@ namespace Restaurant.Mapping.Profiles.Tables
                     dest => dest.TableNumber,
                     opt => opt.MapFrom(src => src.TableNumber)
                 );
+
+            CreateMap<Table, TableResultDto>();
         }
     }
 }

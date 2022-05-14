@@ -10,6 +10,7 @@ namespace Restaurant.Data.Common.Persistance
         ReservationRepository Reservations { get; }
         BillsRepository Bills { get; }
         FoodBillRepository FoodBills { get; }  
+        UserRepository Users { get; }
         Task SaveChangesAsync();
     }
 }

@@ -42,6 +42,7 @@ namespace Restaurant.Data
             new BillsConfiguration().Configure(builder.Entity<Bill>());
             new CategoriesConfiguration().Configure(builder.Entity<Category>());
             new ReservationsConfiguration().Configure(builder.Entity<Reservation>());
+
         }
     }
 }

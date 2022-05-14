@@ -36,10 +36,6 @@ namespace Restaurant.Mapping.Profiles.Reservations
 
             CreateMap<ReservationUpdateDto, Reservation>()
                 .ForMember(
-                    dest => dest.Id,
-                    opt => opt.MapFrom(src => src.Id)
-                )
-                .ForMember(
                     dest => dest.PeopleCount,
                     opt => opt.MapFrom(src => src.PeopleCount)
                 )

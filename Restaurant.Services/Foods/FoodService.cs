@@ -25,8 +25,10 @@ namespace Restaurant.Services.Foods
 
         public async Task Create(FoodCreateDto input)
         {
-            await ThrowIfFoodWithSameNameExists(input.Name);
-            
+            await ThrowIfFoodWithSameNameExists(input.Name, null);
+
+            await ThrowIfCategoryDoesNotExist(input.CategoryId);
+
             var entity = _mapper.Map<Food>(input);
 
             await _foodRepo.Create(entity);
@@ -59,9 +61,9 @@ namespace Restaurant.Services.Foods
 
         public IEnumerable<FoodResultDto> GetAll(Expression<Func<Food, bool>> predicate)
         {
-            var result =  _foodRepo
-                .GetAll(predicate:predicate)
-                .Select(x=>_mapper.Map<FoodResultDto>(x))
+            var result = _foodRepo
+                .GetAll(predicate: predicate)
+                .Select(x => _mapper.Map<FoodResultDto>(x))
                 .ToList();
 
             return result;
@@ -81,9 +83,18 @@ namespace Restaurant.Services.Foods
 
         public async Task Update(string id, FoodUpdateDto input)
         {
-            await ThrowIfFoodWithSameNameExists(input.Name);
+            await ThrowIfFoodWithSameNameExists(input.Name, id);
+
+            await ThrowIfCategoryDoesNotExist(input.CategoryId);
 
             var entity = _mapper.Map<Food>(input);
+
+            entity.Id = id;
+
+            if (string.IsNullOrWhiteSpace(input.CategoryId))
+            {
+                entity.CategoryId = null;
+            }
 
             _foodRepo.Update(id, entity);
 
@@ -92,13 +103,23 @@ namespace Restaurant.Services.Foods
             await _loggingService.LogOnUpdate("Foods");
         }
 
-        private async Task ThrowIfFoodWithSameNameExists(string name)
+        private async Task ThrowIfFoodWithSameNameExists(string name, string id)
         {
-           var foodExists = await _foodRepo.Exists(x => x.Name == name);
+            var foodExists = await _foodRepo.Exists(x => x.Name == name && x.Id != id);
 
             if (foodExists == true)
             {
                 throw new Exception("Food with such name already exists");
+            }
+        }
+
+        private async Task ThrowIfCategoryDoesNotExist(string id)
+        {
+            var category = string.IsNullOrWhiteSpace(id) ? true : await _unitOfWork.Categories.Exists(x => x.Id == id);
+
+            if (category == false)
+            {
+                throw new Exception("Catgory with such id does not exists and cant be added to food");
             }
         }
     }

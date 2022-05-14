@@ -61,6 +61,10 @@ namespace Restaurant.Services.Reservations
         {
             var result = await _reservRepo.GetBy(x => x.Id == id);
 
+            var createdBy = await _unitOfWork.Users.GetBy(x=>x.Id == result.CreatedById);
+
+            result.CreatedBy = createdBy;
+
             if (result == null)
             {
                 throw new Exception("Could not find reservation");
@@ -73,9 +77,20 @@ namespace Restaurant.Services.Reservations
         {
             await ThrowIfReservationDoesntMeetCriteria(input.TableId, id, input.Date);
 
-            var entity = _mapper.Map<Reservation>(input);
+            Reservation reservation = await _reservRepo.GetBy(x => x.Id == id);
 
-            _reservRepo.Update(id,entity);
+            if(reservation== null)
+            {
+                throw new Exception("Cannot find reservation with this id");
+            }
+
+            reservation.Date = input.Date;
+            reservation.CreatedById = input.CreatedById;
+            reservation.ReserveeName = input.ReserveeName;
+            reservation.PeopleCount = input.PeopleCount;
+            reservation.TableId = input.TableId;
+
+            _reservRepo.Update(id, reservation);
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -99,9 +114,9 @@ namespace Restaurant.Services.Reservations
                 && x.Date.Day == timeOfReservation.Day
                 && x.Date.Month == timeOfReservation.Month
                 && x.Date.Year == timeOfReservation.Year
-                && (x.Date.Hour + 2 > timeOfReservation.Hour || x.Date.Hour - 2 < timeOfReservation.Hour));
+                && x.Date.Hour == timeOfReservation.Hour);
 
-            if (!tableCriteria)
+            if (tableCriteria)
             {
                 throw new Exception("This table has a reservation too close to the requested one");
             }
