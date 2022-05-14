@@ -49,19 +49,17 @@ namespace Restaurant.Web.Controllers
                 return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
             }
 
-            input.Id = id;
-
             await _billService.Update(id, input);
 
-            return Ok(new Response<string>(false, "", "Succesfully update bill"));
+            return Ok(new Response<string>(false, "", "Succesfully updated bill"));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetBills()
         {
-            List<BillResultDto> result = (await _billService.GetAll()).ToList();
+            List<BillListDto> result = (await _billService.GetAll()).ToList();
 
-            return Ok(new Response<IEnumerable<BillResultDto>>(false, "", result));
+            return Ok(new Response<IEnumerable<BillListDto>>(false, "", result));
         }
 
         [HttpDelete("{id}")]

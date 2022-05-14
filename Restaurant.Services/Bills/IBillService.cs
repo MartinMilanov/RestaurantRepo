@@ -1,5 +1,4 @@
-﻿using Restaurant.Data.Entities.Bills;
-using Restaurant.Mapping.Models.Bills;
+﻿using Restaurant.Mapping.Models.Bills;
 
 namespace Restaurant.Services.Bills
 {
@@ -11,7 +10,7 @@ namespace Restaurant.Services.Bills
 
         Task<BillResultDto> GetById(string id);
 
-        Task<IEnumerable<BillResultDto>> GetAll();
+        Task<IEnumerable<BillListDto>> GetAll();
 
         Task Delete(string id);
     }

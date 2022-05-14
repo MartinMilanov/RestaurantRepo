@@ -4,7 +4,6 @@ namespace Restaurant.Mapping.Models.Bills
 {
     public class BillUpdateDto
     {
-        public string? Id { get; set; }
         [Required]
         public double Total { get; set; }
         [Required]

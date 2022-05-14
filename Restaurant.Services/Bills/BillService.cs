@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Common.Persistance.Repositories;
 using Restaurant.Data.Entities.Bills;
@@ -32,8 +33,6 @@ namespace Restaurant.Services.Bills
 
             await _billRepo.Create(entity);
 
-            //Create the FoodBills stuff
-
             if (input.FoodData != null)
             {
                 foreach (var food in input.FoodData)
@@ -65,9 +64,13 @@ namespace Restaurant.Services.Bills
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<BillResultDto>> GetAll()
+        public async Task<IEnumerable<BillListDto>> GetAll()
         {
-            var result = (await _billRepo.GetAll()).Select(x => _mapper.Map<BillResultDto>(x));
+            var result = _billRepo.GetAll()
+                .Include(x=>x.Table)
+                .Include(x=>x.CreatedBy)
+                .ToList()
+                .Select(x => _mapper.Map<BillListDto>(x));
 
             return result.ToList();
         }
@@ -86,17 +89,20 @@ namespace Restaurant.Services.Bills
 
         public async Task Update(string id, BillUpdateDto input)
         {
-            var entity = _mapper.Map<Bill>(input);
+            var entity = await _billRepo.GetBy(x => x.Id == id);
+
+            entity.TableId = input.TableId;
+            entity.Total = input.Total;
+            entity.IsClosed = input.IsClosed;
+            entity.CreatedById = input.CreatedById;
 
             _billRepo.Update(id, entity);
-
-            Bill mappedInput = _mapper.Map<Bill>(input);
 
             List<FoodBill>? foodBillsMapped = input?.FoodData?.Select(x => _mapper.Map<FoodBill>(x)).ToList();
 
             await _foodBillService.UpdateFoodsAfterBillUpdate(id, foodBillsMapped);
 
-            _unitOfWork.Bills.Update(id, mappedInput);
+            _billRepo.Update(id, entity);
 
             await _unitOfWork.SaveChangesAsync();
 

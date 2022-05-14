@@ -52,7 +52,7 @@ namespace Restaurant.Services.Reservations
 
         public async Task<IEnumerable<ReservationResultDto>> GetAll()
         {
-            var result = (await _reservRepo.GetAll()).Select(x => _mapper.Map<ReservationResultDto>(x));
+            var result = (_reservRepo.GetAll().ToList()).Select(x => _mapper.Map<ReservationResultDto>(x));
 
             return result.ToList();
         }

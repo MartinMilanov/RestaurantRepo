@@ -49,7 +49,7 @@ namespace Restaurant.Services.Categories
 
         public async Task<IEnumerable<CategoryResultDto>> GetAll()
         {
-            var result = (await _catRepo.GetAll()).Select(x => _mapper.Map<CategoryResultDto>(x));
+            var result = (_catRepo.GetAll().ToList()).Select(x => _mapper.Map<CategoryResultDto>(x));
 
             return result.ToList();
         }

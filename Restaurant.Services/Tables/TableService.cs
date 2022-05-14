@@ -49,7 +49,7 @@ namespace Restaurant.Services.Tables
 
         public async Task<IEnumerable<TableResultDto>> GetAll()
         {
-            var result = (await _tableRepo.GetAll()).Select(x => _mapper.Map<TableResultDto>(x));
+            var result = (_tableRepo.GetAll().ToList()).Select(x => _mapper.Map<TableResultDto>(x));
 
             return result.ToList();
         }

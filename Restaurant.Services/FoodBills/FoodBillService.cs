@@ -32,7 +32,7 @@ namespace Restaurant.Services.FoodBills
 
             List<string> latestFoodIds = foodBills.Select(lfb => lfb.FoodId).ToList();
 
-            foodBillRepo.DeleteAllWhere(fb => latestFoodIds.Any(id => id == fb.FoodId) == false);
+            foodBillRepo.DeleteAllWhere(fb => latestFoodIds.Any(id => id == fb.FoodId) == false && fb.BillId == billId);
 
             await _unitOfWork.SaveChangesAsync();
         }

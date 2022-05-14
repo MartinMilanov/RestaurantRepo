@@ -1,14 +1,12 @@
-﻿using Restaurant.Mapping.Models.Foods;
-
-namespace Restaurant.Mapping.Models.Bills
+﻿namespace Restaurant.Mapping.Models.Bills
 {
-    public class BillResultDto
+    public class BillListDto
     {
         public string Id { get; set; }
         public double Total { get; set; }
         public DateTime Closed { get; set; }
         public bool IsClosed { get; set; }
         public int TableNumber { get; set; }
-        public List<FoodBillListDto> FoodsOrdered { get; set; }
+        public string CretedBy { get; set; }
     }
 }

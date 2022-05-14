@@ -54,7 +54,7 @@ namespace Restaurant.Services.Foods
 
         public async Task<IEnumerable<FoodResultDto>> GetAll()
         {
-            var result = (await _foodRepo.GetAll()).Select(x => _mapper.Map<FoodResultDto>(x));
+            var result = (_foodRepo.GetAll().ToList()).Select(x => _mapper.Map<FoodResultDto>(x));
 
             return result.ToList();
         }

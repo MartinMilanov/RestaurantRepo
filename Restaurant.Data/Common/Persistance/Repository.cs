@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Restaurant.Data.Common.Persistance
@@ -32,9 +33,9 @@ namespace Restaurant.Data.Common.Persistance
             return await _context.Set<TEntity>().AnyAsync(predicate);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return await _context.Set<TEntity>().ToListAsync();
+            return _context.Set<TEntity>().AsQueryable();
         }
 
         public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
