@@ -50,9 +50,43 @@ namespace Restaurant.Services.Reservations
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ReservationResultDto>> GetAll()
+        public async Task<IEnumerable<ReservationResultDto>> GetAll(ReservationPaginationDto filters)
         {
-            var result = (_reservRepo.GetAll().ToList()).Select(x => _mapper.Map<ReservationResultDto>(x));
+            var query = _reservRepo.GetAll().Include(x=>x.CreatedBy).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filters.ReserveeName))
+            {
+                query = query.Where(x => x.ReserveeName == filters.ReserveeName);
+            }
+
+            if (filters.Date != null)
+            {
+                query = query.Where(x => x.Date == filters.Date);
+            }
+
+            if (filters.OrderBy == "ReserveeName")
+            {
+                query = query.OrderBy(x => x.ReserveeName);
+            }
+
+            if (filters.OrderBy == "PeopleCount")
+            {
+                query = query.OrderBy(x => x.PeopleCount);
+            }
+
+            if (filters.OrderBy == "Date")
+            {
+                query = query.OrderBy(x => x.Date);
+            }
+
+            if (filters.OrderBy == "CreatedByName")
+            {
+                query = query.OrderBy(x => x.CreatedBy.UserName);
+            }
+
+            query = query.Skip(filters.Skip).Take(filters.Take);
+
+            var result = query.Select(x => _mapper.Map<ReservationResultDto>(x));
 
             return result.ToList();
         }

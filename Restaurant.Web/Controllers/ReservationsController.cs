@@ -60,9 +60,9 @@ namespace Restaurant.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetReservations()
+        public async Task<IActionResult> GetReservations([FromQuery] ReservationPaginationDto filters)
         {
-            List<ReservationResultDto> reservations = (await _reservationService.GetAll()).ToList();
+            List<ReservationResultDto> reservations = (await _reservationService.GetAll(filters)).ToList();
 
             if (reservations == null)
             {

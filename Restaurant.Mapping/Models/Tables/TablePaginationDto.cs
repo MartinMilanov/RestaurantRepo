@@ -1,16 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Restaurant.Mapping.Models.Common;
 
 namespace Restaurant.Mapping.Models.Tables
 {
-    public class TablePaginationDto
+    public class TablePaginationDto : PaginationDto
     {
-        [Required]
-        public int Skip { get; set; }
-        [Required]
-        public int Take { get; set; }
         public int TableNumer { get; set; }
         public int Seats { get; set; }
-        [Required]
-        public string OrderBy { get; set; }
     }
 }

@@ -51,18 +51,18 @@ namespace Restaurant.Services.Tables
         {
             var query = _tableRepo.GetAll();
 
-            if(filters.TableNumer != 0)
+            if (filters.TableNumer != 0)
             {
-                query = query.Where(x=>x.TableNumber == filters.TableNumer);
+                query = query.Where(x => x.TableNumber == filters.TableNumer);
             }
 
-            if(filters.Seats != 0)
+            if (filters.Seats != 0)
             {
                 query = query.Where(x => x.Seats == filters.Seats);
 
             }
 
-            if(filters.OrderBy == "TableNumber")
+            if (filters.OrderBy == "TableNumber")
             {
                 query = query.OrderBy(x => x.TableNumber);
             }
