@@ -55,9 +55,9 @@ namespace Restaurant.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTables()
+        public async Task<IActionResult> GetTables([FromQuery]TablePaginationDto filters)
         {
-            List<TableResultDto> tables = (await _tableService.GetAll()).ToList();
+            List<TableResultDto> tables = (await _tableService.GetAll(filters)).ToList();
 
             return Ok(new Response<IEnumerable<TableResultDto>>(false, "", tables));
         }

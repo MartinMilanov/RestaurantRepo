@@ -33,6 +33,7 @@ namespace Restaurant.Services.Loggers
             };
 
             await _context.AddAsync(log);
+            await _context.SaveChangesAsync();
         }
     }
 }
