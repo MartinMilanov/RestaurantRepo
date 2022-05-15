@@ -10,7 +10,7 @@ namespace Restaurant.Services.Categories
 
         Task<CategoryResultDto> GetById(string id);
 
-        Task<IEnumerable<CategoryResultDto>> GetAll();
+        Task<IEnumerable<CategoryResultDto>> GetAll(CategoryPaginationDto filters);
 
         Task Delete(string id);
     }

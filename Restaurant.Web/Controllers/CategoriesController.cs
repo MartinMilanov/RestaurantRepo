@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Restaurant.Data.Common.Persistance;
-using Restaurant.Data.Entities.Categories;
-using Restaurant.Services.Loggers;
+﻿using Microsoft.AspNetCore.Mvc;
 using Restaurant.Mapping.Models.Categories;
 using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Response;
@@ -58,9 +54,9 @@ namespace Restaurant.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetCategories([FromQuery] CategoryPaginationDto filters)
         {
-            List<CategoryResultDto> categories = (await _categoryService.GetAll()).ToList();
+            List<CategoryResultDto> categories = (await _categoryService.GetAll(filters)).ToList();
 
             return Ok(new Response<IEnumerable<CategoryResultDto>>(false, "", categories));
         }

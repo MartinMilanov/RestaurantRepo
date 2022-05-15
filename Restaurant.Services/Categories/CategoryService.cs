@@ -47,9 +47,23 @@ namespace Restaurant.Services.Categories
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<CategoryResultDto>> GetAll()
+        public async Task<IEnumerable<CategoryResultDto>> GetAll(CategoryPaginationDto filters)
         {
-            var result = (_catRepo.GetAll().ToList()).Select(x => _mapper.Map<CategoryResultDto>(x));
+            var query = _catRepo.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(filters.Name))
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(filters.Name.ToLower()));
+            }
+
+            if (filters.OrderBy == "Name")
+            {
+                query = query.OrderBy(x => x.Name);
+            }
+
+            query = query.Skip(filters.Skip).Take(filters.Take);
+
+            var result = query.Select(x => _mapper.Map<CategoryResultDto>(x));
 
             return result.ToList();
         }
