@@ -14,6 +14,7 @@ using Restaurant.Services.Foods;
 using Restaurant.Services.Loggers;
 using Restaurant.Services.Reservations;
 using Restaurant.Services.Tables;
+using Restaurant.Web.Middleware;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -70,6 +71,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
