@@ -64,13 +64,47 @@ namespace Restaurant.Services.Bills
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<BillListDto>> GetAll()
+        public async Task<IEnumerable<BillListDto>> GetAll(BillsPaginationDto filters)
         {
-            var result = _billRepo.GetAll()
-                .Include(x=>x.Table)
-                .Include(x=>x.CreatedBy)
-                .ToList()
-                .Select(x => _mapper.Map<BillListDto>(x));
+            var query = _billRepo
+                .GetAll()
+                .Include(x => x.Table)
+                .Include(x => x.CreatedBy)
+                .AsQueryable();
+
+            if (filters.IsClosed != null)
+            {
+                query = query.Where(x=>x.IsClosed == filters.IsClosed);
+            }
+
+            if (filters.TableNumber != 0)
+            {
+                query = query.Where(x => x.Table.TableNumber == filters.TableNumber);
+            }
+
+            if (filters.OrderBy == "Total")
+            {
+                query = query.OrderBy(x => x.Total);
+            }
+
+            if (filters.OrderBy == "Closed")
+            {
+                query = query.OrderBy(x => x.Closed);
+            }
+
+            if (filters.OrderBy == "IsClosed")
+            {
+                query = query.OrderBy(x => x.IsClosed);
+            }
+
+            if (filters.OrderBy == "TableNumber")
+            {
+                query = query.OrderBy(x => x.Table.TableNumber);
+            }
+
+            query = query.Skip(filters.Skip).Take(filters.Take);
+
+            var result = query.Select(x => _mapper.Map<BillListDto>(x));
 
             return result.ToList();
         }
@@ -78,7 +112,7 @@ namespace Restaurant.Services.Bills
         public async Task<BillResultDto> GetById(string id)
         {
             var result = await _billRepo
-                .GetBy(x => x.Id == id,x => x.Table);
+                .GetBy(x => x.Id == id, x => x.Table);
 
             if (result == null)
             {

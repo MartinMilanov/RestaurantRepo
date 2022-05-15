@@ -10,7 +10,7 @@ namespace Restaurant.Services.Bills
 
         Task<BillResultDto> GetById(string id);
 
-        Task<IEnumerable<BillListDto>> GetAll();
+        Task<IEnumerable<BillListDto>> GetAll(BillsPaginationDto filters);
 
         Task Delete(string id);
     }

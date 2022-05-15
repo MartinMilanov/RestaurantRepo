@@ -55,9 +55,9 @@ namespace Restaurant.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBills()
+        public async Task<IActionResult> GetBills([FromQuery] BillsPaginationDto filters)
         {
-            List<BillListDto> result = (await _billService.GetAll()).ToList();
+            List<BillListDto> result = (await _billService.GetAll(filters)).ToList();
 
             return Ok(new Response<IEnumerable<BillListDto>>(false, "", result));
         }

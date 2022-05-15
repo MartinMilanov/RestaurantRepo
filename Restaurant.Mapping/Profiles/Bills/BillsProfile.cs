@@ -66,7 +66,7 @@ namespace Restaurant.Mapping.Profiles.Bills
                     opt => opt.MapFrom(src => src.Total)
                 )
                 .ForMember(
-                    dest => dest.CretedBy,
+                    dest => dest.CreatedBy,
                     opt => opt.MapFrom(src => src.CreatedBy.NormalizedUserName)
                 );
 

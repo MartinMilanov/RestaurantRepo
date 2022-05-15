@@ -7,6 +7,6 @@
         public DateTime Closed { get; set; }
         public bool IsClosed { get; set; }
         public int TableNumber { get; set; }
-        public string CretedBy { get; set; }
+        public string CreatedBy { get; set; }
     }
 }
