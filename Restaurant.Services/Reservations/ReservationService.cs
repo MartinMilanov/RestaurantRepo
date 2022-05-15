@@ -56,7 +56,7 @@ namespace Restaurant.Services.Reservations
 
             if (!string.IsNullOrWhiteSpace(filters.ReserveeName))
             {
-                query = query.Where(x => x.ReserveeName == filters.ReserveeName);
+                query = query.Where(x => x.ReserveeName.ToLower().Contains(filters.ReserveeName.ToLower()));
             }
 
             if (filters.Date != null)

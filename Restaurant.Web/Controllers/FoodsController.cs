@@ -55,9 +55,9 @@ namespace Restaurant.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllFoods()
+        public async Task<IActionResult> GetAllFoods([FromQuery] FoodPaginationDto filters)
         {
-            List<FoodResultDto> foods = (await _foodService.GetAll()).ToList();
+            List<FoodResultDto> foods = (await _foodService.GetAll(filters)).ToList();
 
             return Ok(new Response<IEnumerable<FoodResultDto>>(false, "", foods));
         }

@@ -52,10 +52,34 @@ namespace Restaurant.Services.Foods
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<FoodResultDto>> GetAll()
+        public async Task<IEnumerable<FoodResultDto>> GetAll(FoodPaginationDto filters)
         {
-            var result = (_foodRepo.GetAll().ToList()).Select(x => _mapper.Map<FoodResultDto>(x));
+            var query = _foodRepo.GetAll();
 
+            if (!string.IsNullOrWhiteSpace(filters.Name))
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(filters.Name.ToLower()));
+            }
+
+            if (filters.Price != 0)
+            {
+                query = query.Where(x => x.Price == filters.Price);
+            }
+
+            if (filters.OrderBy == "Name")
+            {
+                query = query.OrderBy(x => x.Name);
+            }
+
+            if (filters.OrderBy == "Price")
+            {
+                query = query.OrderBy(x => x.Price);
+            }
+
+            query = query.Skip(filters.Skip).Take(filters.Take);
+
+            var result = query.Select(x => _mapper.Map<FoodResultDto>(x));
+            
             return result.ToList();
         }
 
