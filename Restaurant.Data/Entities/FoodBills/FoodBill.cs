@@ -9,5 +9,6 @@ namespace Restaurant.Data.Entities.FoodBills
         public Food Food { get; set; }
         public string BillId { get; set; }
         public Bill Bill { get; set; }
+        public int Quantity { get; set; }
     }
 }

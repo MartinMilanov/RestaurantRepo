@@ -77,14 +77,21 @@ namespace Restaurant.Services.Bills
 
         public async Task<BillResultDto> GetById(string id)
         {
-            var result = await _billRepo.GetBy(x => x.Id == id);
+            var result = await _billRepo
+                .GetBy(x => x.Id == id,x => x.Table);
 
             if (result == null)
             {
                 throw new Exception("Could not find bill");
             }
 
-            return _mapper.Map<BillResultDto>(result);
+            var foods = _foodBillService.GetFoodsByBillId(id);
+
+            var bill = _mapper.Map<BillResultDto>(result);
+
+            bill.FoodsOrdered = foods.ToList();
+
+            return bill;
         }
 
         public async Task Update(string id, BillUpdateDto input)

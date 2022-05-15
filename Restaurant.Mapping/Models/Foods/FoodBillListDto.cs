@@ -2,7 +2,7 @@
 {
     public class FoodBillListDto
     {
-        public string FoodBillId { get; set; }
+        public string FoodId { get; set; }
 
         public string Name { get; set; }
 

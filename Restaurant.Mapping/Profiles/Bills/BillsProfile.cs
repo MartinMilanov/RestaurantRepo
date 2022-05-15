@@ -70,7 +70,27 @@ namespace Restaurant.Mapping.Profiles.Bills
                     opt => opt.MapFrom(src => src.CreatedBy.NormalizedUserName)
                 );
 
-            CreateMap<Bill, BillResultDto>();
+            CreateMap<Bill, BillResultDto>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.Id)
+                )
+                .ForMember(
+                    dest => dest.IsClosed,
+                    opt => opt.MapFrom(src => src.IsClosed)
+                )
+                .ForMember(
+                    dest => dest.ClosedDate,
+                    opt => opt.MapFrom(src => src.Closed)
+                )
+                .ForMember(
+                    dest => dest.TableNumber,
+                    opt => opt.MapFrom(src => src.Table.TableNumber)
+                )
+                .ForMember(
+                    dest => dest.Total,
+                    opt => opt.MapFrom(src => src.Total)
+                );
         }
     }
 }

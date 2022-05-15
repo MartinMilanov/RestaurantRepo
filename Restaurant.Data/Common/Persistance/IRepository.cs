@@ -14,6 +14,8 @@ namespace Restaurant.Data.Common.Persistance
 
         Task<TEntity> GetBy(Expression<Func<TEntity, bool>> predicate);
 
+        Task<TEntity> GetBy(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>> includePredicate);
+
         IQueryable<TEntity> GetAll();
 
         IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate);
