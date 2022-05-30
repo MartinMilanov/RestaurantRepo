@@ -68,6 +68,18 @@ namespace Restaurant.Services.Categories
             return result.ToList();
         }
 
+        public async Task<int> GetCount(CategoryPaginationDto filters)
+        {
+            var query = _catRepo.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(filters.Name))
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(filters.Name.ToLower()));
+            }
+
+            return query.ToList().Count;
+        }
+
         public async Task<CategoryResultDto> GetById(string id)
         {
             var result = await _catRepo.GetBy(x => x.Id == id);

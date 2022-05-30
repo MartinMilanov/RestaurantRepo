@@ -47,7 +47,7 @@ namespace Restaurant.Services.Tables
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TableResultDto>> GetAll(TablePaginationDto filters)
+        public async Task<IEnumerable<TableListDto>> GetAll(TablePaginationDto filters)
         {
             var query = _tableRepo.GetAll();
 
@@ -74,9 +74,26 @@ namespace Restaurant.Services.Tables
 
             query = query.Skip(filters.Skip).Take(filters.Take);
 
-            var result = query.Select(x => _mapper.Map<TableResultDto>(x));
+            var result = query.Select(x => _mapper.Map<TableListDto>(x));
 
             return result.ToList();
+        }
+
+        public async Task<int> GetCount(TablePaginationDto filters)
+        {
+            var query = _tableRepo.GetAll();
+
+            if (filters.TableNumer != 0)
+            {
+                query = query.Where(x => x.TableNumber == filters.TableNumer);
+            }
+
+            if (filters.Seats != 0)
+            {
+                query = query.Where(x => x.Seats == filters.Seats);
+            }
+
+            return query.ToList().Count;
         }
 
         public async Task<TableResultDto> GetById(string id)

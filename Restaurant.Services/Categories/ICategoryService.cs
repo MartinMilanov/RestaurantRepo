@@ -12,6 +12,8 @@ namespace Restaurant.Services.Categories
 
         Task<IEnumerable<CategoryResultDto>> GetAll(CategoryPaginationDto filters);
 
+        Task<int> GetCount(CategoryPaginationDto filters);
+
         Task Delete(string id);
     }
 }

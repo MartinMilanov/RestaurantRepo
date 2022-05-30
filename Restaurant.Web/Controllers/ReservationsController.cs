@@ -3,6 +3,7 @@ using Restaurant.Web.Controllers.Common;
 using Restaurant.Mapping.Models.Reservations;
 using Restaurant.Web.Models.Response;
 using Restaurant.Services.Reservations;
+using Restaurant.Mapping.Models.Common;
 
 namespace Restaurant.Web.Controllers
 {
@@ -62,14 +63,12 @@ namespace Restaurant.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetReservations([FromQuery] ReservationPaginationDto filters)
         {
-            List<ReservationResultDto> reservations = (await _reservationService.GetAll(filters)).ToList();
+            List<ReservationResultDto> items = (await _reservationService.GetAll(filters)).ToList();
+            int count = await _reservationService.GetCount(filters);
 
-            if (reservations == null)
-            {
-                return BadRequest(new Response<string>(true, "Could not find record", null));
-            }
-
-            return Ok(new Response<IEnumerable<ReservationResultDto>>(false, "", reservations));
+            var result = new PaginatedResult<ReservationResultDto>(count, items);
+            
+            return Ok(new Response<PaginatedResult<ReservationResultDto>>(false, "", result));
         }
 
         [HttpDelete("{id}")]

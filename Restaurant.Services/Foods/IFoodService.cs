@@ -12,9 +12,11 @@ namespace Restaurant.Services.Foods
 
         Task<FoodResultDto> GetById(string id);
 
-        Task<IEnumerable<FoodResultDto>> GetAll(FoodPaginationDto filters);
+        Task<IEnumerable<FoodListDto>> GetAll(FoodPaginationDto filters);
 
-        IEnumerable<FoodResultDto> GetAll(Expression<Func<Food, bool>> predicate);
+        IEnumerable<FoodListDto> GetAll(Expression<Func<Food, bool>> predicate);
+
+        Task<int> GetCount(FoodPaginationDto filters);
 
         Task Delete(string id);
     }

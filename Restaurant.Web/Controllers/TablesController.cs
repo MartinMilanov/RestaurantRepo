@@ -3,6 +3,7 @@ using Restaurant.Mapping.Models.Tables;
 using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Response;
 using Restaurant.Services.Tables;
+using Restaurant.Mapping.Models.Common;
 
 namespace Restaurant.Web.Controllers
 {
@@ -57,9 +58,12 @@ namespace Restaurant.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTables([FromQuery]TablePaginationDto filters)
         {
-            List<TableResultDto> tables = (await _tableService.GetAll(filters)).ToList();
+            List<TableListDto> items = (await _tableService.GetAll(filters)).ToList();
+            int count = await _tableService.GetCount(filters);
 
-            return Ok(new Response<IEnumerable<TableResultDto>>(false, "", tables));
+            var result = new PaginatedResult<TableListDto>(count, items);
+
+            return Ok(new Response<PaginatedResult<TableListDto>>(false, "", result));
         }
 
         [HttpDelete("{id}")]

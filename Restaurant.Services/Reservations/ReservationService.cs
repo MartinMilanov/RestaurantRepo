@@ -91,6 +91,23 @@ namespace Restaurant.Services.Reservations
             return result.ToList();
         }
 
+        public async Task<int> GetCount(ReservationPaginationDto filters)
+        {
+            var query = _reservRepo.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(filters.ReserveeName))
+            {
+                query = query.Where(x => x.ReserveeName.ToLower().Contains(filters.ReserveeName.ToLower()));
+            }
+
+            if (filters.Date != null)
+            {
+                query = query.Where(x => x.Date == filters.Date);
+            }
+
+            return query.ToList().Count;
+        }
+
         public async Task<ReservationResultDto> GetById(string id)
         {
             var result = await _reservRepo.GetBy(x => x.Id == id);

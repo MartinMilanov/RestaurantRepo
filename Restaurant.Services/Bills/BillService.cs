@@ -109,6 +109,23 @@ namespace Restaurant.Services.Bills
             return result.ToList();
         }
 
+        public async Task<int> GetCount(BillsPaginationDto filters)
+        {
+            var query = _billRepo.GetAll();
+
+            if (filters.IsClosed != null)
+            {
+                query = query.Where(x => x.IsClosed == filters.IsClosed);
+            }
+
+            if (filters.TableNumber != 0)
+            {
+                query = query.Where(x => x.Table.TableNumber == filters.TableNumber);
+            }
+
+            return query.ToList().Count;
+        }
+
         public async Task<BillResultDto> GetById(string id)
         {
             var result = await _billRepo

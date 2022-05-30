@@ -52,7 +52,7 @@ namespace Restaurant.Services.Foods
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<FoodResultDto>> GetAll(FoodPaginationDto filters)
+        public async Task<IEnumerable<FoodListDto>> GetAll(FoodPaginationDto filters)
         {
             var query = _foodRepo.GetAll();
 
@@ -78,19 +78,36 @@ namespace Restaurant.Services.Foods
 
             query = query.Skip(filters.Skip).Take(filters.Take);
 
-            var result = query.Select(x => _mapper.Map<FoodResultDto>(x));
+            var result = query.Select(x => _mapper.Map<FoodListDto>(x));
             
             return result.ToList();
         }
 
-        public IEnumerable<FoodResultDto> GetAll(Expression<Func<Food, bool>> predicate)
+        public IEnumerable<FoodListDto> GetAll(Expression<Func<Food, bool>> predicate)
         {
             var result = _foodRepo
                 .GetAll(predicate: predicate)
-                .Select(x => _mapper.Map<FoodResultDto>(x))
+                .Select(x => _mapper.Map<FoodListDto>(x))
                 .ToList();
 
             return result;
+        }
+
+        public async Task<int> GetCount(FoodPaginationDto filters)
+        {
+            var query = _foodRepo.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(filters.Name))
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(filters.Name.ToLower()));
+            }
+
+            if (filters.Price != 0)
+            {
+                query = query.Where(x => x.Price == filters.Price);
+            }
+
+            return query.ToList().Count;
         }
 
         public async Task<FoodResultDto> GetById(string id)

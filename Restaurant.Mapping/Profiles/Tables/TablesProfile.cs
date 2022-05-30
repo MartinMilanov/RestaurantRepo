@@ -33,6 +33,7 @@ namespace Restaurant.Mapping.Profiles.Tables
                 );
 
             CreateMap<Table, TableResultDto>();
+            CreateMap<Table, TableListDto>();
         }
     }
 }

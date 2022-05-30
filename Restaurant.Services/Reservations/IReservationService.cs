@@ -12,6 +12,8 @@ namespace Restaurant.Services.Reservations
 
         Task<IEnumerable<ReservationResultDto>> GetAll(ReservationPaginationDto filters);
 
+        Task<int> GetCount(ReservationPaginationDto filters);
+
         Task Delete(string id);
     }
 }
