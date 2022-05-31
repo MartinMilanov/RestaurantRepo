@@ -21,7 +21,7 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
+                throw new Exception("Invalid data provided");
             }
 
             await _categoryService.Create(input);
@@ -34,7 +34,7 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
+                throw new Exception("Invalid data provided");
             }
             await _categoryService.Update(id, input);
 
@@ -46,7 +46,7 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                return BadRequest(new Response<string>(true, "Id should not be null", null));
+                throw new Exception("Id should not be null");
             }
 
             CategoryResultDto result = await _categoryService.GetById(id);
@@ -70,7 +70,7 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                return BadRequest(new Response<string>(true, "Id should not be null", null));
+                throw new Exception("Id should not be null");
             }
 
             await _categoryService.Delete(id);

@@ -86,7 +86,7 @@ namespace Restaurant.Web.Controllers
             }
 
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<string>(true, "User creation failed! Please check user details and try again.", null));
+               throw new Exception("User creation failed! Please check user details and try again.");
 
             return Ok(new Response<string>(false, null, "User created successfully!"));
         }
@@ -97,7 +97,7 @@ namespace Restaurant.Web.Controllers
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<string>(true, "User already exists!", null));
+                throw new Exception ("User already exists!");
 
             ApplicationUser user = new()
             {
@@ -107,7 +107,7 @@ namespace Restaurant.Web.Controllers
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response<string>(true, "User creation failed! Please check user details and try again.", null));
+                throw new Exception("User creation failed! Please check user details and try again.");
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
                 await _roleManager.CreateAsync(new ApplicationUserRole(UserRoles.Admin));
@@ -130,6 +130,8 @@ namespace Restaurant.Web.Controllers
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddHours(3),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)

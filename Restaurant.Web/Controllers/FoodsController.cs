@@ -21,7 +21,7 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
+                throw new Exception("Invalid data provided");
             }
 
             await _foodService.Create(input);
@@ -34,7 +34,7 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new Response<string>(true, "Invalid data provided", "Invalid data provided"));
+                throw new Exception("Invalid data provided");
             }
 
             await _foodService.Update(id, input);
@@ -47,7 +47,7 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                return BadRequest(new Response<string>(true, "Id should not be null", null));
+                throw new Exception("Id should not be null");
             }
 
             FoodResultDto entity = await _foodService.GetById(id);
@@ -71,7 +71,7 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                return BadRequest(new Response<string>(true, "Id should not be null", null));
+                throw new Exception("Id should not be null");
             }
 
             await _foodService.Delete(id);
@@ -84,12 +84,12 @@ namespace Restaurant.Web.Controllers
         {
             if (categoryId == null)
             {
-                return BadRequest(new Response<string>(true, "Category id should not be null", null));
+                throw new Exception("Category id should not be null");
             }
 
-            IEnumerable<FoodResultDto> foods = _foodService.GetAll(x => x.Id == categoryId);
+            IEnumerable<FoodListDto> foods = _foodService.GetAll(x => x.Id == categoryId);
 
-            return Ok(new Response<IEnumerable<FoodResultDto>>(false, "", foods));
+            return Ok(new Response<IEnumerable<FoodListDto>>(false, "", foods));
         }
     }
 }
