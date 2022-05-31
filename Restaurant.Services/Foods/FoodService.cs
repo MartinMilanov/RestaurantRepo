@@ -2,6 +2,7 @@
 using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Common.Persistance.Repositories;
 using Restaurant.Data.Entities.Foods;
+using Restaurant.Mapping.Models.Common;
 using Restaurant.Mapping.Models.Foods;
 using Restaurant.Services.Loggers;
 using System.Linq.Expressions;
@@ -68,18 +69,32 @@ namespace Restaurant.Services.Foods
 
             if (filters.OrderBy == "Name")
             {
-                query = query.OrderBy(x => x.Name);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Name);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Name);
+                }
             }
 
             if (filters.OrderBy == "Price")
             {
-                query = query.OrderBy(x => x.Price);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Price);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Price);
+                }
             }
 
             query = query.Skip(filters.Skip).Take(filters.Take);
 
             var result = query.Select(x => _mapper.Map<FoodListDto>(x));
-            
+
             return result.ToList();
         }
 

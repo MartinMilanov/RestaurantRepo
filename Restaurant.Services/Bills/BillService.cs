@@ -5,6 +5,7 @@ using Restaurant.Data.Common.Persistance.Repositories;
 using Restaurant.Data.Entities.Bills;
 using Restaurant.Data.Entities.FoodBills;
 using Restaurant.Mapping.Models.Bills;
+using Restaurant.Mapping.Models.Common;
 using Restaurant.Services.FoodBills;
 using Restaurant.Services.Loggers;
 
@@ -74,7 +75,7 @@ namespace Restaurant.Services.Bills
 
             if (filters.IsClosed != null)
             {
-                query = query.Where(x=>x.IsClosed == filters.IsClosed);
+                query = query.Where(x => x.IsClosed == filters.IsClosed);
             }
 
             if (filters.TableNumber != 0)
@@ -84,22 +85,50 @@ namespace Restaurant.Services.Bills
 
             if (filters.OrderBy == "Total")
             {
-                query = query.OrderBy(x => x.Total);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Total);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Total);
+                }
             }
 
             if (filters.OrderBy == "Closed")
             {
-                query = query.OrderBy(x => x.Closed);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Closed);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Closed);
+                }
             }
 
             if (filters.OrderBy == "IsClosed")
             {
-                query = query.OrderBy(x => x.IsClosed);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.IsClosed);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.IsClosed);
+                }
             }
 
             if (filters.OrderBy == "TableNumber")
             {
-                query = query.OrderBy(x => x.Table.TableNumber);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Table.TableNumber);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Table.TableNumber);
+                }
             }
 
             query = query.Skip(filters.Skip).Take(filters.Take);

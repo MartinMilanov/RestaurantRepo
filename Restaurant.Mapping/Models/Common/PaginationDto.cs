@@ -10,5 +10,7 @@ namespace Restaurant.Mapping.Models.Common
         public int Take { get; set; }
         [Required]
         public string OrderBy { get; set; }
+        [Required]
+        public OrderWay OrderWay{ get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Restaurant.Data.Common.Persistance;
 using Restaurant.Data.Common.Persistance.Repositories;
 using Restaurant.Data.Entities.Categories;
 using Restaurant.Mapping.Models.Categories;
+using Restaurant.Mapping.Models.Common;
 using Restaurant.Services.Loggers;
 
 namespace Restaurant.Services.Categories
@@ -58,7 +59,14 @@ namespace Restaurant.Services.Categories
 
             if (filters.OrderBy == "Name")
             {
-                query = query.OrderBy(x => x.Name);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Name);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Name);
+                }
             }
 
             query = query.Skip(filters.Skip).Take(filters.Take);

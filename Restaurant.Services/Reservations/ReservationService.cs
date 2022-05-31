@@ -5,6 +5,7 @@ using Restaurant.Data.Common.Persistance.Repositories;
 using Restaurant.Data.Entities.Reservations;
 using Restaurant.Services.Loggers;
 using Restaurant.Mapping.Models.Reservations;
+using Restaurant.Mapping.Models.Common;
 
 namespace Restaurant.Services.Reservations
 {
@@ -52,7 +53,7 @@ namespace Restaurant.Services.Reservations
 
         public async Task<IEnumerable<ReservationResultDto>> GetAll(ReservationPaginationDto filters)
         {
-            var query = _reservRepo.GetAll().Include(x=>x.CreatedBy).AsQueryable();
+            var query = _reservRepo.GetAll().Include(x => x.CreatedBy).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filters.ReserveeName))
             {
@@ -66,22 +67,50 @@ namespace Restaurant.Services.Reservations
 
             if (filters.OrderBy == "ReserveeName")
             {
-                query = query.OrderBy(x => x.ReserveeName);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.ReserveeName);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.ReserveeName);
+                }
             }
 
             if (filters.OrderBy == "PeopleCount")
             {
-                query = query.OrderBy(x => x.PeopleCount);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.PeopleCount);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.PeopleCount);
+                }
             }
 
             if (filters.OrderBy == "Date")
             {
-                query = query.OrderBy(x => x.Date);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Date);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Date);
+                }
             }
 
             if (filters.OrderBy == "CreatedByName")
             {
-                query = query.OrderBy(x => x.CreatedBy.UserName);
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.CreatedBy.UserName);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.CreatedBy.UserName);
+                }
             }
 
             query = query.Skip(filters.Skip).Take(filters.Take);
@@ -112,7 +141,7 @@ namespace Restaurant.Services.Reservations
         {
             var result = await _reservRepo.GetBy(x => x.Id == id);
 
-            var createdBy = await _unitOfWork.Users.GetBy(x=>x.Id == result.CreatedById);
+            var createdBy = await _unitOfWork.Users.GetBy(x => x.Id == result.CreatedById);
 
             result.CreatedBy = createdBy;
 
@@ -130,7 +159,7 @@ namespace Restaurant.Services.Reservations
 
             Reservation reservation = await _reservRepo.GetBy(x => x.Id == id);
 
-            if(reservation== null)
+            if (reservation == null)
             {
                 throw new Exception("Cannot find reservation with this id");
             }
