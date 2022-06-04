@@ -1,15 +1,42 @@
 import Pagination from "./pagination";
 
-const List = () => {
-  const object = { name: "hello", age: "22", hasABowl: "nobro" };
-
-  const fillTableHeaders = () => {
+const List = ({ columnNames, data }) => {
+  const generateTableHeaders = () => {
     return (
       <>
-        {Object.keys(object).map((x, index) => (
+        {Object.keys(columnNames).map((x, index) => (
           <th scope="col" className={"onHoverTh"} key={index}>
             {x.charAt(0).toUpperCase() + x.slice(1)}
           </th>
+        ))}
+      </>
+    );
+  };
+
+  const generateTableRows = () => {
+    const dataValues = data.map((x) => Object.entries(x).map((c) => c[1]));
+    return (
+      <>
+        {dataValues.map((x, index) => (
+          <tr>
+            <th scope="row">{index}</th>
+            {x.slice(1).map((d) => (
+              <td>{d}</td>
+            ))}
+            <td>
+              <button class="btn btn-primary listBtn">
+                <i class="bi bi-eye"></i>
+              </button>
+
+              <button class="btn btn-warning listBtn">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+
+              <button class="btn btn-danger listBtn">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
         ))}
       </>
     );
@@ -21,69 +48,11 @@ const List = () => {
         <thead class="thead-light">
           <tr>
             <th scope="col">#</th>
-            {fillTableHeaders()}
+            {generateTableHeaders()}
             <th scope="col"></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>
-              <button class="btn btn-primary listBtn">
-                <i class="bi bi-eye"></i>
-              </button>
-
-              <button class="btn btn-warning listBtn">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-
-              <button class="btn btn-danger listBtn">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>
-              <button class="btn btn-primary listBtn">
-                <i class="bi bi-eye"></i>
-              </button>
-
-              <button class="btn btn-warning listBtn">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-
-              <button class="btn btn-danger listBtn">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>
-              <button class="btn btn-primary listBtn">
-                <i class="bi bi-eye"></i>
-              </button>
-
-              <button class="btn btn-warning listBtn">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-
-              <button class="btn btn-danger listBtn">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody>{generateTableRows()}</tbody>
       </table>
       <div style={{ display: "flex" }}>
         <Pagination />
