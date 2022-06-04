@@ -5,7 +5,7 @@ const List = ({ columnNames, data }) => {
     return (
       <>
         {Object.keys(columnNames).map((x, index) => (
-          <th scope="col" className={"onHoverTh"} key={index}>
+          <th scope="col" className={"onHoverTh"} key={`${index}th`}>
             {x.charAt(0).toUpperCase() + x.slice(1)}
           </th>
         ))}
@@ -19,9 +19,11 @@ const List = ({ columnNames, data }) => {
       <>
         {dataValues.map((x, index) => (
           <tr>
-            <th scope="row">{index}</th>
-            {x.slice(1).map((d) => (
-              <td>{d}</td>
+            <th scope="row" key={`${index}thtr`}>
+              {index}
+            </th>
+            {x.slice(1).map((d, index) => (
+              <td key={`${index}td`}>{d}</td>
             ))}
             <td>
               <button class="btn btn-primary listBtn">
@@ -54,9 +56,6 @@ const List = ({ columnNames, data }) => {
         </thead>
         <tbody>{generateTableRows()}</tbody>
       </table>
-      <div style={{ display: "flex" }}>
-        <Pagination />
-      </div>
     </>
   );
 };
