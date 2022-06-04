@@ -20,11 +20,12 @@ const FilterForm = ({ filters }) => {
   };
 
   return (
-    <>
+    <div className="filterBlock">
+      <h3>Filters</h3>
       {generateFilters()}
 
       <button className="btn btn-primary">Filter</button>
-    </>
+    </div>
   );
 };
 export default FilterForm;
