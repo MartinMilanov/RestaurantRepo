@@ -4,7 +4,7 @@ const List = ({ columnNames, data }) => {
   const generateTableHeaders = () => {
     return (
       <>
-        {Object.keys(columnNames).map((x, index) => (
+        {columnNames.map((x, index) => (
           <th scope="col" className={"onHoverTh"} key={`${index}th`}>
             {x.charAt(0).toUpperCase() + x.slice(1)}
           </th>
@@ -23,7 +23,13 @@ const List = ({ columnNames, data }) => {
               {index}
             </th>
             {x.slice(1).map((d, index) => (
-              <td key={`${index}td`}>{d}</td>
+              <td key={`${index}td`}>
+                {d.toString() == "false"
+                  ? "No"
+                  : d.toString() == "true"
+                  ? "Yes"
+                  : d}
+              </td>
             ))}
             <td>
               <button class="btn btn-primary listBtn">

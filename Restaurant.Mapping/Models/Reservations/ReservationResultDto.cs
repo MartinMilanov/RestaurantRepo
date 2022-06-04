@@ -2,6 +2,8 @@
 {
     public class ReservationResultDto
     {
+        public string Id { get; set; }
+
         public string ReserveeName { get; set; }
 
         public int PeopleCount { get; set; }

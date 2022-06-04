@@ -1,17 +1,24 @@
-import List from "./shared/list";
-import ListView from "./shared/listView";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import FoodList from "./foods/foodList";
+import CategoryList from "./categories/categoryList";
+import ReservationList from "./reservations/reservations";
+import TableList from "./tables/tableList";
+import BillList from "./bills/billList";
 const Main = () => {
   return (
     <main
       role="main"
       className="col-md-9 ml-sm-auto col-lg-10 col-xl-10 pt-3 px-4"
     >
-      <ListView
-        endpoint={"foods"}
-        columnNames={{ name: "hello", age: "22", hasABowl: "nobro" }}
-        filters={{ name: "", price: "" }}
-      />
+      <BrowserRouter>
+        <Routes>
+          <Route path="foods" element={<FoodList />} />
+          <Route path="categories" element={<CategoryList />} />
+          <Route path="reservations" element={<ReservationList />} />
+          <Route path="tables" element={<TableList />} />
+          <Route path="bills" element={<BillList />} />
+        </Routes>
+      </BrowserRouter>
     </main>
   );
 };
