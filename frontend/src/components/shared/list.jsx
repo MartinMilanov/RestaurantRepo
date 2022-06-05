@@ -18,7 +18,7 @@ const List = ({ columnNames, data }) => {
     return (
       <>
         {dataValues.map((x, index) => (
-          <tr>
+          <tr key={`${index}trKey`}>
             <th scope="row" key={`${index}thtr`}>
               {index}
             </th>
@@ -32,16 +32,16 @@ const List = ({ columnNames, data }) => {
               </td>
             ))}
             <td>
-              <button class="btn btn-primary listBtn">
-                <i class="bi bi-eye"></i>
+              <button className="btn btn-primary listBtn">
+                <i className="bi bi-eye"></i>
               </button>
 
-              <button class="btn btn-warning listBtn">
-                <i class="bi bi-pencil-square"></i>
+              <button className="btn btn-warning listBtn">
+                <i className="bi bi-pencil-square"></i>
               </button>
 
-              <button class="btn btn-danger listBtn">
-                <i class="bi bi-trash"></i>
+              <button className="btn btn-danger listBtn">
+                <i className="bi bi-trash"></i>
               </button>
             </td>
           </tr>
@@ -53,7 +53,7 @@ const List = ({ columnNames, data }) => {
   return (
     <>
       <table className="table">
-        <thead class="thead-light">
+        <thead className="thead-light">
           <tr>
             <th scope="col">#</th>
             {generateTableHeaders()}

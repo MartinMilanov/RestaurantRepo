@@ -8,7 +8,7 @@ const ListView = ({ endpoint, columnNames, filters }) => {
   const itemsPerPage = 6;
   const [items, setItems] = useState([]);
   const [count, setCount] = useState([]);
-  const [filterString, setFilterString] = useState();
+  const [filterString, setFilterString] = useState("");
 
   const getListItems = async (skip, orderBy, orderByDirection) => {
     const response = await getItems(
@@ -27,12 +27,12 @@ const ListView = ({ endpoint, columnNames, filters }) => {
   };
 
   useEffect(() => {
-    getListItems(0, "Name", 1);
-  }, []);
+    getListItems(0, "Name", 1).catch((e) => console.log(e));
+  }, [filterString]);
 
   return (
     <>
-      <FilterForm filters={filters} />
+      <FilterForm filters={filters} setFilterString={setFilterString} />
       <List columnNames={columnNames} data={items} />
       <div style={{ display: "flex" }}>
         <Pagination

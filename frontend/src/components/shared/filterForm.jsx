@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-const FilterForm = ({ filters }) => {
-  const [activeFilterKvpArr, setActiveFilterKvpArr] = useState([
-    ["Name", "Todd"],
-    ["Vanish", "Todd"],
-  ]);
+import { useState } from "react";
+const FilterForm = ({ filters, setFilterString }) => {
+  const [activeFilterKvpArr, setActiveFilterKvpArr] = useState([]);
+  const [temporaryFilterKvpArr, setTemporaryFilterKvpArr] = useState([]);
 
   const generateFilters = () => {
     var dataKvpFilters = [];
@@ -20,6 +18,7 @@ const FilterForm = ({ filters }) => {
           className="form-control"
           aria-label="Sizing example input"
           aria-describedby="inputGroup-sizing-default"
+          onChange={(e) => onChangeFilter(kvp[0], e.target.value)}
         />
       </div>
     ));
@@ -30,10 +29,10 @@ const FilterForm = ({ filters }) => {
       <button
         key={`${index}-filterRemove`}
         type="button"
-        class="btn btn-primary btn-filter-remove"
+        className="btn btn-secondary btn-filter-remove"
         onClick={() => removeFilter(x[0])}
       >
-        {x[0]} : {x[1]} <span class="badge badge-light">x</span>
+        {x[0]} : {x[1]} <span className="badge badge-light">x</span>
       </button>
     ));
   };
@@ -46,7 +45,52 @@ const FilterForm = ({ filters }) => {
       );
       newState.splice(indexOfFilter, 1);
       setActiveFilterKvpArr([...newState]);
+      setFilterString(generateQueryString(newState));
     }
+  };
+
+  const onChangeFilter = (filterName, filterValue) => {
+    if (temporaryFilterKvpArr.indexOf((x) => x[0] == filterName) == -1) {
+      var newState = temporaryFilterKvpArr;
+      newState.push([filterName, filterValue]);
+
+      setTemporaryFilterKvpArr([...newState]);
+    } else {
+      var index = temporaryFilterKvpArr.findIndex((x) => x[0] == filterName);
+      var newState = temporaryFilterKvpArr;
+      temporaryFilterKvpArr.splice(index, 1);
+      newState.push([filterName, filterValue]);
+
+      setTemporaryFilterKvpArr([...newState]);
+    }
+  };
+
+  const generateQueryString = (kvpFilters) => {
+    var queryString = "";
+
+    queryString = kvpFilters.map((kvp) => `${kvp[0]}=${kvp[1]}`).join("&");
+
+    return queryString;
+  };
+
+  const applyTemporaryFilters = () => {
+    var newState = activeFilterKvpArr;
+
+    temporaryFilterKvpArr.forEach((kvp) => {
+      var key = kvp[0];
+      var value = kvp[1];
+
+      var index = newState.findIndex((x) => x[0] == key);
+
+      if (index !== -1) {
+        newState.splice(index, 1);
+      }
+
+      newState.push([key, value]);
+    });
+
+    setFilterString(generateQueryString(newState));
+    setActiveFilterKvpArr([...newState]);
   };
 
   return (
@@ -55,7 +99,12 @@ const FilterForm = ({ filters }) => {
 
       {generateFilters()}
 
-      <button className="btn btn-primary">Filter</button>
+      <button
+        className="btn btn-primary"
+        onClick={() => applyTemporaryFilters()}
+      >
+        Filter
+      </button>
 
       <div className="btn-filter-container">
         {generateActiveFilterButtons()}

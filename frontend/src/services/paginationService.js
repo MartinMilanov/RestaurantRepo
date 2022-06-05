@@ -21,7 +21,7 @@ export const getItems = async (
     `${endpoint}?Skip=${skip}&Take=${take}&OrderBy=${orderBy}&OrderWay=${orderWay}`;
 
   if (filtersString) {
-    apiUrl += `&${filtersString}`;
+    apiUrlConstruct += `&${filtersString}`;
   }
 
   var result = await axios.get(apiUrlConstruct, config);
