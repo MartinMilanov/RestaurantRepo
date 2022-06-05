@@ -101,7 +101,7 @@ namespace Restaurant.Services.Reservations
                 }
             }
 
-            if (filters.OrderBy == "CreatedByName")
+            if (filters.OrderBy == "CreatedBy")
             {
                 if (filters.OrderWay == OrderWay.Ascending)
                 {

@@ -131,6 +131,18 @@ namespace Restaurant.Services.Bills
                 }
             }
 
+            if (filters.OrderBy == "CreatedBy")
+            {
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.CreatedBy.UserName);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.CreatedBy.UserName);
+                }
+            }
+
             query = query.Skip(filters.Skip).Take(filters.Take);
 
             var result = query.Select(x => _mapper.Map<BillListDto>(x));
