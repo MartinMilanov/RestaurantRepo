@@ -1,16 +1,42 @@
 import Pagination from "./pagination";
 
-const List = ({ columnNames, data }) => {
+const List = ({ columnNames, data, orderBy, setOrderBy }) => {
   const generateTableHeaders = () => {
     return (
       <>
         {columnNames.map((x, index) => (
-          <th scope="col" className={"onHoverTh"} key={`${index}th`}>
+          <th
+            scope="col"
+            className={"onHoverTh"}
+            key={`${index}th`}
+            onClick={() =>
+              onClickChangeOrderBy(x.charAt(0).toUpperCase() + x.slice(1))
+            }
+          >
             {x.charAt(0).toUpperCase() + x.slice(1)}
+            {isHeaderInOrderBy(x.charAt(0).toUpperCase() + x.slice(1)) ? (
+              orderBy[1] == 1 ? (
+                <i class="bi bi-caret-up-fill"></i>
+              ) : (
+                <i class="bi bi-caret-down-fill"></i>
+              )
+            ) : null}
           </th>
         ))}
       </>
     );
+  };
+
+  const isHeaderInOrderBy = (colName) => {
+    if (orderBy !== undefined) {
+      if (orderBy.indexOf(colName) !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   };
 
   const generateTableRows = () => {
@@ -48,6 +74,27 @@ const List = ({ columnNames, data }) => {
         ))}
       </>
     );
+  };
+
+  const onClickChangeOrderBy = (colName) => {
+    if (orderBy !== undefined) {
+      var exists = orderBy.indexOf(colName);
+      var newState;
+      if (exists == -1) {
+        newState = [colName, 1];
+      } else {
+        newState = orderBy;
+        if (newState[1] == 1) {
+          newState[1] = 2;
+        } else {
+          newState[1] = 1;
+        }
+      }
+      setOrderBy([...newState]);
+    } else {
+      var newState = [colName, 1];
+      setOrderBy([...newState]);
+    }
   };
 
   return (

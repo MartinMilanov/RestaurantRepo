@@ -9,14 +9,18 @@ const ListView = ({ endpoint, columnNames, filters }) => {
   const [items, setItems] = useState([]);
   const [count, setCount] = useState([]);
   const [filterString, setFilterString] = useState("");
+  const [orderBy, setOrderBy] = useState(undefined);
 
-  const getListItems = async (skip, orderBy, orderByDirection) => {
+  const getListItems = async (skip) => {
+    const orderByVar = orderBy ? orderBy[0] : undefined;
+    const orderByDirectionVar = orderBy ? orderBy[1] : undefined;
+
     const response = await getItems(
       endpoint,
       skip,
       itemsPerPage,
-      orderBy,
-      orderByDirection,
+      orderByVar ? orderByVar : "Name",
+      orderByDirectionVar ? orderByDirectionVar : 1,
       filterString
     );
 
@@ -33,7 +37,12 @@ const ListView = ({ endpoint, columnNames, filters }) => {
   return (
     <>
       <FilterForm filters={filters} setFilterString={setFilterString} />
-      <List columnNames={columnNames} data={items} />
+      <List
+        columnNames={columnNames}
+        data={items}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+      />
       <div style={{ display: "flex" }}>
         <Pagination
           count={count}
