@@ -12,15 +12,15 @@ const ListView = ({ endpoint, columnNames, filters }) => {
   const [orderBy, setOrderBy] = useState(undefined);
 
   const getListItems = async (skip) => {
-    const orderByVar = orderBy ? orderBy[0] : undefined;
-    const orderByDirectionVar = orderBy ? orderBy[1] : undefined;
+    const orderByVar = orderBy ? orderBy[0] : "Name";
+    const orderByDirectionVar = orderBy ? orderBy[1] : 1;
 
     const response = await getItems(
       endpoint,
       skip,
       itemsPerPage,
-      orderByVar ? orderByVar : "Name",
-      orderByDirectionVar ? orderByDirectionVar : 1,
+      orderByVar,
+      orderByDirectionVar,
       filterString
     );
 
@@ -32,7 +32,7 @@ const ListView = ({ endpoint, columnNames, filters }) => {
 
   useEffect(() => {
     getListItems(0, "Name", 1).catch((e) => console.log(e));
-  }, [filterString]);
+  }, [filterString, orderBy]);
 
   return (
     <>

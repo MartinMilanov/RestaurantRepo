@@ -28,6 +28,7 @@ const List = ({ columnNames, data, orderBy, setOrderBy }) => {
   };
 
   const isHeaderInOrderBy = (colName) => {
+    colName = colName.split(" ").join("");
     if (orderBy !== undefined) {
       if (orderBy.indexOf(colName) !== -1) {
         return true;
@@ -77,6 +78,7 @@ const List = ({ columnNames, data, orderBy, setOrderBy }) => {
   };
 
   const onClickChangeOrderBy = (colName) => {
+    colName = colName.split(" ").join("");
     if (orderBy !== undefined) {
       var exists = orderBy.indexOf(colName);
       var newState;
