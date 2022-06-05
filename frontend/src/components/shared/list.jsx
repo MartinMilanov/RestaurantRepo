@@ -47,7 +47,7 @@ const List = ({ columnNames, data, orderBy, setOrderBy }) => {
         {dataValues.map((x, index) => (
           <tr key={`${index}trKey`}>
             <th scope="row" key={`${index}thtr`}>
-              {index}
+              {index + (getCurrentPageWithDom() - 1) * 6 + 1}
             </th>
             {x.slice(1).map((d, index) => (
               <td key={`${index}td`}>
@@ -97,6 +97,14 @@ const List = ({ columnNames, data, orderBy, setOrderBy }) => {
       var newState = [colName, 1];
       setOrderBy([...newState]);
     }
+  };
+
+  const getCurrentPageWithDom = () => {
+    var pageNumber = parseInt(
+      document.getElementsByClassName("page-item active")[0].innerText
+    );
+
+    return pageNumber;
   };
 
   return (
