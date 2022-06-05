@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import FoodList from "./foods/foodList";
 import CategoryList from "./categories/categoryList";
 import ReservationList from "./reservations/reservations";
@@ -10,15 +10,13 @@ const Main = () => {
       role="main"
       className="col-md-9 ml-sm-auto col-lg-10 col-xl-10 pt-3 px-4"
     >
-      <BrowserRouter>
-        <Routes>
-          <Route path="foods" element={<FoodList />} />
-          <Route path="categories" element={<CategoryList />} />
-          <Route path="reservations" element={<ReservationList />} />
-          <Route path="tables" element={<TableList />} />
-          <Route path="bills" element={<BillList />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="foods" element={<FoodList />} />
+        <Route path="categories" element={<CategoryList />} />
+        <Route path="reservations" element={<ReservationList />} />
+        <Route path="tables" element={<TableList />} />
+        <Route path="bills" element={<BillList />} />
+      </Routes>
     </main>
   );
 };
