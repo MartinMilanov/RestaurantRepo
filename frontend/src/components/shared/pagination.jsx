@@ -1,7 +1,30 @@
 import { useState } from "react";
 
-const Pagination = ({ count, itemsPerPage }) => {
+const Pagination = ({ count, itemsPerPage, getItems }) => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  const next = () => {
+    var totalPages = Math.ceil(count / itemsPerPage);
+
+    if (totalPages > currentPage) {
+      setCurrentPage(currentPage + 1);
+      getItems(itemsPerPage * currentPage, "Name", 1);
+    }
+  };
+
+  const prev = () => {
+    if (currentPage - 1 >= 0) {
+      setCurrentPage(currentPage - 1);
+      getItems(itemsPerPage * (currentPage - 2), "Name", 1);
+    }
+  };
+
+  const getItemsByPageNumber = (number) => {
+    if (number >= 1 && number <= Math.ceil(count / itemsPerPage)) {
+      setCurrentPage(number);
+      getItems(itemsPerPage * (number - 1), "Name", 1);
+    }
+  };
 
   const generatePageNumbers = () => {
     var numberOfPages = [];
@@ -19,28 +42,13 @@ const Pagination = ({ count, itemsPerPage }) => {
       <li
         className={`page-item ${currentPage == index + 1 ? "active" : null}`}
         key={`${index}numbrer`}
+        onClick={() => getItemsByPageNumber(index + 1)}
       >
         <a className="page-link" href="#">
           {index + 1}
         </a>
       </li>
     ));
-  };
-
-  const next = () => {
-    var totalPages = Math.ceil(count / itemsPerPage);
-
-    if (totalPages > currentPage) {
-      setCurrentPage(currentPage + 1);
-      //call a method provided by the parent component for items
-    }
-  };
-
-  const prev = () => {
-    if (currentPage - 1 !== 0) {
-      setCurrentPage(currentPage - 1);
-      //call a method provided by the parent component for items
-    }
   };
 
   return (

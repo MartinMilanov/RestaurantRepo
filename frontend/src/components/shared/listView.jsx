@@ -10,24 +10,24 @@ const ListView = ({ endpoint, columnNames, filters }) => {
   const [count, setCount] = useState([]);
   const [filterString, setFilterString] = useState();
 
+  const getListItems = async (skip, orderBy, orderByDirection) => {
+    const response = await getItems(
+      endpoint,
+      skip,
+      itemsPerPage,
+      orderBy,
+      orderByDirection,
+      filterString
+    );
+
+    if (response.hasException == false) {
+      setItems(response.data.items);
+      setCount(response.data.count);
+    }
+  };
+
   useEffect(() => {
-    const execute = async () => {
-      const response = await getItems(
-        endpoint,
-        0,
-        itemsPerPage,
-        "Name",
-        1,
-        filterString
-      );
-
-      if (response.hasException == false) {
-        setItems(response.data.items);
-        setCount(response.data.count);
-      }
-    };
-
-    execute();
+    getListItems(0, "Name", 1);
   }, []);
 
   return (
@@ -35,7 +35,11 @@ const ListView = ({ endpoint, columnNames, filters }) => {
       <FilterForm filters={filters} />
       <List columnNames={columnNames} data={items} />
       <div style={{ display: "flex" }}>
-        <Pagination count={count} itemsPerPage={itemsPerPage} />
+        <Pagination
+          count={count}
+          itemsPerPage={itemsPerPage}
+          getItems={getListItems}
+        />
       </div>
     </>
   );
