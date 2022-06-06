@@ -42,6 +42,7 @@ const ListView = ({ endpoint, columnNames, filters }) => {
         data={items}
         orderBy={orderBy}
         setOrderBy={setOrderBy}
+        endpoint={endpoint}
       />
       <div style={{ display: "flex" }}>
         <Pagination

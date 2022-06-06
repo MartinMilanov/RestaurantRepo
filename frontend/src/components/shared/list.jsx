@@ -1,6 +1,7 @@
 import Pagination from "./pagination";
+import { deleteItem } from "../../services/commonService";
 
-const List = ({ columnNames, data, orderBy, setOrderBy }) => {
+const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
   const generateTableHeaders = () => {
     return (
       <>
@@ -67,7 +68,10 @@ const List = ({ columnNames, data, orderBy, setOrderBy }) => {
                 <i className="bi bi-pencil-square"></i>
               </button>
 
-              <button className="btn btn-danger listBtn">
+              <button
+                className="btn btn-danger listBtn"
+                onClick={() => onClickDeleteItem(x[0])}
+              >
                 <i className="bi bi-trash"></i>
               </button>
             </td>
@@ -105,6 +109,14 @@ const List = ({ columnNames, data, orderBy, setOrderBy }) => {
     );
 
     return pageNumber;
+  };
+
+  const onClickDeleteItem = async (id) => {
+    var proceed = window.confirm("Are you sure you want to delete this item ?");
+    window.location.reload();
+    if (proceed) {
+      await deleteItem(endpoint, id).catch((e) => console.log(e));
+    }
   };
 
   return (
