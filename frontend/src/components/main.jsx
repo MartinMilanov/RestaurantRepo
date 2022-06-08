@@ -6,6 +6,7 @@ import ReservationList from "./reservations/reservations";
 import TableList from "./tables/tableList";
 import BillList from "./bills/billList";
 import CategoryCreate from "./categories/categoryCreate";
+import CategoryUpdate from "./categories/categoryUpdate";
 
 const Main = () => {
   return (
@@ -18,6 +19,7 @@ const Main = () => {
         <Route path="categories" element={<CategoryList />} />
         <Route path="categories/details/:id" element={<CategoryDetails />} />
         <Route path="categories/create" element={<CategoryCreate />} />
+        <Route path="categories/update/:id" element={<CategoryUpdate />} />
 
         <Route path="reservations" element={<ReservationList />} />
         <Route path="tables" element={<TableList />} />

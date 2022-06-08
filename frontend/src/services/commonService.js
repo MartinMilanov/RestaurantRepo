@@ -4,7 +4,7 @@ import { apiUrl } from "../settings/settings";
 export const deleteItem = async (endpoint, id) => {
   var apiUrlConstruct = `${apiUrl}${endpoint}/${id}`;
 
-  var result = await axios.delete(apiUrlConstruct);
+  await axios.delete(apiUrlConstruct);
 };
 
 export const getItemById = async (endpoint, id) => {
@@ -23,6 +23,18 @@ export const createItem = async (endpoint, body) => {
   var apiUrlConstruct = `${apiUrl}${endpoint}/create`;
 
   var result = await axios.post(apiUrlConstruct, body);
+
+  if (result.data.HasException !== true) {
+    window.alert(result.data.data);
+  } else {
+    window.alert(result.data.ExceptionMessage);
+  }
+};
+
+export const updateItem = async (endpoint, id, body) => {
+  var apiUrlConstruct = `${apiUrl}${endpoint}/${id}`;
+
+  var result = await axios.put(apiUrlConstruct, body);
 
   if (result.data.HasException !== true) {
     window.alert(result.data.data);

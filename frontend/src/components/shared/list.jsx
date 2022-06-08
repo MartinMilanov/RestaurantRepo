@@ -68,9 +68,12 @@ const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
                 <i className="bi bi-eye"></i>
               </Link>
 
-              <button className="btn btn-warning listBtn">
+              <Link
+                to={`/${endpoint}/update/${x[0]}`}
+                className="btn btn-warning listBtn"
+              >
                 <i className="bi bi-pencil-square"></i>
-              </button>
+              </Link>
 
               <button
                 className="btn btn-danger listBtn"
