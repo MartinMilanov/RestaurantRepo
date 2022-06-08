@@ -27,6 +27,8 @@ namespace Restaurant.Services.Categories
         {
             var entity = _mapper.Map<Category>(input);
 
+            await ThrowIfCategoryWithSameNameExists(input.Name);
+
             await _catRepo.Create(entity);
 
             await _unitOfWork.SaveChangesAsync();
@@ -111,6 +113,16 @@ namespace Restaurant.Services.Categories
             await _unitOfWork.SaveChangesAsync();
 
             await _loggingService.LogOnUpdate("Categories");
+        }
+
+        private async Task ThrowIfCategoryWithSameNameExists(string name)
+        {
+            var exists = await _catRepo.Exists(x => x.Name == name);
+
+            if (exists == true)
+            {
+                throw new Exception("Category with this name already exists");
+            }
         }
     }
 }

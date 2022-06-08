@@ -127,3 +127,12 @@ body {
     width: 550px;
     margin-bottom: 30px;
   }
+
+  .create-wrapper{
+    margin-top:10px;
+    margin-bottom:20px;
+  }
+
+  .btn-cancel{
+    margin-left: 25px
+  }

@@ -3,6 +3,7 @@ import Pagination from "./pagination";
 import { getItems } from "../../services/paginationService";
 import { useEffect, useState } from "react";
 import FilterForm from "./filterForm";
+import { Link } from "react-router-dom";
 
 const ListView = ({ endpoint, columnNames, filters }) => {
   const itemsPerPage = 6;
@@ -37,6 +38,13 @@ const ListView = ({ endpoint, columnNames, filters }) => {
   return (
     <>
       <FilterForm filters={filters} setFilterString={setFilterString} />
+
+      <div className="create-wrapper">
+        <Link to={`/${endpoint}/create`} className="btn btn-success btn-right">
+          Create
+        </Link>
+      </div>
+
       <List
         columnNames={columnNames}
         data={items}

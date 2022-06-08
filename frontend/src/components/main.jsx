@@ -5,6 +5,7 @@ import CategoryDetails from "./categories/categoryDetails";
 import ReservationList from "./reservations/reservations";
 import TableList from "./tables/tableList";
 import BillList from "./bills/billList";
+import CategoryCreate from "./categories/categoryCreate";
 
 const Main = () => {
   return (
@@ -16,6 +17,7 @@ const Main = () => {
         <Route path="foods" element={<FoodList />} />
         <Route path="categories" element={<CategoryList />} />
         <Route path="categories/details/:id" element={<CategoryDetails />} />
+        <Route path="categories/create" element={<CategoryCreate />} />
 
         <Route path="reservations" element={<ReservationList />} />
         <Route path="tables" element={<TableList />} />

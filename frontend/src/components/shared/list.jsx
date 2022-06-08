@@ -18,9 +18,9 @@ const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
             {x.charAt(0).toUpperCase() + x.slice(1)}
             {isHeaderInOrderBy(x.charAt(0).toUpperCase() + x.slice(1)) ? (
               orderBy[1] == 1 ? (
-                <i class="bi bi-caret-up-fill"></i>
+                <i className="bi bi-caret-up-fill"></i>
               ) : (
-                <i class="bi bi-caret-down-fill"></i>
+                <i className="bi bi-caret-down-fill"></i>
               )
             ) : null}
           </th>
@@ -62,7 +62,7 @@ const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
             ))}
             <td>
               <Link
-                to={`/categories/details/${x[0]}`}
+                to={`/${endpoint}/details/${x[0]}`}
                 className="btn btn-primary listBtn"
               >
                 <i className="bi bi-eye"></i>
