@@ -1,5 +1,6 @@
 import Pagination from "./pagination";
 import { deleteItem } from "../../services/commonService";
+import { Link } from "react-router-dom";
 
 const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
   const generateTableHeaders = () => {
@@ -60,9 +61,12 @@ const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
               </td>
             ))}
             <td>
-              <button className="btn btn-primary listBtn">
+              <Link
+                to={`/categories/details/${x[0]}`}
+                className="btn btn-primary listBtn"
+              >
                 <i className="bi bi-eye"></i>
-              </button>
+              </Link>
 
               <button className="btn btn-warning listBtn">
                 <i className="bi bi-pencil-square"></i>
