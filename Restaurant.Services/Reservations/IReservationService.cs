@@ -10,7 +10,7 @@ namespace Restaurant.Services.Reservations
 
         Task<ReservationResultDto> GetById(string id);
 
-        Task<IEnumerable<ReservationResultDto>> GetAll(ReservationPaginationDto filters);
+        Task<IEnumerable<ReservationListDto>> GetAll(ReservationPaginationDto filters);
 
         Task<int> GetCount(ReservationPaginationDto filters);
 

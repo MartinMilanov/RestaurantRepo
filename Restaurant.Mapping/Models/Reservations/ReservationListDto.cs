@@ -1,6 +1,6 @@
 ﻿namespace Restaurant.Mapping.Models.Reservations
 {
-    public class ReservationResultDto
+    public class ReservationListDto
     {
         public string Id { get; set; }
 

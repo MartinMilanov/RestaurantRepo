@@ -13,6 +13,7 @@ import FoodUpdate from "./foods/foodUpdate";
 import TableDetails from "./tables/tableDetails";
 import TableCreate from "./tables/tableCreate";
 import TableUpdate from "./tables/tableUpdate";
+import ReservationDetails from "./reservations/reservationDetails";
 
 const Main = () => {
   return (
@@ -32,6 +33,10 @@ const Main = () => {
         <Route path="categories/update/:id" element={<CategoryUpdate />} />
 
         <Route path="reservations" element={<ReservationList />} />
+        <Route
+          path="reservations/details/:id"
+          element={<ReservationDetails />}
+        />
 
         <Route path="tables" element={<TableList />} />
         <Route path="tables/details/:id" element={<TableDetails />} />

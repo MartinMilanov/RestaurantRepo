@@ -8,7 +8,7 @@ const ReservationList = () => {
         "Reservee Name",
         "People Count",
         "Date",
-        "Table Id",
+        "Table Number",
         "CreatedBy",
       ]}
       filters={{ CreatedBy: "", Date: "" }}

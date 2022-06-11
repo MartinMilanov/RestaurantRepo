@@ -51,9 +51,13 @@ namespace Restaurant.Services.Reservations
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ReservationResultDto>> GetAll(ReservationPaginationDto filters)
+        public async Task<IEnumerable<ReservationListDto>> GetAll(ReservationPaginationDto filters)
         {
-            var query = _reservRepo.GetAll().Include(x => x.CreatedBy).AsQueryable();
+            var query = _reservRepo
+                .GetAll()
+                .Include(x => x.CreatedBy)
+                .Include(x=>x.Table)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filters.ReserveeName))
             {
@@ -113,9 +117,21 @@ namespace Restaurant.Services.Reservations
                 }
             }
 
+            if (filters.OrderBy == "TableNumber")
+            {
+                if (filters.OrderWay == OrderWay.Ascending)
+                {
+                    query = query.OrderBy(x => x.Table.TableNumber);
+                }
+                else
+                {
+                    query = query.OrderByDescending(x => x.Table.TableNumber);
+                }
+            }
+
             query = query.Skip(filters.Skip).Take(filters.Take);
 
-            var result = query.Select(x => _mapper.Map<ReservationResultDto>(x));
+            var result = query.Select(x => _mapper.Map<ReservationListDto>(x));
 
             return result.ToList();
         }
@@ -143,7 +159,10 @@ namespace Restaurant.Services.Reservations
 
             var createdBy = await _unitOfWork.Users.GetBy(x => x.Id == result.CreatedById);
 
+            var table = await _unitOfWork.Tables.GetBy(x => x.Id == result.TableId);
+
             result.CreatedBy = createdBy;
+            result.Table = table;
 
             if (result == null)
             {

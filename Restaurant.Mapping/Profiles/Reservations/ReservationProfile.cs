@@ -60,6 +60,19 @@ namespace Restaurant.Mapping.Profiles.Reservations
                 .ForMember(
                     dest => dest.CreatedByName,
                     opt => opt.MapFrom(src => src.CreatedBy.NormalizedUserName)
+                ).ForMember(
+                    dest => dest.TableNumber,
+                    opt => opt.MapFrom(src => src.Table.TableNumber)
+                );
+
+            CreateMap<Reservation, ReservationListDto>()
+                .ForMember(
+                    dest => dest.CreatedByName,
+                    opt => opt.MapFrom(src => src.CreatedBy.NormalizedUserName)
+                )
+                .ForMember(
+                    dest => dest.TableNumber,
+                    opt => opt.MapFrom(src => src.Table.TableNumber)
                 );
         }
     }

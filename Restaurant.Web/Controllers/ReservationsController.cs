@@ -63,12 +63,12 @@ namespace Restaurant.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetReservations([FromQuery] ReservationPaginationDto filters)
         {
-            List<ReservationResultDto> items = (await _reservationService.GetAll(filters)).ToList();
+            List<ReservationListDto> items = (await _reservationService.GetAll(filters)).ToList();
             int count = await _reservationService.GetCount(filters);
 
-            var result = new PaginatedResult<ReservationResultDto>(count, items);
+            var result = new PaginatedResult<ReservationListDto>(count, items);
             
-            return Ok(new Response<PaginatedResult<ReservationResultDto>>(false, "", result));
+            return Ok(new Response<PaginatedResult<ReservationListDto>>(false, "", result));
         }
 
         [HttpDelete("{id}")]
