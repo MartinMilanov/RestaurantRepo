@@ -9,6 +9,7 @@ import CategoryCreate from "./categories/categoryCreate";
 import CategoryUpdate from "./categories/categoryUpdate";
 import FoodDetails from "./foods/foodDetails";
 import FoodCreate from "./foods/foodCreate";
+import FoodUpdate from "./foods/foodUpdate";
 
 const Main = () => {
   return (
@@ -20,6 +21,7 @@ const Main = () => {
         <Route path="foods" element={<FoodList />} />
         <Route path="foods/details/:id" element={<FoodDetails />} />
         <Route path="foods/create" element={<FoodCreate />} />
+        <Route path="foods/update/:id" element={<FoodUpdate />} />
 
         <Route path="categories" element={<CategoryList />} />
         <Route path="categories/details/:id" element={<CategoryDetails />} />

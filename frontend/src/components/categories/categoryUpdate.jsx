@@ -27,7 +27,7 @@ const CategoryUpdate = () => {
   };
 
   useEffect(() => {
-    const getCategory = async () => {
+    const setup = async () => {
       var item = await getItemById("categories", id);
       var newState = values;
 
@@ -37,7 +37,7 @@ const CategoryUpdate = () => {
       setCategory(item);
     };
 
-    getCategory();
+    setup();
   }, []);
 
   return (
