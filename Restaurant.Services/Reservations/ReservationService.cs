@@ -28,7 +28,7 @@ namespace Restaurant.Services.Reservations
         {
             var entity = _mapper.Map<Reservation>(input);
 
-            await ThrowIfReservationDoesntMeetCriteria(input.TableId, entity.Id, input.Date);
+            await ThrowIfReservationDoesntMeetCriteria(input.TableId, entity.Id, input.Date, input.PeopleCount);
 
             await _reservRepo.Create(entity);
 
@@ -56,7 +56,7 @@ namespace Restaurant.Services.Reservations
             var query = _reservRepo
                 .GetAll()
                 .Include(x => x.CreatedBy)
-                .Include(x=>x.Table)
+                .Include(x => x.Table)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filters.ReserveeName))
@@ -174,7 +174,7 @@ namespace Restaurant.Services.Reservations
 
         public async Task Update(string id, ReservationUpdateDto input)
         {
-            await ThrowIfReservationDoesntMeetCriteria(input.TableId, id, input.Date);
+            await ThrowIfReservationDoesntMeetCriteria(input.TableId, id, input.Date, input.PeopleCount);
 
             Reservation reservation = await _reservRepo.GetBy(x => x.Id == id);
 
@@ -196,7 +196,7 @@ namespace Restaurant.Services.Reservations
             await _loggingService.LogOnUpdate("Reservations");
         }
 
-        private async Task ThrowIfReservationDoesntMeetCriteria(string tableId, string reservationId, DateTime timeOfReservation)
+        private async Task ThrowIfReservationDoesntMeetCriteria(string tableId, string reservationId, DateTime timeOfReservation, int peopleCount)
         {
             var table = await _unitOfWork.Tables
                 .GetAll(x => x.Id == tableId)
@@ -208,16 +208,25 @@ namespace Restaurant.Services.Reservations
                 throw new Exception("Table does not exist");
             }
 
-            bool tableCriteria = table.Reservations.Any(x =>
+            bool doesNotMeetTimeCriteria = table.Reservations.Any(x => 
                 x.Id != reservationId
-                && x.Date.Day == timeOfReservation.Day
-                && x.Date.Month == timeOfReservation.Month
-                && x.Date.Year == timeOfReservation.Year
-                && x.Date.Hour == timeOfReservation.Hour);
+                && (
+                    (x.Date.AddHours(4) >= timeOfReservation && x.Date <= timeOfReservation)
+                    || (x.Date.AddHours(-4) <= timeOfReservation && x.Date >= timeOfReservation)
+                    || x.Date == timeOfReservation
+                   ));
 
-            if (tableCriteria)
+            bool doesNotMeetPeopleCriteria = table.Seats < peopleCount;
+
+
+            if (doesNotMeetTimeCriteria)
             {
                 throw new Exception("This table has a reservation too close to the requested one");
+            }
+
+            if (doesNotMeetPeopleCriteria)
+            {
+                throw new Exception("This table has less seats than reservation people count");
             }
         }
     }
