@@ -48,6 +48,7 @@ const TableCreate = () => {
         <button className="btn btn-success">Create</button>
         <button
           className="btn btn-cancel"
+          type="button"
           onClick={() => {
             navigate(-1);
           }}

@@ -1,22 +1,36 @@
 import { useState } from "react";
-import { createItem } from "../../services/commonService";
-import { useNavigate } from "react-router-dom";
+import { getItemById, updateItem } from "../../services/commonService";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getItems } from "../../services/paginationService";
 
-const ReservationCreate = () => {
+const ReservationUpdate = () => {
+  let { id } = useParams();
+  const navigate = useNavigate();
+
   const [values, setValues] = useState({
     reserveeName: "",
     peopleCount: "",
     date: "",
     tableId: "",
-    createdById: "d149839b-7999-4813-9e06-ca14d2b744ef",
+    createdById: "",
   });
+
   const [tables, setTables] = useState([]);
 
   useEffect(() => {
     const setup = async () => {
+      var reservation = await getItemById("reservations", id);
       const tablesQuery = await getItems("tables", 0, 100, "TableNumber", 1);
+
+      var newState = values;
+      newState.reserveeName = reservation.reserveeName;
+      newState.peopleCount = reservation.peopleCount;
+      newState.date = reservation.date;
+      newState.tableId = reservation.tableId;
+      newState.createdById = reservation.createdById;
+
+      setValues({ ...newState });
 
       setTables(tablesQuery.data.items);
     };
@@ -24,11 +38,9 @@ const ReservationCreate = () => {
     setup();
   }, []);
 
-  const navigate = useNavigate();
-
   const onSubmit = async (event) => {
     event.preventDefault();
-    await createItem("reservations", values);
+    await updateItem("reservations", id, values);
     navigate(-1);
   };
 
@@ -42,7 +54,7 @@ const ReservationCreate = () => {
 
   return (
     <>
-      <h2 className="formTitle">Create reservation entry</h2>
+      <h2 className="formTitle">Update reservation entry</h2>
 
       <form
         onSubmit={(event) => {
@@ -55,6 +67,7 @@ const ReservationCreate = () => {
             required={true}
             type="text"
             className="form-control custom-input"
+            value={values.reserveeName}
             onChange={(e) => onChange("reserveeName", e.target.value)}
           />
           <label className="form-label">People Count</label>
@@ -62,6 +75,7 @@ const ReservationCreate = () => {
             type="text"
             className="form-control custom-input"
             pattern="^\d*(\.\d{0,2})?$"
+            value={values.peopleCount}
             onChange={(e) => onChange("peopleCount", e.target.value)}
           />
           <label className="form-label">Date</label>
@@ -69,6 +83,7 @@ const ReservationCreate = () => {
             type="datetime-local"
             className="form-control custom-input"
             pattern="^\d*(\.\d{0,2})?$"
+            value={values.date}
             onChange={(e) => onChange("date", e.target.value)}
           />
           <div className="form-group">
@@ -81,7 +96,11 @@ const ReservationCreate = () => {
               <option value="">None</option>
               {tables.length > 0
                 ? tables.map((table) => (
-                    <option key={table.id} value={table.id}>
+                    <option
+                      key={table.id}
+                      value={table.id}
+                      selected={values.tableId === table.id}
+                    >
                       {table.tableNumber}
                     </option>
                   ))
@@ -89,7 +108,7 @@ const ReservationCreate = () => {
             </select>
           </div>
         </div>
-        <button className="btn btn-success">Create</button>
+        <button className="btn btn-warning">Update</button>
         <button
           className="btn btn-cancel"
           type="button"
@@ -104,4 +123,4 @@ const ReservationCreate = () => {
   );
 };
 
-export default ReservationCreate;
+export default ReservationUpdate;

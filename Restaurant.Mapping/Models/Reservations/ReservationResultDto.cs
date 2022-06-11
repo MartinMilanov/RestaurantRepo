@@ -13,5 +13,9 @@
         public string TableNumber { get; set; }
 
         public string CreatedByName { get; set; }
+
+        public string TableId { get; set; }
+
+        public string CreatedById { get; set; }
     }
 }
