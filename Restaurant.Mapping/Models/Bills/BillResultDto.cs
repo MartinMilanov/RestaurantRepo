@@ -8,7 +8,8 @@ namespace Restaurant.Mapping.Models.Bills
         public double Total { get; set; }
         public DateTime ClosedDate { get; set; }
         public bool IsClosed { get; set; }
-        public int TableNumber { get; set; }
+        public string TableId { get; set; }
+        public string CreatedById { get; set; }
         public List<FoodBillListDto> FoodsOrdered { get; set; }
     }
 }

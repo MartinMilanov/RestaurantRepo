@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { createItem } from "../../services/commonService";
+import { useNavigate, useParams } from "react-router-dom";
+import { getItemById, updateItem } from "../../services/commonService";
 import { getItems } from "../../services/paginationService";
 import FoodAddList from "../shared/foodAddList";
 
-const BillCreate = () => {
+const BillUpdate = () => {
+  let { id } = useParams();
   const [values, setValues] = useState({
     isClosed: false,
     tableId: "",
@@ -19,7 +20,7 @@ const BillCreate = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await createItem("bills", values);
+    await updateItem("bills", id, values);
     navigate(-1);
   };
 
@@ -83,7 +84,15 @@ const BillCreate = () => {
     const setup = async () => {
       const tablesQuery = await getItems("tables", 0, 100, "TableNumber", 1);
       const foodsQuery = await getItems("foods", 0, 100, "Name", 1);
+      const billQuery = await getItemById("bills", id);
 
+      var newState = values;
+      newState.createdById = billQuery.createdById;
+      newState.foodData = billQuery.foodsOrdered;
+      newState.isClosed = billQuery.isClosed;
+      newState.tableId = billQuery.tableId;
+
+      setValues({ ...newState });
       setTables(tablesQuery.data.items);
       setFoods(foodsQuery.data.items);
     };
@@ -93,7 +102,7 @@ const BillCreate = () => {
 
   return (
     <div className="form-container">
-      <h3 className="formTitle">Create a bill</h3>
+      <h3 className="formTitle">Update bill entry</h3>
       <form
         onSubmit={(event) => {
           onSubmit(event);
@@ -109,8 +118,12 @@ const BillCreate = () => {
               onChange("isClosed", e.target.value === "false" ? false : true)
             }
           >
-            <option value={false}>False</option>
-            <option value={true}>True</option>
+            <option value={false} selected={values.isClosed === false}>
+              False
+            </option>
+            <option value={true} selected={values.isClosed === true}>
+              True
+            </option>
           </select>
         </div>
 
@@ -122,10 +135,13 @@ const BillCreate = () => {
             id="exampleFormControlSelect1"
             onChange={(e) => onChange("tableId", e.target.value)}
           >
-            <option value="">None</option>
             {tables.length > 0
               ? tables.map((table) => (
-                  <option key={table.id} value={table.id}>
+                  <option
+                    key={table.id}
+                    value={table.id}
+                    selected={table.id === values.tableId}
+                  >
                     {table.tableNumber}
                   </option>
                 ))
@@ -203,10 +219,10 @@ const BillCreate = () => {
         <div className="total-container">
           <h4>{previewTotal().toFixed(2)} лв</h4>
         </div>
-        <button className="btn btn-success">Create</button>
+        <button className="btn btn-warning">Update</button>
       </form>
     </div>
   );
 };
 
-export default BillCreate;
+export default BillUpdate;

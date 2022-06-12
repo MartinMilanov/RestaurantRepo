@@ -171,8 +171,7 @@ namespace Restaurant.Services.Bills
 
         public async Task<BillResultDto> GetById(string id)
         {
-            var result = await _billRepo
-                .GetBy(x => x.Id == id, x => x.Table);
+            var result = await _billRepo.GetBy(x => x.Id == id);
 
             if (result == null)
             {
@@ -193,9 +192,9 @@ namespace Restaurant.Services.Bills
             var entity = await _billRepo.GetBy(x => x.Id == id);
 
             entity.TableId = input.TableId;
-            entity.Total = input.Total;
             entity.IsClosed = input.IsClosed;
             entity.CreatedById = input.CreatedById;
+            entity.Total = await CalculateTotal(input.FoodData);
 
             _billRepo.Update(id, entity);
 

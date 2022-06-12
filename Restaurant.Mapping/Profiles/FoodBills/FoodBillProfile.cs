@@ -17,6 +17,10 @@ namespace Restaurant.Mapping.Profiles.FoodBills
                 .ForMember(
                     dest => dest.BillId,
                     opt => opt.MapFrom(src => src.BillId)
+                )
+                .ForMember(
+                    dest => dest.Quantity,
+                    opt => opt.MapFrom(src => src.Quantity)
                 );
 
             CreateMap<FoodBill, FoodBillListDto>()
@@ -27,6 +31,10 @@ namespace Restaurant.Mapping.Profiles.FoodBills
                 .ForMember(
                     dest => dest.Name,
                     opt => opt.MapFrom(src => src.Food.Name)
+                )
+                .ForMember(
+                    dest => dest.Quantity,
+                    opt => opt.MapFrom(src => src.Quantity)
                 );
         }
     }

@@ -22,7 +22,9 @@ export const getItemById = async (endpoint, id) => {
 export const createItem = async (endpoint, body) => {
   var apiUrlConstruct = `${apiUrl}${endpoint}/create`;
 
-  var result = await axios.post(apiUrlConstruct, body);
+  var result = await axios
+    .post(apiUrlConstruct, body)
+    .catch((x) => console.log(x));
 
   if (result.data.HasException !== true) {
     window.alert(result.data.data);

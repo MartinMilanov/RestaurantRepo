@@ -33,10 +33,12 @@ namespace Restaurant.Services.FoodBills
                 {
                     await foodBillRepo.Create(foodBillInput);
                 }
+                else
+                {
+                    foodBillData.Quantity = foodBillInput.Quantity;
 
-                foodBillData.Quantity = foodBillInput.Quantity;
-
-                foodBillRepo.Update(foodBillData.BillId, foodBillData);
+                    foodBillRepo.Update(foodBillData.BillId, foodBillData);
+                }
             }
 
             List<string> latestFoodIds = foodBills.Select(lfb => lfb.FoodId).ToList();

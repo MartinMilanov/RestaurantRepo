@@ -36,10 +36,6 @@ namespace Restaurant.Mapping.Profiles.Bills
                     opt => opt.MapFrom(src => src.TableId)
                 )
                 .ForMember(
-                    dest => dest.Total,
-                    opt => opt.MapFrom(src => src.Total)
-                )
-                .ForMember(
                     dest => dest.CreatedById,
                     opt => opt.MapFrom(src => src.CreatedById)
                 );
@@ -80,8 +76,12 @@ namespace Restaurant.Mapping.Profiles.Bills
                     opt => opt.MapFrom(src => src.Closed)
                 )
                 .ForMember(
-                    dest => dest.TableNumber,
-                    opt => opt.MapFrom(src => src.Table.TableNumber)
+                    dest => dest.TableId,
+                    opt => opt.MapFrom(src => src.TableId)
+                )
+                .ForMember(
+                    dest => dest.CreatedById,
+                    opt => opt.MapFrom(src => src.CreatedById)
                 )
                 .ForMember(
                     dest => dest.Total,
