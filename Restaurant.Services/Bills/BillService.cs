@@ -32,6 +32,8 @@ namespace Restaurant.Services.Bills
         {
             var entity = _mapper.Map<Bill>(input);
 
+            entity.Total = await CalculateTotal(input.FoodData);
+
             await _billRepo.Create(entity);
 
             if (input.FoodData != null)
@@ -206,6 +208,25 @@ namespace Restaurant.Services.Bills
             await _unitOfWork.SaveChangesAsync();
 
             await _loggingService.LogOnUpdate("Bills");
+        }
+    
+        private async Task<decimal> CalculateTotal(IEnumerable<FoodBillDto> foodData)
+        {
+            decimal total = 0;
+
+            foreach (var food in foodData)
+            {
+                var foodEntity = await _unitOfWork.Foods.GetBy(x => x.Id == food.FoodId);
+
+                if (foodEntity == null)
+                {
+                    throw new Exception("Food with id does not exist. Cannot create bill");
+                }
+
+                total += food.Quantity * foodEntity.Price;
+            }
+
+            return total;
         }
     }
 }

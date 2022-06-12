@@ -5,7 +5,7 @@ namespace Restaurant.Data.Entities.Bills
 {
     public interface IBill
     {
-        public double Total { get; set; }
+        public decimal Total { get; set; }
         public DateTime Closed { get; set; }
         public string TableId { get; set; }
         public Table Table { get; set; }

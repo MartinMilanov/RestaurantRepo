@@ -7,7 +7,7 @@ namespace Restaurant.Data.Entities.Bills
 {
     public class Bill : BaseEntity, IBill
     {
-        public double Total { get; set; }
+        public decimal Total { get; set; }
         public DateTime Closed { get; set; }
         public bool IsClosed { get; set; }
         public string TableId { get; set; }

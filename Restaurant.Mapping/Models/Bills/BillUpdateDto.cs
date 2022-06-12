@@ -5,7 +5,7 @@ namespace Restaurant.Mapping.Models.Bills
     public class BillUpdateDto
     {
         [Required]
-        public double Total { get; set; }
+        public decimal Total { get; set; }
         [Required]
         public bool IsClosed { get; set; }
         [Required]
