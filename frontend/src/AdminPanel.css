@@ -140,7 +140,7 @@ body {
   }
 
   .food-addList-container{
-    padding:36px
+    padding:15px
   }
 
   .title{
@@ -158,4 +158,17 @@ body {
 
   .food-listItem-badge{
     font-size: 16px;
+  }
+
+  .form-container{
+    padding-right: 57%;
+  }
+
+  .total-container{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .modal-food-title{
+    padding: 32px!important;
   }

@@ -67,9 +67,6 @@ const FoodAddList = ({ foods, values, setValues }) => {
 
   return (
     <div className="food-addList-container">
-      <div>
-        <h3 className="title">Add food to bill</h3>
-      </div>
       <input
         className="form-control mr-sm-2 custom-input"
         type="search"
