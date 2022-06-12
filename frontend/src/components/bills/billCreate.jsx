@@ -6,7 +6,7 @@ import FoodAddList from "../shared/foodAddList";
 
 const BillCreate = () => {
   const [values, setValues] = useState({
-    IsClosed: "",
+    isClosed: false,
     tableId: "",
     createdById: "d149839b-7999-4813-9e06-ca14d2b744ef",
     foodData: [], // {billId,foodId,quantity}
@@ -19,7 +19,7 @@ const BillCreate = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await createItem("categories", values);
+    await createItem("bills", values);
     navigate(-1);
   };
 
@@ -102,18 +102,20 @@ const BillCreate = () => {
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Is closed</label>
           <select
+            required={true}
             className="form-control custom-input"
             id="exampleFormControlSelect1"
             onChange={(e) => onChange("isClosed", e.target.value)}
           >
-            <option value="true">True</option>
-            <option value="false">False</option>
+            <option value={false}>False</option>
+            <option value={true}>True</option>
           </select>
         </div>
 
         <div className="form-group">
           <label htmlFor="exampleFormControlSelect1">Table</label>
           <select
+            required={true}
             className="form-control custom-input"
             id="exampleFormControlSelect1"
             onChange={(e) => onChange("tableId", e.target.value)}
