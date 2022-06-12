@@ -72,7 +72,7 @@ const ReservationCreate = () => {
             onChange={(e) => onChange("date", e.target.value)}
           />
           <div className="form-group">
-            <label for="exampleFormControlSelect1">Table</label>
+            <label htmlFor="exampleFormControlSelect1">Table</label>
             <select
               className="form-control custom-input"
               id="exampleFormControlSelect1"

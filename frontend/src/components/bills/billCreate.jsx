@@ -9,7 +9,7 @@ const BillCreate = () => {
     IsClosed: "",
     tableId: "",
     createdById: "d149839b-7999-4813-9e06-ca14d2b744ef",
-    foodData: [],
+    foodData: [], // {billId,foodId,quantity}
   });
 
   const [tables, setTables] = useState([]);
@@ -113,14 +113,37 @@ const BillCreate = () => {
           >
             <div className="modal-dialog modal-lg">
               <div className="modal-content">
-                <FoodAddList foods={foods} />
+                <FoodAddList
+                  foods={foods}
+                  values={values}
+                  setValues={setValues}
+                />
               </div>
             </div>
           </div>
           <ul className="list-group custom-input">
-            <li className="list-group-item d-flex justify-content-between align-items-center">
-              None
-            </li>
+            {values.foodData.map((fd) => {
+              var foodValues = foods.filter((x) => x.id === fd.foodId)[0];
+
+              return (
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <span>{foodValues.name}</span>
+                    <span
+                      className="badge badge-primary badge-pill food-listItem-badge"
+                      style={{ marginLeft: 20 }}
+                    >
+                      {fd.quantity}
+                    </span>
+                  </div>
+                  <div>
+                    <span style={{ fontWeight: "bold" }}>
+                      {foodValues.price * fd.quantity} лв
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <button className="btn btn-success">Create</button>

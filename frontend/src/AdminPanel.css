@@ -150,3 +150,12 @@ body {
   .btn-addFood{
     margin-left: 10px;
   }
+
+  .food-listItem-button-container{
+    display: flex;
+    align-items: center;
+  }
+
+  .food-listItem-badge{
+    font-size: 16px;
+  }

@@ -22,7 +22,7 @@ const CategoryDetails = () => {
 
       <form>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Id
           </label>
           <input
@@ -33,7 +33,7 @@ const CategoryDetails = () => {
             aria-describedby="emailHelp"
             value={category ? category.id : ""}
           />
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             Name
           </label>
           <input

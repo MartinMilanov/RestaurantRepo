@@ -59,7 +59,7 @@ const FoodCreate = () => {
             onChange={(e) => onChange("price", e.target.value)}
           />
           <div className="form-group">
-            <label for="exampleFormControlSelect1">Category</label>
+            <label htmlFor="exampleFormControlSelect1">Category</label>
             <select
               className="form-control custom-input"
               id="exampleFormControlSelect1"
