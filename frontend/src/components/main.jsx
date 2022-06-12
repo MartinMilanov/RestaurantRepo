@@ -16,6 +16,7 @@ import TableUpdate from "./tables/tableUpdate";
 import ReservationDetails from "./reservations/reservationDetails";
 import ReservationCreate from "./reservations/reservationCreate";
 import ReservationUpdate from "./reservations/reservationUpdate";
+import BillCreate from "./bills/billCreate";
 
 const Main = () => {
   return (
@@ -48,6 +49,7 @@ const Main = () => {
         <Route path="tables/update/:id" element={<TableUpdate />} />
 
         <Route path="bills" element={<BillList />} />
+        <Route path="bills/create" element={<BillCreate />} />
       </Routes>
     </main>
   );

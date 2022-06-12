@@ -70,8 +70,6 @@ body {
   .navbar-brand {
     padding-top: .75rem;
     padding-bottom: .75rem;
-    background-color: rgba(0, 0, 0, .25);
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
   }
   
   .navbar .navbar-toggler {
@@ -135,4 +133,20 @@ body {
 
   .btn-cancel{
     margin-left: 25px
+  }
+
+  .food-modal{
+    width: 624px;
+  }
+
+  .food-addList-container{
+    padding:36px
+  }
+
+  .title{
+    margin-bottom: 20px;
+  }
+
+  .btn-addFood{
+    margin-left: 10px;
   }
