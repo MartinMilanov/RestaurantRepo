@@ -2,16 +2,20 @@ import axios from "axios";
 import { apiUrl } from "../settings/settings";
 
 export const tryLogIn = async (username, password) => {
-  var result = await axios.post(`${apiUrl}authenticate/login`, {
-    username: username,
-    password: password,
-  });
+  try {
+    var result = await axios.post(`${apiUrl}authenticate/login`, {
+      username: username,
+      password: password,
+    });
 
-  if (result.data.token !== undefined) {
-    localStorage.setItem("token", result.data.token);
-    localStorage.setItem("username", result.data.username);
-    return true;
-  } else {
+    if (result.data.token !== undefined) {
+      localStorage.setItem("token", result.data.token);
+      localStorage.setItem("username", result.data.username);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
     return false;
   }
 };

@@ -173,38 +173,38 @@ const BillUpdate = () => {
           <label htmlFor="exampleFormControlSelect1">Foods</label>
 
           <div
-            class="modal fade bd-example-modal-lg"
+            className="modal fade bd-example-modal-lg"
             tabindex="-1"
             role="dialog"
             aria-labelledby="myLargeModalLabel"
             aria-hidden="true"
           >
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header modal-food-title">
-                  <h5 class="modal-title " id="exampleModalLabel">
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header modal-food-title">
+                  <h5 className="modal-title " id="exampleModalLabel">
                     Добавяне на храна
                   </h5>
                   <button
                     type="button"
-                    class="close"
+                    className="close"
                     data-dismiss="modal"
                     aria-label="Close"
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
                   <FoodAddList
                     foods={foods}
                     values={values}
                     setValues={setValues}
                   />
                 </div>
-                <div class="modal-footer">
+                <div className="modal-footer">
                   <button
                     type="button"
-                    class="btn btn-secondary"
+                    className="btn btn-secondary"
                     data-dismiss="modal"
                   >
                     Close

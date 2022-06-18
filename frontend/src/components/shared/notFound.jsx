@@ -1,7 +1,7 @@
 const NotFound = () => {
   return (
     <>
-      <div class="alert alert-secondary" role="alert">
+      <div className="alert alert-secondary" role="alert">
         Page not found
       </div>
     </>

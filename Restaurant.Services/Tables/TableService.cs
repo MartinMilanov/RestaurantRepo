@@ -27,6 +27,8 @@ namespace Restaurant.Services.Tables
         {
             var entity = _mapper.Map<Table>(input);
 
+            await ThrowIfTableNumberExists(entity.Id, entity.TableNumber);
+
             await _tableRepo.Create(entity);
 
             await _unitOfWork.SaveChangesAsync();
@@ -134,6 +136,16 @@ namespace Restaurant.Services.Tables
             await _unitOfWork.SaveChangesAsync();
 
             await _loggingService.LogOnUpdate("Tables");
+        }
+    
+        private async Task ThrowIfTableNumberExists(string id, int number)
+        {
+            var result = await _tableRepo.GetBy(x => x.TableNumber == number && x.Id != id);
+
+            if (result != null)
+            {
+                throw new Exception("Table with this number already exists");
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { GlobalContext } from "../../GlobalContext";
-
+import { toast } from "react-toastify";
 const Login = () => {
   const [values, setValues] = useState({ username: "", password: "" });
 
@@ -17,9 +17,9 @@ const Login = () => {
     var result = await tryLogIn(values.username, values.password);
 
     if (result === false) {
-      window.alert("Unsuccessful login");
+      toast.error("Unsuccessful login");
     } else {
-      window.alert("Successful login");
+      toast.success("Successful login");
       setUsername(localStorage.getItem("username"));
       navigate(-1);
     }
@@ -48,8 +48,8 @@ const Login = () => {
         }}
       >
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
-            Email address
+          <label htmlFor="exampleInputEmail1" className="form-label">
+            Username
           </label>
           <input
             className="form-control"
@@ -63,7 +63,7 @@ const Login = () => {
           </div>
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Password
           </label>
           <input

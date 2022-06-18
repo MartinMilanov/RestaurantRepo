@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,7 +17,9 @@ using Restaurant.Services.Loggers;
 using Restaurant.Services.Reservations;
 using Restaurant.Services.Tables;
 using Restaurant.Web.Middleware;
+using Restaurant.Web.Models.Response;
 using System.Text;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,7 +82,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IFoodBillService, FoodBillService>();
 builder.Services.AddTransient<ILoggingService, LoggingService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
