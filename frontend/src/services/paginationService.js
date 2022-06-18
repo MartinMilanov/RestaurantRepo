@@ -1,5 +1,6 @@
 import axios from "axios";
 import { apiUrl } from "../settings/settings";
+import { getToken } from "./authService";
 
 export const getItems = async (
   endpoint,
@@ -10,9 +11,11 @@ export const getItems = async (
   filtersString,
   jwtToken
 ) => {
+  const jwt = getToken();
+
   const config = {
     headers: {
-      Authorization: jwtToken,
+      Authorization: `Bearer ${jwt}`,
     },
   };
 

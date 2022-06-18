@@ -6,6 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import { useEffect, useState } from "react";
 import { getUsername, isLoggedIn } from "./services/authService";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [username, setUsername] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,6 +31,7 @@ function App() {
         <BrowserRouter>
           <Header />
           <Container />
+          <ToastContainer />
         </BrowserRouter>
       </GlobalContext.Provider>
     </>
