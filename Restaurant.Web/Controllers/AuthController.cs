@@ -54,6 +54,7 @@ namespace Restaurant.Web.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
+                    username=user.NormalizedUserName,
                     expiration = token.ValidTo
                 });
             }

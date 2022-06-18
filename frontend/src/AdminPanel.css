@@ -1,3 +1,5 @@
+
+
 body {
     font-size: .875rem;
   }
@@ -171,4 +173,18 @@ body {
 
   .modal-food-title{
     padding: 32px!important;
+  }
+  .navbar-brand{
+    color:black !important;
+  }
+
+  .userLink{
+    color:black !important;
+    cursor: pointer;
+  }
+  .log-in-title{
+    margin-bottom: 40px;
+  }
+  .login-links-container{
+    display: flex;
   }
