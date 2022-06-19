@@ -53,6 +53,7 @@ const CategoryUpdate = () => {
             Име
           </label>
           <input
+            required={true}
             type="text"
             className="form-control custom-input"
             id="exampleInputEmail1"

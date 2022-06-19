@@ -72,6 +72,7 @@ const ReservationUpdate = () => {
           />
           <label className="form-label">Брой души</label>
           <input
+            required={true}
             type="text"
             className="form-control custom-input"
             pattern="^\d*(\.\d{0,2})?$"
@@ -80,6 +81,7 @@ const ReservationUpdate = () => {
           />
           <label className="form-label">Дата и час</label>
           <input
+            required={true}
             type="datetime-local"
             className="form-control custom-input"
             pattern="^\d*(\.\d{0,2})?$"
@@ -89,6 +91,7 @@ const ReservationUpdate = () => {
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Маса</label>
             <select
+              required={true}
               className="form-control custom-input"
               id="exampleFormControlSelect1"
               onChange={(e) => onChange("tableId", e.target.value)}

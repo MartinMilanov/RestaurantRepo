@@ -63,6 +63,7 @@ const FoodUpdate = () => {
           />
           <label className="form-label">Цена</label>
           <input
+            required={true}
             type="text"
             className="form-control custom-input"
             pattern="^\d*(\.\d{0,2})?$"
@@ -72,6 +73,7 @@ const FoodUpdate = () => {
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Категория</label>
             <select
+              required={true}
               className="form-control custom-input"
               id="exampleFormControlSelect1"
               onChange={(e) => onChange("categoryId", e.target.value)}

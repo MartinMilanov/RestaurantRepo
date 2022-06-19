@@ -57,6 +57,7 @@ const TableUpdate = () => {
           />
           <label className="form-label">Seats</label>
           <input
+            required={true}
             type="number"
             className="form-control custom-input"
             value={values.seats}

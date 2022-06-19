@@ -35,6 +35,7 @@ const CategoryCreate = () => {
           </label>
           <input
             type="text"
+            required={true}
             className="form-control custom-input"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
