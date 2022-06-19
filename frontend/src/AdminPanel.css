@@ -188,3 +188,15 @@ body {
   .login-links-container{
     display: flex;
   }
+
+  .dashboard-card{
+    margin-top:15px
+  }
+
+  .export-button{
+    margin-left : 20px
+  }
+
+  .hidden{
+    visibility: hidden;
+  }

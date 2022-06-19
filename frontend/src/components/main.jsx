@@ -24,6 +24,7 @@ import { GlobalContext } from "../GlobalContext";
 import { useContext } from "react";
 import Unauthorized from "./shared/unauthorized";
 import NotFound from "./shared/notFound";
+import Dashboard from "./dashboard";
 
 const Main = () => {
   const { username } = useContext(GlobalContext);
@@ -86,6 +87,7 @@ const Main = () => {
 
         <Route path="/login" element={<Login />} />
 
+        <Route path="/" element={authorize(<Dashboard />)} />
         <Route path="*" element={authorize(<NotFound />)} />
       </Routes>
     </main>
