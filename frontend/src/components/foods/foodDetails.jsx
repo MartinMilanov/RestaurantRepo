@@ -21,7 +21,7 @@ const FoodDetails = () => {
 
   return (
     <>
-      <h2 className="formTitle">Details</h2>
+      <h2 className="formTitle">Детайли за храна</h2>
 
       <form>
         <div className="mb-3">
@@ -32,21 +32,21 @@ const FoodDetails = () => {
             disabled={true}
             value={food ? food.id : ""}
           />
-          <label className="form-label">Name</label>
+          <label className="form-label">Име</label>
           <input
             type="text"
             className="form-control custom-input"
             disabled={true}
             value={food ? food.name : ""}
           />
-          <label className="form-label">Price</label>
+          <label className="form-label">Цена</label>
           <input
             type="number"
             className="form-control custom-input"
             disabled={true}
             value={food ? food.price : ""}
           />
-          <label className="form-label">Category</label>
+          <label className="form-label">Категория</label>
           <input
             type="text"
             className="form-control custom-input"

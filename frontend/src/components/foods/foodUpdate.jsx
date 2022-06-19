@@ -45,7 +45,7 @@ const FoodUpdate = () => {
 
   return (
     <>
-      <h2 className="formTitle">Create food entry</h2>
+      <h2 className="formTitle">Обновяване на храна</h2>
 
       <form
         onSubmit={(event) => {
@@ -53,7 +53,7 @@ const FoodUpdate = () => {
         }}
       >
         <div className="mb-3">
-          <label className="form-label">Name</label>
+          <label className="form-label">Име</label>
           <input
             required={true}
             type="text"
@@ -61,7 +61,7 @@ const FoodUpdate = () => {
             value={values.name}
             onChange={(e) => onChange("name", e.target.value)}
           />
-          <label className="form-label">Price</label>
+          <label className="form-label">Цена</label>
           <input
             type="text"
             className="form-control custom-input"
@@ -70,7 +70,7 @@ const FoodUpdate = () => {
             onChange={(e) => onChange("price", e.target.value)}
           />
           <div className="form-group">
-            <label htmlFor="exampleFormControlSelect1">Category</label>
+            <label htmlFor="exampleFormControlSelect1">Категория</label>
             <select
               className="form-control custom-input"
               id="exampleFormControlSelect1"
@@ -91,7 +91,7 @@ const FoodUpdate = () => {
             </select>
           </div>
         </div>
-        <button className="btn btn-warning">Update</button>
+        <button className="btn btn-warning">Обнови</button>
 
         <button
           className="btn btn-cancel"
@@ -100,7 +100,7 @@ const FoodUpdate = () => {
             navigate(-1);
           }}
         >
-          Cancel
+          Отказ
         </button>
       </form>
     </>

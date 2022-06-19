@@ -56,7 +56,7 @@ const Pagination = ({ count, itemsPerPage, getItems }) => {
       <ul className="pagination justify-content-center">
         <li className={`page-item ${currentPage == 1 ? "disabled" : null}`}>
           <a className="page-link" onClick={() => prev()}>
-            Previous
+            Назад
           </a>
         </li>
         {generatePageNumbers()}
@@ -66,7 +66,7 @@ const Pagination = ({ count, itemsPerPage, getItems }) => {
           }`}
         >
           <a className="page-link" onClick={() => next()}>
-            Next
+            Напред
           </a>
         </li>
       </ul>

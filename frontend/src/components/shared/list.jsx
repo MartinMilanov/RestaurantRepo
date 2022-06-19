@@ -1,6 +1,6 @@
-import Pagination from "./pagination";
 import { deleteItem } from "../../services/commonService";
 import { Link } from "react-router-dom";
+import { translate } from "../../services/translationService";
 
 const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
   const generateTableHeaders = () => {
@@ -15,7 +15,7 @@ const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
               onClickChangeOrderBy(x.charAt(0).toUpperCase() + x.slice(1))
             }
           >
-            {x.charAt(0).toUpperCase() + x.slice(1)}
+            {translate(x.charAt(0).toUpperCase() + x.slice(1))}
             {isHeaderInOrderBy(x.charAt(0).toUpperCase() + x.slice(1)) ? (
               orderBy[1] == 1 ? (
                 <i className="bi bi-caret-up-fill"></i>

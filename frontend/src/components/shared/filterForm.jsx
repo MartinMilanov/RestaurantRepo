@@ -95,7 +95,7 @@ const FilterForm = ({ filters, setFilterString }) => {
 
   return (
     <div className="filterBlock">
-      <h3>Filters</h3>
+      <h3>Филтри</h3>
 
       {generateFilters()}
 
@@ -103,7 +103,7 @@ const FilterForm = ({ filters, setFilterString }) => {
         className="btn btn-primary"
         onClick={() => applyTemporaryFilters()}
       >
-        Filter
+        Филтрирай
       </button>
 
       <div className="btn-filter-container">

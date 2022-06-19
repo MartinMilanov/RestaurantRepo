@@ -70,11 +70,11 @@ const FoodAddList = ({ foods, values, setValues }) => {
       <input
         className="form-control mr-sm-2 custom-input"
         type="search"
-        placeholder="Search"
+        placeholder="Търсене по име"
         aria-label="Search"
         onChange={(e) => setNameFilter(e.target.value)}
       ></input>
-      <label htmlFor="exampleFormControlSelect1">Foods</label>
+      <label htmlFor="exampleFormControlSelect1">Храни</label>
       <ul className="list-group custom-input">
         {foods
           .filter(

@@ -18,7 +18,7 @@ const ReservationDetails = () => {
 
   return (
     <>
-      <h2 className="formTitle">Details</h2>
+      <h2 className="formTitle">Детайли за резервация</h2>
 
       <form>
         <div className="mb-3">
@@ -29,21 +29,21 @@ const ReservationDetails = () => {
             disabled={true}
             value={reservation ? reservation.id : ""}
           />
-          <label className="form-label">Reservee Name</label>
+          <label className="form-label">Име на резервиращия</label>
           <input
             type="text"
             className="form-control custom-input"
             disabled={true}
             value={reservation ? reservation.reserveeName : ""}
           />
-          <label className="form-label">PeopleCount</label>
+          <label className="form-label">Брой души</label>
           <input
             type="number"
             className="form-control custom-input"
             disabled={true}
             value={reservation ? reservation.peopleCount : ""}
           />
-          <label className="form-label">Date</label>
+          <label className="form-label">Дата и час</label>
           <input
             type="text"
             className="form-control custom-input"
@@ -53,7 +53,7 @@ const ReservationDetails = () => {
             }
           />
 
-          <label className="form-label">Table Number</label>
+          <label className="form-label">Номер на маса</label>
           <input
             type="text"
             className="form-control custom-input"
@@ -61,7 +61,7 @@ const ReservationDetails = () => {
             value={reservation ? reservation.tableNumber : ""}
           />
 
-          <label className="form-label">Created By</label>
+          <label className="form-label">Създаден от</label>
           <input
             type="text"
             className="form-control custom-input"

@@ -86,10 +86,10 @@ const BillDetails = () => {
 
   return (
     <div className="form-container">
-      <h3 className="formTitle">Update bill entry</h3>
+      <h3 className="formTitle">Детайли за сметка</h3>
       <form>
         <div className="form-group">
-          <label htmlFor="exampleFormControlSelect1">Is closed</label>
+          <label htmlFor="exampleFormControlSelect1">Затворено</label>
           <select
             required={true}
             className="form-control custom-input"
@@ -97,16 +97,16 @@ const BillDetails = () => {
             disabled={true}
           >
             <option value={false} selected={values.isClosed === false}>
-              False
+              Не
             </option>
             <option value={true} selected={values.isClosed === true}>
-              True
+              Да
             </option>
           </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="exampleFormControlSelect1">Table</label>
+          <label htmlFor="exampleFormControlSelect1">Маса</label>
           <select
             required={true}
             className="form-control custom-input"
@@ -128,7 +128,7 @@ const BillDetails = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="exampleFormControlSelect1">Foods</label>
+          <label htmlFor="exampleFormControlSelect1">Храни</label>
 
           <ul className="list-group custom-input">{previewFoods()}</ul>
         </div>

@@ -42,7 +42,7 @@ const ReservationCreate = () => {
 
   return (
     <>
-      <h2 className="formTitle">Create reservation entry</h2>
+      <h2 className="formTitle">Създаване на резервация</h2>
 
       <form
         onSubmit={(event) => {
@@ -50,21 +50,21 @@ const ReservationCreate = () => {
         }}
       >
         <div className="mb-3">
-          <label className="form-label">Reservee Name</label>
+          <label className="form-label">Име на резеревиращия</label>
           <input
             required={true}
             type="text"
             className="form-control custom-input"
             onChange={(e) => onChange("reserveeName", e.target.value)}
           />
-          <label className="form-label">People Count</label>
+          <label className="form-label">Брой души</label>
           <input
             type="text"
             className="form-control custom-input"
             pattern="^\d*(\.\d{0,2})?$"
             onChange={(e) => onChange("peopleCount", e.target.value)}
           />
-          <label className="form-label">Date</label>
+          <label className="form-label">Дата и час</label>
           <input
             type="datetime-local"
             className="form-control custom-input"
@@ -72,7 +72,7 @@ const ReservationCreate = () => {
             onChange={(e) => onChange("date", e.target.value)}
           />
           <div className="form-group">
-            <label htmlFor="exampleFormControlSelect1">Table</label>
+            <label htmlFor="exampleFormControlSelect1">Маса</label>
             <select
               className="form-control custom-input"
               id="exampleFormControlSelect1"
@@ -89,7 +89,7 @@ const ReservationCreate = () => {
             </select>
           </div>
         </div>
-        <button className="btn btn-success">Create</button>
+        <button className="btn btn-success">Създай</button>
         <button
           className="btn btn-cancel"
           type="button"
@@ -97,7 +97,7 @@ const ReservationCreate = () => {
             navigate(-1);
           }}
         >
-          Cancel
+          Отказване
         </button>
       </form>
     </>

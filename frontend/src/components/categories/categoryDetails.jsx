@@ -18,7 +18,7 @@ const CategoryDetails = () => {
 
   return (
     <>
-      <h2 className="formTitle">Details</h2>
+      <h2 className="formTitle">Детайли за категория</h2>
 
       <form>
         <div className="mb-3">
@@ -34,7 +34,7 @@ const CategoryDetails = () => {
             value={category ? category.id : ""}
           />
           <label htmlFor="exampleInputEmail1" className="form-label">
-            Name
+            Име
           </label>
           <input
             type="email"

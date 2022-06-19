@@ -54,7 +54,7 @@ const ReservationUpdate = () => {
 
   return (
     <>
-      <h2 className="formTitle">Update reservation entry</h2>
+      <h2 className="formTitle">Обновяване на резервация</h2>
 
       <form
         onSubmit={(event) => {
@@ -62,7 +62,7 @@ const ReservationUpdate = () => {
         }}
       >
         <div className="mb-3">
-          <label className="form-label">Reservee Name</label>
+          <label className="form-label">Име на резервиращия</label>
           <input
             required={true}
             type="text"
@@ -70,7 +70,7 @@ const ReservationUpdate = () => {
             value={values.reserveeName}
             onChange={(e) => onChange("reserveeName", e.target.value)}
           />
-          <label className="form-label">People Count</label>
+          <label className="form-label">Брой души</label>
           <input
             type="text"
             className="form-control custom-input"
@@ -78,7 +78,7 @@ const ReservationUpdate = () => {
             value={values.peopleCount}
             onChange={(e) => onChange("peopleCount", e.target.value)}
           />
-          <label className="form-label">Date</label>
+          <label className="form-label">Дата и час</label>
           <input
             type="datetime-local"
             className="form-control custom-input"
@@ -87,7 +87,7 @@ const ReservationUpdate = () => {
             onChange={(e) => onChange("date", e.target.value)}
           />
           <div className="form-group">
-            <label htmlFor="exampleFormControlSelect1">Table</label>
+            <label htmlFor="exampleFormControlSelect1">Маса</label>
             <select
               className="form-control custom-input"
               id="exampleFormControlSelect1"
@@ -108,7 +108,7 @@ const ReservationUpdate = () => {
             </select>
           </div>
         </div>
-        <button className="btn btn-warning">Update</button>
+        <button className="btn btn-warning">Обновяване</button>
         <button
           className="btn btn-cancel"
           type="button"
@@ -116,7 +116,7 @@ const ReservationUpdate = () => {
             navigate(-1);
           }}
         >
-          Cancel
+          Отказване
         </button>
       </form>
     </>

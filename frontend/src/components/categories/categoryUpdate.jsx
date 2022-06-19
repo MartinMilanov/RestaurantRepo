@@ -42,7 +42,7 @@ const CategoryUpdate = () => {
 
   return (
     <>
-      <h3 className="formTitle">Create a category</h3>
+      <h3 className="formTitle">Обновяване на категория</h3>
       <form
         onSubmit={(event) => {
           onSubmit(event);
@@ -50,7 +50,7 @@ const CategoryUpdate = () => {
       >
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
-            Name
+            Име
           </label>
           <input
             type="text"
@@ -62,7 +62,7 @@ const CategoryUpdate = () => {
           />
         </div>
 
-        <button className="btn btn-warning">Update</button>
+        <button className="btn btn-warning">Обнови</button>
         <button
           className="btn btn-cancel"
           type="button"
@@ -70,7 +70,7 @@ const CategoryUpdate = () => {
             navigate(-1);
           }}
         >
-          Cancel
+          Отказ
         </button>
       </form>
     </>

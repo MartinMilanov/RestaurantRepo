@@ -81,13 +81,13 @@ const ListView = ({ endpoint, columnNames, filters }) => {
 
       <div className="create-wrapper">
         <Link to={`/${endpoint}/create`} className="btn btn-success btn-right">
-          Create
+          Създай
         </Link>
         <button
           className="btn btn-warning btn-right export-button"
           onClick={() => downloadFile()}
         >
-          Export {endpoint}
+          Експортирай всички
         </button>
 
         <a
