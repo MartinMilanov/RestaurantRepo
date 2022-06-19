@@ -12,7 +12,7 @@ const Sidebar = () => {
             <Link
               to={`/`}
               key={"homeLink"}
-              className="nav-link active"
+              className="nav-link"
               aria-current="page"
             >
               <svg

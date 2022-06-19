@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Dashboard = () => {
   return (
     <>
@@ -5,57 +7,61 @@ const Dashboard = () => {
         <div className="col-sm-3 dashboard-card">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">Foods</h5>
-              <p className="card-text">
-                This is where you can create read update and delete your foods
-              </p>
-              <a className="btn btn-primary">Go somewhere</a>
+              <h5 className="card-title">Храни</h5>
+              <p className="card-text">Кликнете тук за менежиране на храните</p>
+              <Link to={"/foods"} className="btn btn-primary">
+                Храни
+              </Link>
             </div>
           </div>
         </div>
         <div className="col-sm-3 dashboard-card">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">Categories</h5>
+              <h5 className="card-title">Категории</h5>
               <p className="card-text">
-                This is where you can create read update and delete your
-                categories
+                Кликнете тук за менежиране на категориите
               </p>
-              <a className="btn btn-primary">Go somewhere</a>
+              <Link to={"/categories"} className="btn btn-primary">
+                Категории
+              </Link>
             </div>
           </div>
         </div>
         <div className="col-sm-3 dashboard-card">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">Bills</h5>
+              <h5 className="card-title">Сметки</h5>
               <p className="card-text">
-                This is where you can create read update and delete your bills
+                Кликнете тук за менежиране на сметките
               </p>
-              <a className="btn btn-primary">Go somewhere</a>
+              <Link to={"/bills"} className="btn btn-primary">
+                Сметки
+              </Link>
             </div>
           </div>
         </div>
         <div className="col-sm-3 dashboard-card">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">Reservations</h5>
+              <h5 className="card-title">Резервации</h5>
               <p className="card-text">
-                This is where you can create read update and delete your
-                reservations
+                Кликнете тук за менежиране на резервациите
               </p>
-              <a className="btn btn-primary">Go somewhere</a>
+              <Link to={"/reservations"} className="btn btn-primary">
+                Резервации
+              </Link>
             </div>
           </div>
         </div>
         <div className="col-sm-3 dashboard-card">
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">Tables</h5>
-              <p className="card-text">
-                This is where you can create read update and delete your tables
-              </p>
-              <a className="btn btn-primary">Go somewhere</a>
+              <h5 className="card-title">Маси</h5>
+              <p className="card-text">Кликнете тук за менежиране на масите</p>
+              <Link to={"/tables"} className="btn btn-primary">
+                Маси
+              </Link>
             </div>
           </div>
         </div>

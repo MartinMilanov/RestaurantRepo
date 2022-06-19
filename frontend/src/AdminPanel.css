@@ -200,3 +200,7 @@ body {
   .hidden{
     visibility: hidden;
   }
+
+  .btn-primary{
+    color:white !important;
+  }

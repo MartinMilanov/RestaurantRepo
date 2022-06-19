@@ -1,6 +1,7 @@
 import { deleteItem } from "../../services/commonService";
 import { Link } from "react-router-dom";
 import { translate } from "../../services/translationService";
+import { toast } from "react-toastify";
 
 const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
   const generateTableHeaders = () => {
@@ -119,10 +120,13 @@ const List = ({ columnNames, data, orderBy, setOrderBy, endpoint }) => {
   };
 
   const onClickDeleteItem = async (id) => {
-    var proceed = window.confirm("Are you sure you want to delete this item ?");
+    var proceed = window.confirm(
+      "Сигурни ли сте че искате да изтриете този запис ?"
+    );
     window.location.reload();
     if (proceed) {
       await deleteItem(endpoint, id).catch((e) => console.log(e));
+      toast.success("Успешно изтрихте запис");
     }
   };
 
