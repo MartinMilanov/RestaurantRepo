@@ -11,7 +11,8 @@ namespace Restaurant.Data.Common.Configurations.Reservations
             builder
                 .HasOne(x => x.Table)
                 .WithMany(x => x.Reservations)
-                .HasForeignKey(x => x.TableId);
+                .HasForeignKey(x => x.TableId)
+                .IsRequired(false);
         }
     }
 }

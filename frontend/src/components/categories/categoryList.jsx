@@ -4,7 +4,7 @@ const CategoryList = () => {
   const previewFilters = (onChangeFilter) => {
     return (
       <>
-        <div className="input-group mb-3" key={`$1billfilter`}>
+        <div className="input-group mb-3" key={`$1catfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
             Име
           </span>

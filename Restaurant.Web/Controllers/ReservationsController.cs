@@ -4,16 +4,20 @@ using Restaurant.Mapping.Models.Reservations;
 using Restaurant.Web.Models.Response;
 using Restaurant.Services.Reservations;
 using Restaurant.Mapping.Models.Common;
+using Microsoft.AspNetCore.Identity;
+using Restaurant.Data.Entities.Auth;
 
 namespace Restaurant.Web.Controllers
 {
     public class ReservationsController: BaseController
     {
         private readonly IReservationService _reservationService;
+        private readonly UserManager<ApplicationUser> _userService;
 
-        public ReservationsController(IReservationService reservationService)
+        public ReservationsController(IReservationService reservationService, UserManager<ApplicationUser> userService)
         {
             _reservationService = reservationService;
+            _userService = userService;
         }
 
         [HttpPost("create")]
@@ -23,6 +27,8 @@ namespace Restaurant.Web.Controllers
             {
                 throw new Exception("Невалидни данни");
             }
+
+            input.CreatedById = _userService.GetUserId(User);
 
             await _reservationService.Create(input);
 
@@ -36,6 +42,8 @@ namespace Restaurant.Web.Controllers
             {
                 throw new Exception("Невалидни данни");
             }
+
+            input.CreatedById = _userService.GetUserId(User);
 
             await _reservationService.Update(id, input);
 

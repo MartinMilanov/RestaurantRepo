@@ -14,12 +14,14 @@ namespace Restaurant.Data.Common.Configurations.FoodBills
             modelBuilder
                 .HasOne(bc => bc.Food)
                 .WithMany(b => b.Bills)
-                .HasForeignKey(bc => bc.FoodId);
+                .HasForeignKey(bc => bc.FoodId)
+                .IsRequired(false);
 
             modelBuilder
                 .HasOne(bc => bc.Bill)
                 .WithMany(b => b.Foods)
-                .HasForeignKey(bc => bc.BillId);
+                .HasForeignKey(bc => bc.BillId)
+                .IsRequired(false);
         }
     }
 }

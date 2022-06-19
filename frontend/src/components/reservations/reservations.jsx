@@ -4,7 +4,7 @@ const ReservationList = () => {
   const previewFilters = (onChangeFilter) => {
     return (
       <>
-        <div className="input-group mb-3" key={`$1billfilter`}>
+        <div className="input-group mb-3" key={`$1resrtvfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
             Дата и час
           </span>
@@ -16,7 +16,7 @@ const ReservationList = () => {
             onChange={(e) => onChangeFilter("Date", e.target.value)}
           />
         </div>
-        <div className="input-group mb-3" key={`$1billfilter`}>
+        <div className="input-group mb-3" key={`$1resrtvfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
             Създадено от
           </span>

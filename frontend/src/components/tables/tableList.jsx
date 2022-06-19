@@ -4,7 +4,7 @@ const TableList = () => {
   const previewFilters = (onChangeFilter) => {
     return (
       <>
-        <div className="input-group mb-3" key={`$1billfilter`}>
+        <div className="input-group mb-3" key={`$1tblfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
             Брой места
           </span>
@@ -16,7 +16,7 @@ const TableList = () => {
             onChange={(e) => onChangeFilter("Seats", e.target.value)}
           />
         </div>
-        <div className="input-group mb-3" key={`$1billfilter`}>
+        <div className="input-group mb-3" key={`$1tblfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
             Номер на маса
           </span>

@@ -14,7 +14,9 @@ const Login = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    var result = await tryLogIn(values.username, values.password);
+    var result = await tryLogIn(values.username, values.password).catch((x) =>
+      toast.error("Unsuccessful login")
+    );
 
     if (result === false) {
       toast.error("Unsuccessful login");
@@ -41,7 +43,7 @@ const Login = () => {
 
   return (
     <>
-      <h2 className="log-in-title">Log in</h2>
+      <h2 className="log-in-title">Log In</h2>
       <form
         onSubmit={(event) => {
           onSubmit(event);
@@ -58,9 +60,6 @@ const Login = () => {
             aria-describedby="emailHelp"
             onChange={(e) => onChange("username", e.target.value)}
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">
@@ -75,7 +74,7 @@ const Login = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Login
+          Log in
         </button>
       </form>
     </>

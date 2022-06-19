@@ -4,7 +4,7 @@ const FoodList = () => {
   const previewFilters = (onChangeFilter) => {
     return (
       <>
-        <div className="input-group mb-3" key={`$1billfilter`}>
+        <div className="input-group mb-3" key={`$1foodfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
             Име
           </span>
@@ -16,7 +16,7 @@ const FoodList = () => {
             onChange={(e) => onChangeFilter("Name", e.target.value)}
           />
         </div>
-        <div className="input-group mb-3" key={`$1billfilter`}>
+        <div className="input-group mb-3" key={`$1foodfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
             Цена
           </span>

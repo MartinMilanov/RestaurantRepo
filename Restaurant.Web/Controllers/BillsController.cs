@@ -4,6 +4,8 @@ using Restaurant.Web.Controllers.Common;
 using Restaurant.Web.Models.Response;
 using Restaurant.Services.Bills;
 using Restaurant.Mapping.Models.Common;
+using Microsoft.AspNetCore.Identity;
+using Restaurant.Data.Entities.Auth;
 
 namespace Restaurant.Web.Controllers
 {
@@ -11,9 +13,12 @@ namespace Restaurant.Web.Controllers
     {
         private readonly IBillService _billService;
 
-        public BillsController(IBillService billService)
+        private readonly UserManager<ApplicationUser> _userService;
+
+        public BillsController(IBillService billService, UserManager<ApplicationUser> userService)
         {
             _billService = billService;
+            _userService = userService;
         }
 
         [HttpPost("create")]
@@ -23,6 +28,8 @@ namespace Restaurant.Web.Controllers
             {
                 throw new Exception("Невалидни данни");
             }
+
+            input.CreatedById = _userService.GetUserId(User);
 
             await _billService.Create(input);
 

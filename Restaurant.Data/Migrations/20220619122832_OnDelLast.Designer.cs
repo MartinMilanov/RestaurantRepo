@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant.Data;
 
@@ -11,9 +12,10 @@ using Restaurant.Data;
 namespace Restaurant.Data.Migrations
 {
     [DbContext(typeof(RestaurantDbContext))]
-    partial class RestaurantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220619122832_OnDelLast")]
+    partial class OnDelLast
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,6 +243,7 @@ namespace Restaurant.Data.Migrations
                         .HasColumnName("LastEdited18118164");
 
                     b.Property<string>("TableId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Total")
@@ -366,6 +369,7 @@ namespace Restaurant.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TableId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -458,7 +462,9 @@ namespace Restaurant.Data.Migrations
 
                     b.HasOne("Restaurant.Data.Entities.Tables.Table", "Table")
                         .WithMany("Bills")
-                        .HasForeignKey("TableId");
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
@@ -469,11 +475,15 @@ namespace Restaurant.Data.Migrations
                 {
                     b.HasOne("Restaurant.Data.Entities.Bills.Bill", "Bill")
                         .WithMany("Foods")
-                        .HasForeignKey("BillId");
+                        .HasForeignKey("BillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Restaurant.Data.Entities.Foods.Food", "Food")
                         .WithMany("Bills")
-                        .HasForeignKey("FoodId");
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Bill");
 
@@ -499,7 +509,9 @@ namespace Restaurant.Data.Migrations
 
                     b.HasOne("Restaurant.Data.Entities.Tables.Table", "Table")
                         .WithMany("Reservations")
-                        .HasForeignKey("TableId");
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 
