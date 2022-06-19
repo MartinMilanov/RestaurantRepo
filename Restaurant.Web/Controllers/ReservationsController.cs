@@ -21,12 +21,12 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
 
             await _reservationService.Create(input);
 
-            return Ok(new Response<String>(false, null, "Successfully created Reservation"));
+            return Ok(new Response<String>(false, null, "Успешно създадохте резервация"));
         }
 
         [HttpPut("{id}")]
@@ -34,12 +34,12 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
 
             await _reservationService.Update(id, input);
 
-            return Ok(new Response<String>(false, null, "Successfully updated Reservation"));
+            return Ok(new Response<String>(false, null, "Успешно обновихте резервация"));
         }
 
         [HttpGet("{id}")]
@@ -47,14 +47,14 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null");
+                throw new Exception("Id не трябва да бъде празно");
             }
 
             ReservationResultDto entity = await _reservationService.GetById(id);
 
             if (entity == null)
             {
-                throw new Exception("Could not find record");
+                throw new Exception("Резервацията не може да бъде намерена");
             }
 
             return Ok(new Response<ReservationResultDto>(false, "", entity));
@@ -76,12 +76,12 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null");
+                throw new Exception("Id не трябва да бъде празно");
             }
 
             await _reservationService.Delete(id);
 
-            return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
+            return Ok(new Response<String>(false, "", $"Успешно изтрихте резервация с id:{id}"));
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Restaurant.Services.Bills
 
             if (entityToDelete == null)
             {
-                throw new Exception("Bill does not exist");
+                throw new Exception("Сметката не съществува");
             }
 
             _billRepo.Delete(entityToDelete);
@@ -175,7 +175,7 @@ namespace Restaurant.Services.Bills
 
             if (result == null)
             {
-                throw new Exception("Could not find bill");
+                throw new Exception("Сметката не съществува");
             }
 
             var foods = _foodBillService.GetFoodsByBillId(id);
@@ -219,7 +219,7 @@ namespace Restaurant.Services.Bills
 
                 if (foodEntity == null)
                 {
-                    throw new Exception("Food with id does not exist. Cannot create bill");
+                    throw new Exception("Храна с посочено id не съществува. Сметката не може да бъде създадена");
                 }
 
                 total += food.Quantity * foodEntity.Price;

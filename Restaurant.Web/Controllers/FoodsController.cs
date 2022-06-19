@@ -21,12 +21,12 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
 
             await _foodService.Create(input);
 
-            return Ok(new Response<String>(false, null, "Successfully created food"));
+            return Ok(new Response<String>(false, null, "Успешно създадохте храна"));
         }
 
         [HttpPut("{id}")]
@@ -34,12 +34,12 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
 
             await _foodService.Update(id, input);
 
-            return Ok(new Response<String>(false, null, "Successfully updated food"));
+            return Ok(new Response<String>(false, null, "Успешно обновихте храна"));
         }
 
         [HttpGet("{id}")]
@@ -47,7 +47,7 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null");
+                throw new Exception("Id не трябва да бъде празно");
             }
 
             FoodResultDto entity = await _foodService.GetById(id);
@@ -71,12 +71,12 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null");
+                throw new Exception("Id не трябва да бъде празно");
             }
 
             await _foodService.Delete(id);
 
-            return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
+            return Ok(new Response<String>(false, "", $"Успешно изтрихте храна с id:{id}"));
         }
 
         [HttpGet("getAllByCategory/{categoryId}")]
@@ -84,7 +84,7 @@ namespace Restaurant.Web.Controllers
         {
             if (categoryId == null)
             {
-                throw new Exception("Category id should not be null");
+                throw new Exception("Category Id не трябва да бъде празно");
             }
 
             IEnumerable<FoodListDto> foods = _foodService.GetAll(x => x.Id == categoryId);

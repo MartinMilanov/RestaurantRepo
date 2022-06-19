@@ -21,12 +21,12 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
 
             await _categoryService.Create(input);
 
-            return Ok(new Response<String>(false, null, "Successfully created category"));
+            return Ok(new Response<String>(false, null, "Успешно създадохте категорията"));
         }
 
         [HttpPut("{id}")]
@@ -34,11 +34,11 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
             await _categoryService.Update(id, input);
 
-            return Ok(new Response<String>(false, null, "Successfully updated category"));
+            return Ok(new Response<String>(false, null, "Успешно обновихте категорията"));
         }
 
         [HttpGet("{id}")]
@@ -46,7 +46,7 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null");
+                throw new Exception("Id не трябва да е празно");
             }
 
             CategoryResultDto result = await _categoryService.GetById(id);
@@ -70,12 +70,12 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null");
+                throw new Exception("Id не трябва да е празно");
             }
 
             await _categoryService.Delete(id);
 
-            return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
+            return Ok(new Response<String>(false, "", $"Категорията с id:{id} бе изтрита"));
         }
     }
 }

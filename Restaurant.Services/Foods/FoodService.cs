@@ -45,7 +45,7 @@ namespace Restaurant.Services.Foods
 
             if (entityToDelete == null)
             {
-                throw new Exception("Food does not exist");
+                throw new Exception("Храната не съществува");
             }
 
             _foodRepo.Delete(entityToDelete);
@@ -131,7 +131,7 @@ namespace Restaurant.Services.Foods
 
             if (result == null)
             {
-                throw new Exception("Could not find food");
+                throw new Exception("Храната не съществува");
             }
 
             return _mapper.Map<FoodResultDto>(result);
@@ -165,7 +165,7 @@ namespace Restaurant.Services.Foods
 
             if (foodExists == true)
             {
-                throw new Exception("Food with such name already exists");
+                throw new Exception("Храна със същото име вече съществува");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Restaurant.Services.Foods
 
             if (category == false)
             {
-                throw new Exception("Catgory with such id does not exists and cant be added to food");
+                throw new Exception("Категория с посоченото id не съществува. Храната не може да бъде създадена");
             }
         }
     }

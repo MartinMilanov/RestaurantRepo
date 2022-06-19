@@ -21,12 +21,12 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
 
             await _billService.Create(input);
 
-            return Ok(new Response<String>(false, null, "Successfully created Bill"));
+            return Ok(new Response<String>(false, null, "Успешно създадохте сметка"));
         }
 
         [HttpGet("{id}")]
@@ -34,7 +34,7 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null");
+                throw new Exception("Id не трябва да е празно");
             }
 
             BillResultDto result = await _billService.GetById(id);
@@ -47,12 +47,12 @@ namespace Restaurant.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("Invalid data provided");
+                throw new Exception("Невалидни данни");
             }
 
             await _billService.Update(id, input);
 
-            return Ok(new Response<string>(false, "", "Succesfully updated bill"));
+            return Ok(new Response<string>(false, "", "Успешно обновихте сметка"));
         }
 
         [HttpGet]
@@ -71,12 +71,12 @@ namespace Restaurant.Web.Controllers
         {
             if (id == null)
             {
-                throw new Exception("Id should not be null", null);
+                throw new Exception("Id не трябва да е празно", null);
             }
 
             await _billService.Delete(id);
 
-            return Ok(new Response<String>(false, "", $"Deleted entity with id:{id}"));
+            return Ok(new Response<String>(false, "", $"Успешно изтрихте сметка със id:{id}"));
         }
 
     }

@@ -42,7 +42,7 @@ namespace Restaurant.Services.Categories
 
             if (entityToDelete == null)
             {
-                throw new Exception("Category does not exist");
+                throw new Exception("Категорията не съществува");
             }
 
             _catRepo.Delete(entityToDelete);
@@ -96,7 +96,7 @@ namespace Restaurant.Services.Categories
 
             if (result == null)
             {
-                throw new Exception("Could not find category");
+                throw new Exception("Категорията не съществува");
             }
 
             return _mapper.Map<CategoryResultDto>(result);
@@ -121,7 +121,7 @@ namespace Restaurant.Services.Categories
 
             if (exists == true)
             {
-                throw new Exception("Category with this name already exists");
+                throw new Exception("Категория със същото име вече съществува");
             }
         }
     }

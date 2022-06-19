@@ -42,7 +42,7 @@ namespace Restaurant.Services.Tables
 
             if (entityToDelete == null)
             {
-                throw new Exception("Table does not exist");
+                throw new Exception("Масата не съществува");
             }
 
             _tableRepo.Delete(entityToDelete);
@@ -119,7 +119,7 @@ namespace Restaurant.Services.Tables
 
             if (result == null)
             {
-                throw new Exception("Could not find table");
+                throw new Exception("Масата не съществува");
             }
 
             return _mapper.Map<TableResultDto>(result);
@@ -144,7 +144,7 @@ namespace Restaurant.Services.Tables
 
             if (result != null)
             {
-                throw new Exception("Table with this number already exists");
+                throw new Exception("Маса с този номер вече съществува");
             }
         }
     }

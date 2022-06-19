@@ -43,7 +43,7 @@ namespace Restaurant.Services.Reservations
 
             if (entityToDelete == null)
             {
-                throw new Exception("Reservation does not exist");
+                throw new Exception("Резервацията не съществува");
             }
 
             _reservRepo.Delete(entityToDelete);
@@ -166,7 +166,7 @@ namespace Restaurant.Services.Reservations
 
             if (result == null)
             {
-                throw new Exception("Could not find reservation");
+                throw new Exception("Резервацията не съществува");
             }
 
             return _mapper.Map<ReservationResultDto>(result);
@@ -180,7 +180,7 @@ namespace Restaurant.Services.Reservations
 
             if (reservation == null)
             {
-                throw new Exception("Cannot find reservation with this id");
+                throw new Exception("Резервацията не съществува");
             }
 
             reservation.Date = input.Date;
@@ -205,7 +205,7 @@ namespace Restaurant.Services.Reservations
 
             if (table == null)
             {
-                throw new Exception("Table does not exist");
+                throw new Exception("Масата не съществува");
             }
 
             bool doesNotMeetTimeCriteria = table.Reservations.Any(x => 
@@ -221,12 +221,12 @@ namespace Restaurant.Services.Reservations
 
             if (doesNotMeetTimeCriteria)
             {
-                throw new Exception("This table has a reservation too close to the requested one");
+                throw new Exception("Тази маса има вече резервация близко до посочената");
             }
 
             if (doesNotMeetPeopleCriteria)
             {
-                throw new Exception("This table has less seats than reservation people count");
+                throw new Exception("Тази маса има твърде малко места");
             }
         }
     }
