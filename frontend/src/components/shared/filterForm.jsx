@@ -1,28 +1,7 @@
 import { useState } from "react";
-const FilterForm = ({ filters, setFilterString }) => {
+const FilterForm = ({ setFilterString, previewFilters }) => {
   const [activeFilterKvpArr, setActiveFilterKvpArr] = useState([]);
   const [temporaryFilterKvpArr, setTemporaryFilterKvpArr] = useState([]);
-
-  const generateFilters = () => {
-    var dataKvpFilters = [];
-
-    dataKvpFilters = Object.entries(filters);
-
-    return dataKvpFilters.map((kvp, index) => (
-      <div className="input-group mb-3" key={`${index}filter`}>
-        <span className="input-group-text" id="inputGroup-sizing-default">
-          {kvp[0]}
-        </span>
-        <input
-          type="text"
-          className="form-control"
-          aria-label="Sizing example input"
-          aria-describedby="inputGroup-sizing-default"
-          onChange={(e) => onChangeFilter(kvp[0], e.target.value)}
-        />
-      </div>
-    ));
-  };
 
   const generateActiveFilterButtons = () => {
     return activeFilterKvpArr.map((x, index) => (
@@ -50,14 +29,14 @@ const FilterForm = ({ filters, setFilterString }) => {
   };
 
   const onChangeFilter = (filterName, filterValue) => {
-    if (temporaryFilterKvpArr.indexOf((x) => x[0] == filterName) == -1) {
-      var newState = temporaryFilterKvpArr;
+    if (temporaryFilterKvpArr.indexOf((x) => x[0] === filterName) === -1) {
+      let newState = temporaryFilterKvpArr;
       newState.push([filterName, filterValue]);
 
       setTemporaryFilterKvpArr([...newState]);
     } else {
-      var index = temporaryFilterKvpArr.findIndex((x) => x[0] == filterName);
-      var newState = temporaryFilterKvpArr;
+      var index = temporaryFilterKvpArr.findIndex((x) => x[0] === filterName);
+      let newState = temporaryFilterKvpArr;
       temporaryFilterKvpArr.splice(index, 1);
       newState.push([filterName, filterValue]);
 
@@ -97,7 +76,7 @@ const FilterForm = ({ filters, setFilterString }) => {
     <div className="filterBlock">
       <h3>Филтри</h3>
 
-      {generateFilters()}
+      {previewFilters(onChangeFilter)}
 
       <button
         className="btn btn-primary"

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useRef } from "react";
 
-const ListView = ({ endpoint, columnNames, filters }) => {
+const ListView = ({ endpoint, columnNames, previewFilters }) => {
   const itemsPerPage = 6;
   const [items, setItems] = useState([]);
   const [count, setCount] = useState([]);
@@ -77,7 +77,10 @@ const ListView = ({ endpoint, columnNames, filters }) => {
 
   return (
     <>
-      <FilterForm filters={filters} setFilterString={setFilterString} />
+      <FilterForm
+        setFilterString={setFilterString}
+        previewFilters={previewFilters}
+      />
 
       <div className="create-wrapper">
         <Link to={`/${endpoint}/create`} className="btn btn-success btn-right">
