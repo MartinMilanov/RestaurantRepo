@@ -15,13 +15,13 @@ const Login = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     var result = await tryLogIn(values.username, values.password).catch((x) =>
-      toast.error("Unsuccessful login")
+      toast.error("Неуспешно вписване")
     );
 
     if (result === false) {
-      toast.error("Unsuccessful login");
+      toast.error("Неуспешно вписване");
     } else {
-      toast.success("Successful login");
+      toast.success("Успешно се вписахте във вашият профил");
       setUsername(localStorage.getItem("username"));
       navigate(-1);
     }

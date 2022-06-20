@@ -43,6 +43,7 @@ namespace Restaurant.Web.Controllers
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.Role,userRoles.Contains("Admin") == true ? "Admin" : "User")
                 };
 
                 foreach (var userRole in userRoles)

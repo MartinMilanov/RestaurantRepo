@@ -18,14 +18,14 @@ const ReservationList = () => {
         </div>
         <div className="input-group mb-3" key={`$1resrtvfilter`}>
           <span className="input-group-text" id="inputGroup-sizing-default">
-            Създадено от
+            Име на резервиращия
           </span>
           <input
             type="text"
             className="form-control"
             aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-default"
-            onChange={(e) => onChangeFilter("CreatedBy", e.target.value)}
+            onChange={(e) => onChangeFilter("ReserveeName", e.target.value)}
           />
         </div>
       </>

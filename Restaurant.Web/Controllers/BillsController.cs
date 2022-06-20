@@ -6,6 +6,7 @@ using Restaurant.Services.Bills;
 using Restaurant.Mapping.Models.Common;
 using Microsoft.AspNetCore.Identity;
 using Restaurant.Data.Entities.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Restaurant.Web.Controllers
 {
@@ -73,6 +74,7 @@ namespace Restaurant.Web.Controllers
             return Ok(new Response<PaginatedResult<BillListDto>>(false, "", result));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {

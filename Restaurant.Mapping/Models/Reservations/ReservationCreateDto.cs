@@ -12,7 +12,6 @@ namespace Restaurant.Mapping.Models.Reservations
         public DateTime Date { get; set; }
         [Required]
         public string? TableId { get; set; }
-        [Required]
         public string? CreatedById { get; set; }
     }
 }

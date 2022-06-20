@@ -32,6 +32,11 @@ namespace Restaurant.Services.Bills
         {
             var entity = _mapper.Map<Bill>(input);
 
+            if(input.IsClosed == true)
+            {
+                entity.Closed = DateTime.UtcNow;
+            }
+
             entity.Total = await CalculateTotal(input.FoodData);
 
             await _billRepo.Create(entity);
@@ -195,6 +200,11 @@ namespace Restaurant.Services.Bills
             entity.IsClosed = input.IsClosed;
             entity.CreatedById = input.CreatedById;
             entity.Total = await CalculateTotal(input.FoodData);
+
+            if (input.IsClosed == true)
+            {
+                entity.Closed = DateTime.UtcNow;
+            }
 
             _billRepo.Update(id, entity);
 

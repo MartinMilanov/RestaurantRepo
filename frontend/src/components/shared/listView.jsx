@@ -55,7 +55,7 @@ const ListView = ({ endpoint, columnNames, previewFilters }) => {
       const blob = new Blob([json]);
       const fileDownloadUrl = URL.createObjectURL(blob);
 
-      toast.success("Successfully downloaded file");
+      toast.success("Успешно изтеглихте файл");
       setDownloadUrl(fileDownloadUrl);
       this.dofileDownload.click();
     } else {
